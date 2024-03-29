@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/pet_detail.dart';
-
-import 'model/pet.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
