@@ -29,7 +29,7 @@ class Pet {
         age = json["age"] as int,
         weight = json["weight"] as double,
         photo = json["photo"] as String,
-        birthdate = DateFormat("yyyy-mm-dd").parse(json["birthdate"]),
+        birthdate = DateFormat("yyyy-MM-dd").parse(json["birthdate"]),
         breed = json["breed"] as String,
         fur = json["fur"] as String,
         sex = json["sex"] as String;
