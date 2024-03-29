@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mascotas/model/pet.dart';
@@ -9,9 +11,10 @@ class PetDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const avatar = CircleAvatar(
-      backgroundImage: NetworkImage(
-          "https://i.pinimg.com/originals/fa/0c/eb/fa0ceb0e64f70e4b81b39f5328c477ff.jpg"),
+    var image = MemoryImage(base64Decode(pet.photo));
+
+    final avatar = CircleAvatar(
+      backgroundImage: image,
       radius: 60,
     );
 
