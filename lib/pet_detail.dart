@@ -29,7 +29,7 @@ class PetDetail extends StatelessWidget {
         ),
         buildPetAttributeRow("Edad", pet.ageToString()),
         buildPetAttributeRow("Nacimiento", pet.birthdateToString()),
-        buildPetAttributeRow("Peso", pet.ageToString()),
+        buildPetAttributeRow("Peso", pet.weightToString()),
         buildPetAttributeRow("Sexo", pet.sex),
         buildPetAttributeRow("Raza", pet.breed),
         buildPetAttributeRow("Pelaje", pet.fur),

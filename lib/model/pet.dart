@@ -43,6 +43,6 @@ class Pet {
   }
 
   String weightToString() {
-    return "${weight.toString()} Kg";
+    return "${weight.ceil().toString()} Kg";
   }
 }
