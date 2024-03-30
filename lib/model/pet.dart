@@ -24,13 +24,25 @@ class Pet {
   });
 
   Pet.fromJson(Map<String, dynamic> json)
-      : id = json["id"] as int,
-        name = json["name"] as String,
-        age = json["age"] as int,
-        weight = json["weight"] as double,
-        photo = json["photo"] as String,
+      : id = json["id"],
+        name = json["name"],
+        age = json["age"],
+        weight = json["weight"],
+        photo = json["photo"],
         birthdate = DateFormat("yyyy-MM-dd").parse(json["birthdate"]),
-        breed = json["breed"] as String,
-        fur = json["fur"] as String,
-        sex = json["sex"] as String;
+        breed = json["breed"],
+        fur = json["fur"],
+        sex = json["sex"];
+
+  String birthdateToString() {
+    return DateFormat("dd-MM-yy").format(birthdate);
+  }
+
+  String ageToString() {
+    return age.toString();
+  }
+
+  String weightToString() {
+    return "${weight.toString()} Kg";
+  }
 }
