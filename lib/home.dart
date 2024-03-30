@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
 
   FutureBuilder<Pet> makePetDetails() {
     return FutureBuilder<Pet>(
-      future: petDatasource.getPet(1),
+      future: petDatasource.getPet(2),
       builder: (BuildContext context, AsyncSnapshot<Pet> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());

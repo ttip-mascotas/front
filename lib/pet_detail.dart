@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:mascotas/model/pet.dart';
 
 class PetDetail extends StatelessWidget {
@@ -28,12 +27,9 @@ class PetDetail extends StatelessWidget {
             fontSize: 25,
           ),
         ),
-        buildPetAttributeRow("Edad", pet.age.toString()),
-        buildPetAttributeRow(
-          "Nacimiento",
-          DateFormat('yyyy-MM-dd').format(pet.birthdate),
-        ),
-        buildPetAttributeRow("Peso", "${pet.weight.toString()} Kg"),
+        buildPetAttributeRow("Edad", pet.ageToString()),
+        buildPetAttributeRow("Nacimiento", pet.birthdateToString()),
+        buildPetAttributeRow("Peso", pet.ageToString()),
         buildPetAttributeRow("Sexo", pet.sex),
         buildPetAttributeRow("Raza", pet.breed),
         buildPetAttributeRow("Pelaje", pet.fur),
@@ -78,7 +74,7 @@ class PetDetail extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Text(attributeValue)
+        Text(attributeValue.isEmpty ? "-" : attributeValue)
       ],
     );
   }
