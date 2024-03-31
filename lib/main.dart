@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mascotas/style/theme.dart';
 
-import 'screen/home.dart';
+import 'screen/pet_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       title: "History Pets",
       theme: theme,
-      home: const Home(),
+      home: const PetScreen(),
     );
   }
 }

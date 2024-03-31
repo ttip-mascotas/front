@@ -28,7 +28,7 @@ class _MedicalVisitRegistrationFormState
       child: Form(
         key: _formKey,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,7 +61,7 @@ class _MedicalVisitRegistrationFormState
               ),
               TextFormField(
                 controller: _observationsController,
-                maxLines: 3,
+                maxLines: 2,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
