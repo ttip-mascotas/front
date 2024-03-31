@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mascotas/style/theme.dart';
 
-import 'home.dart';
+import 'screen/home.dart';
 
 void main() {
   runApp(const MainApp());
@@ -13,7 +14,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "History Pets",
-      theme: ThemeData(primarySwatch: Colors.purple),
+      theme: theme,
       home: const Home(),
     );
   }

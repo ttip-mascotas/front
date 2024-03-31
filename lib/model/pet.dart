@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:mascotas/utils/format.dart';
 
 class Pet {
   final int id;
@@ -35,7 +36,7 @@ class Pet {
         sex = json["sex"];
 
   String birthdateToString() {
-    return DateFormat("dd-MM-yy").format(birthdate);
+    return formatDateToString(birthdate);
   }
 
   String ageToString() {
