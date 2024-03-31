@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
@@ -18,5 +19,10 @@ class Api {
       return "http://10.0.2.2:8080";
     }
     return "http://localhost:8080";
+  }
+
+  post(String path, {Map<String, String>? headers, Object? body, Encoding? encoding}) {
+    return http
+        .post(_getUrl(path), headers: headers, body: body,encoding: encoding);
   }
 }

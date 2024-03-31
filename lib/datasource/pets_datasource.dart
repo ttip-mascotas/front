@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:mascotas/datasource/api.dart';
+import 'package:mascotas/model/medicalVisit.dart';
 import 'package:mascotas/model/pet.dart';
 
 class PetsDatasource {
@@ -49,4 +50,13 @@ class PetsDatasource {
 
   bool _isSuccessful(Response response) =>
       response.statusCode >= 200 || response.statusCode < 300;
+
+  Future<MedicalVisit> addMedicalVisit(MedicalVisit medicalVisit, int id) async {
+    final response = await api.post("/pets/$id/visitations");
+    
+    return _manageResponse<MedicalVisit>(
+        response,
+        parseJson: (json) => MedicalVisit.fromJson(json),
+        message: "Hubo un problema al registrar la visita medica");
+  }
 }

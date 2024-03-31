@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mascotas/bloc/pet_bloc.dart';
 import 'package:mascotas/utils/format.dart';
 import 'package:mascotas/utils/validator.dart';
 
@@ -95,10 +97,20 @@ class _MedicalVisitRegistrationFormState
 
   void saveMedicalVisit() {
     if (_formKey.currentState!.validate()) {
-      //TODO: Registrar la visita medica
-      Navigator.pop(context);
+      try {
+        context.read<PetCubit>().addMedicalVisit(
+              specialist: _specialistController.text,
+              address: _addressController.text,
+              date: _dateController.text,
+              observations: _observationsController.text,
+            );
+        Navigator.pop(context);
+      } catch (error) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error.toString())),
+        );
+      }
     }
   }
 }
-
-
