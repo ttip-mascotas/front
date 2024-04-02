@@ -1,6 +1,8 @@
-import 'package:intl/intl.dart';
+import 'package:equatable/equatable.dart';
+import 'package:mascotas/model/medicalVisit.dart';
+import 'package:mascotas/utils/format.dart';
 
-class Pet {
+class Pet extends Equatable {
   final int id;
   final String name;
   final int age;
@@ -10,8 +12,9 @@ class Pet {
   final String breed;
   final String fur;
   final String sex;
+  final List<MedicalVisit> medicalVisits;
 
-  const Pet({
+  Pet({
     required this.id,
     required this.name,
     required this.age,
@@ -21,7 +24,8 @@ class Pet {
     required this.breed,
     required this.fur,
     required this.sex,
-  });
+    List<MedicalVisit>? medicalVisits,
+  }) : medicalVisits = medicalVisits ?? [];
 
   Pet.fromJson(Map<String, dynamic> json)
       : id = json["id"],
@@ -29,13 +33,14 @@ class Pet {
         age = json["age"],
         weight = json["weight"],
         photo = json["photo"],
-        birthdate = DateFormat("yyyy-MM-dd").parse(json["birthdate"]),
+        birthdate = formatStringToDateTimeFromBack(json["birthdate"]),
         breed = json["breed"],
         fur = json["fur"],
-        sex = json["sex"];
+        sex = json["sex"],
+        medicalVisits = json["medicalVisits"] ?? [];
 
   String birthdateToString() {
-    return DateFormat("dd-MM-yy").format(birthdate);
+    return formatDateToString(birthdate);
   }
 
   String ageToString() {
@@ -45,4 +50,22 @@ class Pet {
   String weightToString() {
     return "${weight.ceil().toString()} Kg";
   }
+
+  void addMedicalVisit(MedicalVisit medicalVisit) {
+    medicalVisits.add(medicalVisit);
+  }
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        age,
+        weight,
+        photo,
+        birthdate,
+        breed,
+        fur,
+        sex,
+        medicalVisits,
+      ];
 }
