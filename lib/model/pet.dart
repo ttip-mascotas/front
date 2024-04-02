@@ -32,7 +32,7 @@ class Pet {
         age = json["age"],
         weight = json["weight"],
         photo = json["photo"],
-        birthdate = formatStringToDateTime(json["birthdate"]),
+        birthdate = formatStringToDateTimeFromBack(json["birthdate"]),
         breed = json["breed"],
         fur = json["fur"],
         sex = json["sex"],

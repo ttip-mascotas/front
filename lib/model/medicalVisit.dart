@@ -19,7 +19,7 @@ class MedicalVisit {
       : id = json['id'],
         specialist = json['specialist'],
         address = json['address'],
-        date = formatStringToDateTime(json['datetime']),
+        date = formatStringToDateTimeFromBack(json['datetime']),
         observations = json['observations'];
 
   Map<String, dynamic> toJson() => {
