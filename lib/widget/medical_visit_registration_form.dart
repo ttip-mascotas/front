@@ -99,11 +99,11 @@ class _MedicalVisitRegistrationFormState
     if (_formKey.currentState!.validate()) {
       try {
         context.read<PetCubit>().addMedicalVisit(
-              specialist: _specialistController.text,
-              address: _addressController.text,
-              date: _dateController.text,
-              observations: _observationsController.text,
-            );
+          specialist: _specialistController.text,
+          address: _addressController.text,
+          date: _dateController.text,
+          observations: _observationsController.text,
+        );
         Navigator.pop(context);
       } catch (error) {
         Navigator.pop(context);

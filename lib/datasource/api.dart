@@ -10,6 +10,14 @@ class Api {
         .timeout(const Duration(seconds: 30));
   }
 
+  post(String path, {Map<String, String>? headers, Object? body, Encoding? encoding}) {
+    headers ??= {};
+    headers[HttpHeaders.contentTypeHeader] = 'application/json; charset=UTF-8';
+
+    return http
+        .post(_getUrl(path), headers: headers, body: jsonEncode(body),encoding: encoding);
+  }
+
   Uri _getUrl(String path) {
     return Uri.parse(_baseURL() + path);
   }
@@ -19,10 +27,5 @@ class Api {
       return "http://10.0.2.2:8080";
     }
     return "http://localhost:8080";
-  }
-
-  post(String path, {Map<String, String>? headers, Object? body, Encoding? encoding}) {
-    return http
-        .post(_getUrl(path), headers: headers, body: body,encoding: encoding);
   }
 }
