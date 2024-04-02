@@ -17,3 +17,11 @@ Abrir un emulador Android o IOS
 Una vez abierto el emulador correr el siguiente comando:
 
 `flutter run`
+
+## Test
+
+Correr comando de mockito para generar los mocks
+
+```
+    flutter pub run build_runner build
+```

@@ -1,5 +1,8 @@
+import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/datasource/pets_datasource.dart';
+import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/medicalVisit.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/utils/format.dart';
@@ -13,8 +16,11 @@ class PetCubit extends Cubit<BlocState> {
     try {
       final pet = await petsDatasource.getPet(id);
       emit(Loaded(pet: pet));
+    } on DatasourceException catch (error) {
+      emit(Error(message: error.message));
     } catch (error) {
-      emit(Error(message: error.toString()));
+      debugPrint(error.toString());
+      emit(Error(message: "Ocurrio un error inesperado"));
     }
   }
 
@@ -37,24 +43,40 @@ class PetCubit extends Cubit<BlocState> {
         pet.addMedicalVisit(medicalVisitFromResponse);
         emit(Loaded(pet: pet));
       }
+    } on DatasourceException catch (error) {
+      emit(Error(message: error.message));
     } catch (error) {
-      emit(Error(message: error.toString()));
+      debugPrint(error.toString());
+      emit(Error(message: "Ocurrio un error inesperado"));
     }
   }
 }
 
-class BlocState {}
+class BlocState extends Equatable {
+
+  @override
+  List<Object?> get props => [];
+}
 
 class Error extends BlocState {
   final String message;
 
   Error({required this.message});
+
+  @override
+  List<Object?> get props => [message];
 }
 
-class Loading extends BlocState {}
+class Loading extends BlocState {
+  @override
+  List<Object?> get props => [];
+}
 
 class Loaded extends BlocState {
   final Pet pet;
 
   Loaded({required this.pet});
+
+  @override
+  List<Object?> get props => [pet];
 }

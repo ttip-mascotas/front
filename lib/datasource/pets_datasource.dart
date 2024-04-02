@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:mascotas/datasource/api.dart';
+import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/medicalVisit.dart';
 import 'package:mascotas/model/pet.dart';
 
@@ -22,11 +23,8 @@ class PetsDatasource {
         message: "Hubo un error al cargar la información de la mascota",
       );
     } on TimeoutException {
-      return Future.error(
+      return throw DatasourceException(
           "Nuestros servidores están ocupados, intentalo nuevamente más tarde.");
-    } catch (e) {
-      debugPrint(e.toString());
-      return Future.error("Ha ocurrido un error inesperado.");
     }
   }
 
@@ -57,10 +55,10 @@ class PetsDatasource {
     if (_isSuccessful(response)) {
       return parseJson(json);
     } if (_isClientError(response)){
-      throw Exception(json['message']);
+      throw DatasourceException( json['message'], );
     } else {
       debugPrint(json['message']);
-      throw Exception(message);
+      throw DatasourceException(message);
     }
   }
 

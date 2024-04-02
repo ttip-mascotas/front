@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:mascotas/utils/format.dart';
 
-class MedicalVisit {
+class MedicalVisit extends Equatable {
   final int? id;
   final String specialist;
   final String address;
@@ -28,4 +29,7 @@ class MedicalVisit {
         'datetime': date.toIso8601String(),
         'observations': observations,
       };
+
+  @override
+  List<Object?> get props => [id, specialist, address, date, observations];
 }

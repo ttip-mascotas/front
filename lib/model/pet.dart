@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
 import 'package:mascotas/model/medicalVisit.dart';
 import 'package:mascotas/utils/format.dart';
 
-class Pet {
+class Pet extends Equatable {
   final int id;
   final String name;
   final int age;
@@ -53,4 +54,18 @@ class Pet {
   void addMedicalVisit(MedicalVisit medicalVisit) {
     medicalVisits.add(medicalVisit);
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        name,
+        age,
+        weight,
+        photo,
+        birthdate,
+        breed,
+        fur,
+        sex,
+        medicalVisits,
+      ];
 }
