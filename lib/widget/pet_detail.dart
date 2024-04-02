@@ -162,7 +162,7 @@ class MedicalVisits extends StatelessWidget {
                     ),
                   );
                 },
-                separatorBuilder: (context, index) => const Divider(),
+                separatorBuilder: (context, index) => Divider(color: Colors.purple.shade200,),
                 itemCount: medicalVisits.length),
           )
         : Container(
