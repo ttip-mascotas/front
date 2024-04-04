@@ -37,7 +37,13 @@ class Pet extends Equatable {
         breed = json["breed"],
         fur = json["fur"],
         sex = json["sex"],
-        medicalVisits = json["medicalVisits"] ?? [];
+        medicalVisits = _medicalVisitsFromJson(json["medicalVisits"]);
+
+  static List<MedicalVisit> _medicalVisitsFromJson(List<dynamic> json) {
+    return json
+        .map<MedicalVisit>((json) => MedicalVisit.fromJson(json))
+        .toList();
+  }
 
   String birthdateToString() {
     return formatDateToString(birthdate);
