@@ -13,7 +13,7 @@ class PetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final purple = Colors.purple.shade200;
-    context.read<PetCubit>().getPet(Random().nextInt(6));
+    context.read<PetCubit>().getPet(Random().nextInt(5) + 1);
 
     return Scaffold(
       appBar: AppBar(

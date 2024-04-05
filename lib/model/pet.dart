@@ -36,8 +36,14 @@ class Pet extends Equatable {
         birthdate = formatStringToDateTimeFromBack(json["birthdate"]),
         breed = json["breed"],
         fur = json["fur"],
-        sex = json["sex"],
-        medicalVisits = json["medicalVisits"] ?? [];
+        sex = typeOfSex[json["sex"]] ?? '',
+        medicalVisits = _medicalVisitsFromJson(json["medicalVisits"]);
+
+  static List<MedicalVisit> _medicalVisitsFromJson(List<dynamic> json) {
+    return json
+        .map<MedicalVisit>((json) => MedicalVisit.fromJson(json))
+        .toList();
+  }
 
   String birthdateToString() {
     return formatDateToString(birthdate);
@@ -69,3 +75,8 @@ class Pet extends Equatable {
         medicalVisits,
       ];
 }
+
+final Map<String, String> typeOfSex = {
+  'FEMALE' : 'Hembra',
+  'MALE': 'Macho'
+};

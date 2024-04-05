@@ -12,7 +12,8 @@ final Map<String, dynamic> petMap = {
   "birthdate": "2023-03-30",
   "breed": "San Bernardo",
   "fur": "Largo",
-  "sex": "FEMALE"
+  "sex": "FEMALE",
+  "medicalVisits": []
 };
 
 final String petJson = jsonEncode(
