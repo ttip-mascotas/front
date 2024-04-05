@@ -36,7 +36,7 @@ class Pet extends Equatable {
         birthdate = formatStringToDateTimeFromBack(json["birthdate"]),
         breed = json["breed"],
         fur = json["fur"],
-        sex = json["sex"],
+        sex = typeOfSex[json["sex"]] ?? '',
         medicalVisits = _medicalVisitsFromJson(json["medicalVisits"]);
 
   static List<MedicalVisit> _medicalVisitsFromJson(List<dynamic> json) {
@@ -75,3 +75,8 @@ class Pet extends Equatable {
         medicalVisits,
       ];
 }
+
+final Map<String, String> typeOfSex = {
+  'FEMALE' : 'Hembra',
+  'MALE': 'Macho'
+};

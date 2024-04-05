@@ -34,7 +34,7 @@ void main() {
     expect(pet.birthdate, DateTime(2023, 03, 30));
     expect(pet.breed, "San Bernardo");
     expect(pet.fur, "Largo");
-    expect(pet.sex, "FEMALE");
+    expect(pet.sex, "Hembra");
   });
 
   test("Record pet medical visit", () async {
