@@ -15,10 +15,10 @@ class PetDetail extends StatelessWidget {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           color: Colors.purple.shade50,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Avatar(photo: pet.photo),
               PetAttributes(pet: pet),
@@ -57,41 +57,49 @@ class PetAttributes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          pet.name,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 25,
-          ),
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                pet.name,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                ),
+              ),
+            ),
+            PetAttribute(
+              attributeValue: pet.ageToString(),
+              attributeName: 'Edad',
+            ),
+            PetAttribute(
+              attributeValue: pet.birthdateToString(),
+              attributeName: 'Nacimiento',
+            ),
+            PetAttribute(
+              attributeValue: pet.weightToString(),
+              attributeName: 'Peso',
+            ),
+            PetAttribute(
+              attributeValue: pet.sex,
+              attributeName: 'Sexo',
+            ),
+            PetAttribute(
+              attributeValue: pet.breed,
+              attributeName: 'Raza',
+            ),
+            PetAttribute(
+              attributeValue: pet.fur,
+              attributeName: 'Pelaje',
+            ),
+          ],
         ),
-        PetAttribute(
-          attributeValue: pet.ageToString(),
-          attributeName: 'Edad',
-        ),
-        PetAttribute(
-          attributeValue: pet.birthdateToString(),
-          attributeName: 'Nacimiento',
-        ),
-        PetAttribute(
-          attributeValue: pet.weightToString(),
-          attributeName: 'Peso',
-        ),
-        PetAttribute(
-          attributeValue: pet.sex,
-          attributeName: 'Sexo',
-        ),
-        PetAttribute(
-          attributeValue: pet.breed,
-          attributeName: 'Raza',
-        ),
-        PetAttribute(
-          attributeValue: pet.fur,
-          attributeName: 'Pelaje',
-        ),
-      ],
+      ),
     );
   }
 }
@@ -105,16 +113,17 @@ class PetAttribute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          "$attributeName: ",
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.0),
+      child: RichText(
+        text: TextSpan(
+          text: "$attributeName: ",
+          children: [
+            TextSpan(text: attributeValue.isEmpty ? "-" : attributeValue, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.w400))
+          ],
+          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
         ),
-        Text(attributeValue.isEmpty ? "-" : attributeValue)
-      ],
+      ),
     );
   }
 }
@@ -162,7 +171,9 @@ class MedicalVisits extends StatelessWidget {
                     ),
                   );
                 },
-                separatorBuilder: (context, index) => Divider(color: Colors.purple.shade200,),
+                separatorBuilder: (context, index) => Divider(
+                      color: Colors.purple.shade200,
+                    ),
                 itemCount: medicalVisits.length),
           )
         : Container(
