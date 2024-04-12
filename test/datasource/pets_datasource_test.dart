@@ -59,4 +59,17 @@ void main() {
     expect(medicalVisitResponse.observations, medicalVisitResponse.observations);
     expect(medicalVisitResponse.address, medicalVisitResponse.address);
   });
+
+  test("Get all pets", () async {
+    final PetsDatasource petsDataSource = PetsDatasource(api: mockApi);
+    
+    when(mockApi.get("/pets"))
+        .thenAnswer((_) async => Response(petsJson, 200));
+
+    final pets = await petsDataSource.getPets();
+
+    expect(pets.length, 1);
+    expect(pets[0].name, petMap['name']);
+    expect(pets[0].medicalVisits, isEmpty);
+  });
 }
