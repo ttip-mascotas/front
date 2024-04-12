@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mascotas/bloc/bloc_state.dart';
 import 'package:mascotas/bloc/pet_bloc.dart';
 import 'package:mascotas/widget/pet_detail.dart';
+import 'package:mascotas/widget/pets_scaffold.dart';
 
 import '../widget/medical_visit_registration_form.dart';
 
@@ -15,15 +17,7 @@ class PetScreen extends StatelessWidget {
     final purple = Colors.purple.shade200;
     context.read<PetCubit>().getPet(Random().nextInt(5) + 1);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "Historial Médico",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: purple,
-      ),
+    return PetsScaffold(
       body: const PetDetails(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: purple,
@@ -33,6 +27,7 @@ class PetScreen extends StatelessWidget {
           color: Colors.white,
         ),
       ),
+      title: "Historial Médico",
     );
   }
 
@@ -54,7 +49,6 @@ class PetDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return BlocBuilder<PetCubit, BlocState>(
       builder: (BuildContext context, BlocState state) {
         switch (state) {
@@ -68,7 +62,7 @@ class PetDetails extends StatelessWidget {
               ),
             );
           case Loaded():
-            return PetDetail(pet: state.pet);
+            return PetDetail(pet: state.value);
           default:
             return const Center(child: CircularProgressIndicator());
         }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mascotas/model/medicalVisit.dart';
+import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 
 final Map<String, dynamic> petMap = {

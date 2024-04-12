@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mascotas/model/medicalVisit.dart';
+import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/utils/format.dart';
 
 class Pet extends Equatable {
@@ -39,10 +39,13 @@ class Pet extends Equatable {
         sex = typeOfSex[json["sex"]] ?? '',
         medicalVisits = _medicalVisitsFromJson(json["medicalVisits"]);
 
-  static List<MedicalVisit> _medicalVisitsFromJson(List<dynamic> json) {
-    return json
-        .map<MedicalVisit>((json) => MedicalVisit.fromJson(json))
-        .toList();
+  static List<MedicalVisit> _medicalVisitsFromJson(List<dynamic>? json) {
+    if (json != null) {
+      return json
+          .map<MedicalVisit>((json) => MedicalVisit.fromJson(json))
+          .toList();
+    }
+    return [];
   }
 
   String birthdateToString() {
@@ -50,7 +53,10 @@ class Pet extends Equatable {
   }
 
   String ageToString() {
-    return age.toString();
+    if (age > 1) {
+      return '${age.toString()} años';
+    }
+    return '${age.toString()} año';
   }
 
   String weightToString() {
