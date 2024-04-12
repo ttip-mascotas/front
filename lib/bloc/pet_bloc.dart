@@ -1,10 +1,9 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mascotas/bloc/bloc_state.dart';
 import 'package:mascotas/datasource/pets_datasource.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
-import 'package:mascotas/model/medicalVisit.dart';
-import 'package:mascotas/model/pet.dart';
+import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/utils/format.dart';
 
 class PetCubit extends Cubit<BlocState> {
@@ -15,7 +14,7 @@ class PetCubit extends Cubit<BlocState> {
   Future<void> getPet(int id) async {
     try {
       final pet = await petsDatasource.getPet(id);
-      emit(Loaded(pet: pet));
+      emit(Loaded(value: pet));
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));
     } catch (error) {
@@ -37,11 +36,11 @@ class PetCubit extends Cubit<BlocState> {
           observations: observations);
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
-        final pet = currentState.pet;
+        final pet = currentState.value;
         emit(Loading());
         final medicalVisitFromResponse = await petsDatasource.addMedicalVisit(medicalVisit, pet.id);
         pet.addMedicalVisit(medicalVisitFromResponse);
-        emit(Loaded(pet: pet));
+        emit(Loaded(value: pet));
       }
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));
@@ -50,33 +49,4 @@ class PetCubit extends Cubit<BlocState> {
       emit(Error(message: "Ocurrio un error inesperado"));
     }
   }
-}
-
-class BlocState extends Equatable {
-
-  @override
-  List<Object?> get props => [];
-}
-
-class Error extends BlocState {
-  final String message;
-
-  Error({required this.message});
-
-  @override
-  List<Object?> get props => [message];
-}
-
-class Loading extends BlocState {
-  @override
-  List<Object?> get props => [];
-}
-
-class Loaded extends BlocState {
-  final Pet pet;
-
-  Loaded({required this.pet});
-
-  @override
-  List<Object?> get props => [pet];
 }

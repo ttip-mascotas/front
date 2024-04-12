@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:mascotas/model/medicalVisit.dart';
+import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 
 final Map<String, dynamic> petMap = {
@@ -16,11 +16,13 @@ final Map<String, dynamic> petMap = {
   "medicalVisits": []
 };
 
-final String petJson = jsonEncode(
-  petMap
-);
+final String petJson = jsonEncode(petMap);
 
-final Map<String, dynamic > medicalVisitMap = {
+final String petsJson = jsonEncode({
+  "results": [petMap]
+});
+
+final Map<String, dynamic> medicalVisitMap = {
   "id": 1,
   "address": "Alsina 1309, Quilmes",
   "datetime": "2023-03-30",
@@ -38,4 +40,5 @@ final medicalVisit = MedicalVisit(
 
 final pet = Pet.fromJson(petMap);
 
-final Pet petWithMedicalVisits = Pet.fromJson(petMap)..addMedicalVisit(MedicalVisit.fromJson(medicalVisitMap));
+final Pet petWithMedicalVisits = Pet.fromJson(petMap)
+  ..addMedicalVisit(MedicalVisit.fromJson(medicalVisitMap));

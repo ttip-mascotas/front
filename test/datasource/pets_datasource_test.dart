@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mascotas/datasource/api.dart';
 import 'package:mascotas/datasource/pets_datasource.dart';
-import 'package:mascotas/model/medicalVisit.dart';
+import 'package:mascotas/model/medical_visit.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -58,5 +58,18 @@ void main() {
     expect(medicalVisitResponse.date, medicalVisitResponse.date);
     expect(medicalVisitResponse.observations, medicalVisitResponse.observations);
     expect(medicalVisitResponse.address, medicalVisitResponse.address);
+  });
+
+  test("Get all pets", () async {
+    final PetsDatasource petsDataSource = PetsDatasource(api: mockApi);
+    
+    when(mockApi.get("/pets"))
+        .thenAnswer((_) async => Response(petsJson, 200));
+
+    final pets = await petsDataSource.getPets();
+
+    expect(pets.length, 1);
+    expect(pets[0].name, petMap['name']);
+    expect(pets[0].medicalVisits, isEmpty);
   });
 }

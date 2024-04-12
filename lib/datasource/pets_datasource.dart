@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:mascotas/datasource/api.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
-import 'package:mascotas/model/medicalVisit.dart';
+import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 
 class PetsDatasource {
@@ -28,12 +28,12 @@ class PetsDatasource {
     }
   }
 
-  Future<String> getPets() async {
+  Future<List<Pet>> getPets() async {
     final response = await api.get("/pets");
 
-    return _manageResponse<String>(
+    return _manageResponse<List<Pet>>(
       response,
-      parseJson: (json) => json,
+      parseJson: (json) => json['results'].map<Pet>((json) => Pet.fromJson(json)).toList(),
       message: "Failed to load pets",
     );
   }

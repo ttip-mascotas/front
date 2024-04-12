@@ -5,6 +5,6 @@ void main() {
   testWidgets("Hello Widget", (WidgetTester tester) async {
     await tester.pumpWidget(const MainApp());
     await tester.pump();
-    expect(find.text('Historial Médico'), findsOneWidget);
+    expect(find.text('Mis Mascotas'), findsOneWidget);
   });
 }

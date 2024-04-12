@@ -1,9 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:mascotas/model/medicalVisit.dart';
+import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/utils/format.dart';
+import 'package:mascotas/widget/pets_divider.dart';
+
+import 'avatar.dart';
 
 class PetDetail extends StatelessWidget {
   const PetDetail({super.key, required this.pet});
@@ -20,32 +21,13 @@ class PetDetail extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Avatar(photo: pet.photo),
+              Avatar.avatarLarge(photo: pet.photo),
               PetAttributes(pet: pet),
             ],
           ),
         ),
         MedicalVisits(medicalVisits: pet.medicalVisits),
       ],
-    );
-  }
-}
-
-class Avatar extends StatelessWidget {
-  const Avatar({
-    super.key,
-    required this.photo,
-  });
-
-  final String photo;
-
-  @override
-  Widget build(BuildContext context) {
-    var image = MemoryImage(base64Decode(photo));
-
-    return CircleAvatar(
-      backgroundImage: image,
-      radius: 60,
     );
   }
 }
@@ -171,9 +153,7 @@ class MedicalVisits extends StatelessWidget {
                     ),
                   );
                 },
-                separatorBuilder: (context, index) => Divider(
-                      color: Colors.purple.shade200,
-                    ),
+                separatorBuilder: (context, index) => const PetsDivider(),
                 itemCount: medicalVisits.length),
           )
         : Container(

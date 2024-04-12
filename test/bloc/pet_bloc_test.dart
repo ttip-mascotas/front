@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
+import 'package:mascotas/bloc/bloc_state.dart';
 import 'package:mascotas/bloc/pet_bloc.dart';
 import 'package:mascotas/datasource/pets_datasource.dart';
 import 'package:mascotas/model/pet.dart';
@@ -33,7 +34,7 @@ void main() {
     build: () => PetCubit(petsDatasource: petsDataSource),
     act: (cubit) => cubit.getPet(1),
     expect: () => [
-      Loaded(pet: Pet.fromJson(jsonDecode(petJson))),
+      Loaded(value: Pet.fromJson(jsonDecode(petJson))),
     ],
   );
 
@@ -77,9 +78,9 @@ void main() {
           observations: medicalVisit.observations);
     },
     expect: () => [
-      Loaded(pet: petWithMedicalVisits),
+      Loaded(value: petWithMedicalVisits),
       Loading(),
-      Loaded(pet: petWithMedicalVisits),
+      Loaded(value: petWithMedicalVisits),
     ],
   );
 
@@ -107,7 +108,7 @@ void main() {
           observations: medicalVisit.observations);
     },
     expect: () => [
-      Loaded(pet: pet),
+      Loaded(value: pet),
       Loading(),
       Error(message: "Ocurrio un error inesperado"),
     ],
