@@ -24,6 +24,7 @@ class PetsScaffold extends StatelessWidget {
         backgroundColor: Colors.purple.shade200,
       ),
       body: body,
+      floatingActionButton: floatingActionButton,
     );
   }
 }

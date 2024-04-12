@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
 import 'package:mascotas/bloc/pets_bloc.dart';
 import 'package:mascotas/model/pet.dart';
+import 'package:mascotas/navigation/navigation.dart';
 import 'package:mascotas/widget/avatar.dart';
 import 'package:mascotas/widget/pets_divider.dart';
 import 'package:mascotas/widget/pets_scaffold.dart';
@@ -51,8 +52,33 @@ class Pets extends StatelessWidget {
       child: ListView.separated(
         itemBuilder: (BuildContext context, int index) {
           final Pet pet = pets[index];
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
+          return PetBasicInfo(pet: pet);
+        },
+        separatorBuilder: (BuildContext context, int index) =>
+            const PetsDivider(),
+        itemCount: pets.length,
+      ),
+    );
+  }
+}
+
+class PetBasicInfo extends StatelessWidget {
+  final Pet pet;
+
+  const PetBasicInfo({
+    super.key,
+    required this.pet,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigation.goToPetScreen(context: context, id: pet.id),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Expanded(
+          child: Container(
+            color: Colors.transparent,
             child: Row(
               children: [
                 Avatar.avatarSmall(photo: pet.photo),
@@ -66,17 +92,20 @@ class Pets extends StatelessWidget {
                       info: pet.name,
                       icon: Icons.pets,
                     ),
-                    PetInfo(info: pet.ageToString(), icon: Icons.access_time),
-                    PetInfo(info: pet.weightToString(), icon: Icons.scale)
+                    PetInfo(
+                      info: pet.ageToString(),
+                      icon: Icons.access_time,
+                    ),
+                    PetInfo(
+                      info: pet.weightToString(),
+                      icon: Icons.scale,
+                    )
                   ],
                 ),
               ],
             ),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) =>
-            const PetsDivider(),
-        itemCount: pets.length,
+          ),
+        ),
       ),
     );
   }
