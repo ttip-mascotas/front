@@ -5,6 +5,7 @@ import 'package:mascotas/bloc/pets_bloc.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/navigation/navigation.dart';
 import 'package:mascotas/widget/avatar.dart';
+import 'package:mascotas/widget/pet_registration_form.dart';
 import 'package:mascotas/widget/pets_divider.dart';
 import 'package:mascotas/widget/pets_scaffold.dart';
 
@@ -13,27 +14,47 @@ class PetsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final purple = Colors.purple.shade200;
+
     return PetsScaffold(
-        title: 'Mis Mascotas',
-        body: BlocBuilder<PetsCubit, BlocState>(
-          builder: (BuildContext context, BlocState state) {
-            switch (state) {
-              case Error():
-                return Container(
-                  padding: const EdgeInsets.all(20),
-                  child: Row(
-                    children: [
-                      Flexible(child: Text(state.message)),
-                    ],
-                  ),
-                );
-              case Loaded():
-                return Pets(pets: state.value);
-              default:
-                return const Center(child: CircularProgressIndicator());
-            }
-          },
-        ));
+      title: 'Mis Mascotas',
+      body: BlocBuilder<PetsCubit, BlocState>(
+        builder: (BuildContext context, BlocState state) {
+          switch (state) {
+            case Error():
+              return Container(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  children: [
+                    Flexible(child: Text(state.message)),
+                  ],
+                ),
+              );
+            case Loaded():
+              return Pets(pets: state.value);
+            default:
+              return const Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: purple,
+        onPressed: () => openPetRegistrationModal(context),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  void openPetRegistrationModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        showDragHandle: true,
+        useSafeArea: true,
+        builder: (BuildContext context) => const PetRegistrationForm());
   }
 }
 
