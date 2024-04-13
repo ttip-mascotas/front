@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
 import 'package:mascotas/datasource/pets_datasource.dart';
@@ -18,6 +19,7 @@ class PetCubit extends Cubit<BlocState> {
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));
     } catch (error) {
+      debugPrint(error.toString());
       emit(Error(message: "Ocurrió un error inesperado"));
     }
   }
@@ -35,7 +37,7 @@ class PetCubit extends Cubit<BlocState> {
           observations: observations);
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
-        final pet = currentState.value as Pet;
+        final Pet pet = currentState.value;
         emit(Loading());
         final medicalVisitFromResponse =
             await petsDatasource.addMedicalVisit(medicalVisit, pet.id);
@@ -45,6 +47,7 @@ class PetCubit extends Cubit<BlocState> {
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));
     } catch (error) {
+      debugPrint(error.toString());
       emit(Error(message: "Ocurrió un error inesperado"));
     }
   }

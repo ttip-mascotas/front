@@ -49,7 +49,7 @@ class PetsCubit extends Cubit<BlocState> {
       );
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
-        final pets = currentState.value as List<Pet>;
+        final List<Pet> pets = currentState.value;
 
         emit(Loading());
         final petResponse = await petsDatasource.addPet(pet);
@@ -59,6 +59,7 @@ class PetsCubit extends Cubit<BlocState> {
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));
     } catch (error) {
+      debugPrint(error.toString());
       emit(Error(message: "Ocurrió un error inesperado"));
     }
   }
