@@ -38,9 +38,7 @@ class PetsCubit extends Cubit<BlocState> {
     try {
       final pet = Pet(
         name: name,
-        photo:
-            "iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAFUlEQVR42mNk+M9Qz0AEYBxVSF+FAAhKDveksOjmAAAAAElFTkSuQmCC",
-        //photo,
+        photo: photo,
         weight: weight,
         birthdate: formatStringToDateTime(birthdate),
         breed: breed,
@@ -61,7 +59,7 @@ class PetsCubit extends Cubit<BlocState> {
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));
     } catch (error) {
-      emit(Error(message: "Ocurrió un error inesperado!!"));
+      emit(Error(message: "Ocurrió un error inesperado"));
     }
   }
 }

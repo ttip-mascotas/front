@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mascotas/bloc/pets_bloc.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/utils/format.dart';
@@ -16,12 +20,12 @@ class PetRegistrationForm extends StatefulWidget {
 class _PetRegistrationFormState extends State<PetRegistrationForm> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
-  final _photoController = TextEditingController();
   final _birthdateController = TextEditingController();
   final _breedController = TextEditingController();
   final _furController = TextEditingController();
   double _weight = 8;
   PetSex _sex = PetSex.female;
+  String _photo = "";
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +116,14 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
                   controller: _furController,
                   validator: emptyFieldValidator,
                 ),
-                const InputTitle(
-                  title: "Foto",
-                ),
-                TextFormField(
-                  controller: _photoController,
-                  validator: emptyFieldValidator,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: ElevatedButton(
+                      onPressed: selectPhoto,
+                      child: const Text(
+                        "Seleccionar foto",
+                        style: TextStyle(color: Colors.white),
+                      )),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -150,12 +156,28 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
     }
   }
 
+  void selectPhoto() async {
+    final selectedPhoto =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if (selectedPhoto == null) {
+      return;
+    }
+
+    final photo = File(selectedPhoto.path).readAsBytesSync();
+    final encodedPhoto = base64Encode(photo);
+
+    setState(() {
+      _photo = encodedPhoto;
+    });
+  }
+
   void savePet() {
     if (_formKey.currentState!.validate()) {
       try {
         context.read<PetsCubit>().addPet(
               name: _nameController.text,
-              photo: _photoController.text,
+              photo: _photo,
               weight: _weight,
               birthdate: _birthdateController.text,
               breed: _breedController.text,
