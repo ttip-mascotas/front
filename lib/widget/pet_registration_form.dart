@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/pets_bloc.dart';
+import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/utils/format.dart';
 import 'package:mascotas/utils/validator.dart';
 import 'package:mascotas/widget/input_title.dart';
@@ -18,10 +18,10 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
   final _nameController = TextEditingController();
   final _photoController = TextEditingController();
   final _birthdateController = TextEditingController();
-  final _weightController = TextEditingController();
-  final _sexController = TextEditingController();
   final _breedController = TextEditingController();
   final _furController = TextEditingController();
+  double _weight = 8;
+  PetSex _sex = PetSex.female;
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +47,16 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
                 const InputTitle(
                   title: "Peso",
                 ),
-                TextFormField(
-                  controller: _weightController,
-                  validator: emptyFieldValidator,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                Slider(
+                  value: _weight,
+                  max: 25,
+                  divisions: 25,
+                  label: _weight.round().toString(),
+                  onChanged: (double value) {
+                    setState(() {
+                      _weight = value;
+                    });
+                  },
                 ),
                 const InputTitle(
                   title: "Fecha de Nacimiento",
@@ -67,9 +70,33 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
                 const InputTitle(
                   title: "Sexo",
                 ),
-                TextFormField(
-                  controller: _sexController,
-                  validator: emptyFieldValidator,
+                Column(
+                  children: [
+                    ListTile(
+                      title: const Text('Hembra'),
+                      leading: Radio<PetSex>(
+                        value: PetSex.female,
+                        groupValue: _sex,
+                        onChanged: (PetSex? value) {
+                          setState(() {
+                            _sex = value!;
+                          });
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text('Macho'),
+                      leading: Radio<PetSex>(
+                        value: PetSex.male,
+                        groupValue: _sex,
+                        onChanged: (PetSex? value) {
+                          setState(() {
+                            _sex = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 const InputTitle(
                   title: "Raza",
@@ -129,11 +156,11 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
         context.read<PetsCubit>().addPet(
               name: _nameController.text,
               photo: _photoController.text,
-              weight: double.parse(_weightController.text),
+              weight: _weight,
               birthdate: _birthdateController.text,
               breed: _breedController.text,
               fur: _furController.text,
-              sex: _sexController.text,
+              sex: _sex.name.toUpperCase(),
             );
         Navigator.pop(context);
       } catch (error) {
