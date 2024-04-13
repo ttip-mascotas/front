@@ -48,6 +48,17 @@ class Pet extends Equatable {
     return [];
   }
 
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'weight': weight,
+        'photo': photo,
+        'birthdate': birthdate.toIso8601String(),
+        'breed': breed,
+        'fur': fur,
+        'sex': sex,
+      };
+
   String birthdateToString() {
     return formatDateToString(birthdate);
   }
@@ -83,6 +94,11 @@ class Pet extends Equatable {
 }
 
 final Map<String, String> typeOfSex = {
-  'FEMALE' : 'Hembra',
-  'MALE': 'Macho'
+  PetSex.female.name.toUpperCase(): 'Hembra',
+  PetSex.male.name.toUpperCase(): 'Macho',
 };
+
+enum PetSex {
+  female,
+  male,
+}

@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/pet_bloc.dart';
 import 'package:mascotas/utils/format.dart';
 import 'package:mascotas/utils/validator.dart';
-
-import 'input_title.dart';
+import 'package:mascotas/widget/input_title.dart';
 
 class MedicalVisitRegistrationForm extends StatefulWidget {
   const MedicalVisitRegistrationForm({super.key});
@@ -101,11 +100,11 @@ class _MedicalVisitRegistrationFormState
     if (_formKey.currentState!.validate()) {
       try {
         context.read<PetCubit>().addMedicalVisit(
-          specialist: _specialistController.text,
-          address: _addressController.text,
-          date: _dateController.text,
-          observations: _observationsController.text,
-        );
+              specialist: _specialistController.text,
+              address: _addressController.text,
+              date: _dateController.text,
+              observations: _observationsController.text,
+            );
         Navigator.pop(context);
       } catch (error) {
         Navigator.pop(context);

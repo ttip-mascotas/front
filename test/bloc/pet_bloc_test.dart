@@ -9,6 +9,7 @@ import 'package:mascotas/datasource/pets_datasource.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/utils/format.dart';
 import 'package:mockito/mockito.dart';
+
 import '../datasource/mocks.dart';
 import '../datasource/pets_datasource_test.mocks.dart';
 
@@ -45,17 +46,15 @@ void main() {
         mockApi.get(
           any,
         ),
-      ).thenAnswer((_) async => throw Exception("Algo salio mal"));
+      ).thenAnswer((_) async => throw Exception("Algo salió mal"));
     },
     build: () => PetCubit(petsDatasource: petsDataSource),
     act: (cubit) => cubit.getPet(petId),
-    expect: () => [
-      Error(message: "Ocurrio un error inesperado")
-    ],
+    expect: () => [Error(message: "Ocurrió un error inesperado")],
   );
 
   blocTest(
-    "Al registrar una visita medica en una mascota con el id dado, obtengo ese registro",
+    "Al registrar una visita médica en una mascota con el id dado, obtengo ese registro",
     setUp: () {
       when(
         mockApi.get(
@@ -85,7 +84,7 @@ void main() {
   );
 
   blocTest(
-    "Al registrar una visita medica en una mascota con el id dado algo sale mal y obtengo un error",
+    "Al registrar una visita médica en una mascota con el id dado algo sale mal y obtengo un error",
     setUp: () {
       when(
         mockApi.get(
@@ -96,7 +95,7 @@ void main() {
       when(
         mockApi.post("/pets/$petId/medical-records",
             body: medicalVisit.toJson()),
-      ).thenAnswer((_) async => throw Exception("Algo salio mal"));
+      ).thenAnswer((_) async => throw Exception("Algo salió mal"));
     },
     build: () => PetCubit(petsDatasource: petsDataSource)..getPet(petId),
     act: (cubit) async {
@@ -110,7 +109,7 @@ void main() {
     expect: () => [
       Loaded(value: pet),
       Loading(),
-      Error(message: "Ocurrio un error inesperado"),
+      Error(message: "Ocurrió un error inesperado"),
     ],
   );
 }

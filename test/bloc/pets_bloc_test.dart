@@ -22,7 +22,7 @@ void main() {
   });
 
   blocTest(
-    "Al buscar todas las mascotas obtengo un listado con su informacion basica",
+    "Al buscar todas las mascotas obtengo un listado con su información básica",
     setUp: () {
       when(
         mockApi.get(
@@ -44,12 +44,10 @@ void main() {
         mockApi.get(
           any,
         ),
-      ).thenAnswer((_) async => throw Exception("Algo salio mal"));
+      ).thenAnswer((_) async => throw Exception("Algo salió mal"));
     },
     build: () => PetsCubit(petsDatasource: petsDataSource),
     act: (cubit) => cubit.getPets(),
-    expect: () => [
-      Error(message: "Ocurrio un error inesperado")
-    ],
+    expect: () => [Error(message: "Ocurrió un error inesperado")],
   );
 }

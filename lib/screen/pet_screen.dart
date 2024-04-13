@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
 import 'package:mascotas/bloc/pet_bloc.dart';
+import 'package:mascotas/widget/medical_visit_registration_form.dart';
 import 'package:mascotas/widget/pet_detail.dart';
 import 'package:mascotas/widget/pets_scaffold.dart';
-
-import '../widget/medical_visit_registration_form.dart';
 
 class PetScreen extends StatelessWidget {
   final int id;
@@ -18,6 +17,7 @@ class PetScreen extends StatelessWidget {
     context.read<PetCubit>().getPet(id);
 
     return PetsScaffold(
+      title: "Historial Médico",
       body: const PetDetails(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: purple,
@@ -27,7 +27,6 @@ class PetScreen extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      title: "Historial Médico",
     );
   }
 
