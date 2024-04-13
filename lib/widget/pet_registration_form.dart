@@ -70,31 +70,31 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
                 const InputTitle(
                   title: "Sexo",
                 ),
-                Column(
+                Row(
                   children: [
-                    ListTile(
-                      title: const Text('Hembra'),
-                      leading: Radio<PetSex>(
-                        value: PetSex.female,
-                        groupValue: _sex,
-                        onChanged: (PetSex? value) {
-                          setState(() {
-                            _sex = value!;
-                          });
-                        },
-                      ),
+                    Radio<PetSex>(
+                      value: PetSex.female,
+                      groupValue: _sex,
+                      onChanged: (PetSex? value) {
+                        setState(() {
+                          _sex = value!;
+                        });
+                      },
                     ),
-                    ListTile(
-                      title: const Text('Macho'),
-                      leading: Radio<PetSex>(
-                        value: PetSex.male,
-                        groupValue: _sex,
-                        onChanged: (PetSex? value) {
-                          setState(() {
-                            _sex = value!;
-                          });
-                        },
-                      ),
+                    Expanded(
+                      child: Text(typeOfSex[PetSex.female.name.toUpperCase()]!),
+                    ),
+                    Radio<PetSex>(
+                      value: PetSex.male,
+                      groupValue: _sex,
+                      onChanged: (PetSex? value) {
+                        setState(() {
+                          _sex = value!;
+                        });
+                      },
+                    ),
+                    Expanded(
+                      child: Text(typeOfSex[PetSex.male.name.toUpperCase()]!),
                     ),
                   ],
                 ),
