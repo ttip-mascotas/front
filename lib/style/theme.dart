@@ -22,7 +22,7 @@ final elevatedButtonTheme = ElevatedButtonThemeData(
 final inputDecorationTheme = InputDecorationTheme(
   filled: true,
   fillColor: Colors.white,
-  contentPadding: const EdgeInsets.all(16),
+  contentPadding: const EdgeInsets.all(12),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(10),
   ),

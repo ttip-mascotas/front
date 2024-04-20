@@ -29,7 +29,7 @@ class Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var image = MemoryImage(base64Decode(photo));
+    var image = photo.isNotEmpty ? MemoryImage(base64Decode(photo)) : null;
 
     return CircleAvatar(
       backgroundImage: image,

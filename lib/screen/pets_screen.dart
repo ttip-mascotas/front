@@ -97,34 +97,32 @@ class PetBasicInfo extends StatelessWidget {
       onTap: () => Navigation.goToPetScreen(context: context, id: pet.id),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Expanded(
-          child: Container(
-            color: Colors.transparent,
-            child: Row(
-              children: [
-                Avatar.avatarSmall(photo: pet.photo),
-                const SizedBox(
-                  width: 8,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    PetInfo(
-                      info: pet.name,
-                      icon: Icons.pets,
-                    ),
-                    PetInfo(
-                      info: pet.ageToString(),
-                      icon: Icons.access_time,
-                    ),
-                    PetInfo(
-                      info: pet.weightToString(),
-                      icon: Icons.scale,
-                    )
-                  ],
-                ),
-              ],
-            ),
+        child: Container(
+          color: Colors.transparent,
+          child: Row(
+            children: [
+              Avatar.avatarSmall(photo: pet.photo),
+              const SizedBox(
+                width: 8,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PetInfo(
+                    info: pet.name,
+                    icon: Icons.pets,
+                  ),
+                  PetInfo(
+                    info: pet.ageToString(),
+                    icon: Icons.access_time,
+                  ),
+                  PetInfo(
+                    info: pet.weightToString(),
+                    icon: Icons.scale,
+                  )
+                ],
+              ),
+            ],
           ),
         ),
       ),

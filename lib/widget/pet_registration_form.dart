@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +7,10 @@ import 'package:mascotas/bloc/pets_bloc.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/utils/format.dart';
 import 'package:mascotas/utils/validator.dart';
+import 'package:mascotas/widget/avatar_selector.dart';
 import 'package:mascotas/widget/input_title.dart';
+import 'package:mascotas/widget/sex_input.dart';
+import 'package:mascotas/widget/text_form_field_with_title.dart';
 
 class PetRegistrationForm extends StatefulWidget {
   const PetRegistrationForm({super.key});
@@ -41,89 +43,78 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const InputTitle(
-                  title: "Nombre",
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    AvatarSelector(photo: _photo, selectPhoto: selectPhoto,),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Expanded(
+                      child: TextFormFieldWithTitle(
+                        nameController: _nameController,
+                        title: "Nombre",
+                        validator: emptyFieldValidator,
+                      ),
+                    ),
+                  ],
                 ),
-                TextFormField(
-                  controller: _nameController,
-                  validator: emptyFieldValidator,
-                ),
+                const SizedBox(height: 8,),
                 const InputTitle(
                   title: "Peso",
                 ),
-                Slider(
-                  value: _weight,
-                  max: 25,
-                  divisions: 25,
-                  label: _weight.round().toString(),
-                  onChanged: (double value) {
-                    setState(() {
-                      _weight = value;
-                    });
-                  },
+                Row(
+                  children: [
+                    Container(
+                        width: 50,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.primary,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(50),
+                          ),
+                        ),
+                        child: Center(
+                            child: Text(
+                          '${_weight.round()} kg',
+                          style: const TextStyle(color: Colors.white),
+                        ))),
+                    Expanded(
+                      child: Slider(
+                        value: _weight,
+                        max: 25,
+                        divisions: 25,
+                        label: _weight.round().toString(),
+                        onChanged: (double value) {
+                          setState(() {
+                            _weight = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                const InputTitle(
+                TextFormFieldWithTitle(
+                  nameController: _birthdateController,
                   title: "Fecha de Nacimiento",
-                ),
-                TextFormField(
-                  controller: _birthdateController,
                   validator: emptyFieldValidator,
-                  readOnly: true,
-                  onTap: selectDate,
                 ),
                 const InputTitle(
                   title: "Sexo",
                 ),
-                Row(
-                  children: [
-                    Radio<PetSex>(
-                      value: PetSex.female,
-                      groupValue: _sex,
-                      onChanged: (PetSex? value) {
-                        setState(() {
-                          _sex = value!;
-                        });
-                      },
-                    ),
-                    Expanded(
-                      child: Text(typeOfSex[PetSex.female.name.toUpperCase()]!),
-                    ),
-                    Radio<PetSex>(
-                      value: PetSex.male,
-                      groupValue: _sex,
-                      onChanged: (PetSex? value) {
-                        setState(() {
-                          _sex = value!;
-                        });
-                      },
-                    ),
-                    Expanded(
-                      child: Text(typeOfSex[PetSex.male.name.toUpperCase()]!),
-                    ),
-                  ],
+                SexInput(
+                  petSex: _sex,
+                  onSelect: selectSex,
                 ),
-                const InputTitle(
+                TextFormFieldWithTitle(
+                  nameController: _breedController,
                   title: "Raza",
-                ),
-                TextFormField(
-                  controller: _breedController,
                   validator: emptyFieldValidator,
                 ),
-                const InputTitle(
+                TextFormFieldWithTitle(
+                  nameController: _furController,
                   title: "Pelaje",
-                ),
-                TextFormField(
-                  controller: _furController,
                   validator: emptyFieldValidator,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: ElevatedButton(
-                      onPressed: selectPhoto,
-                      child: const Text(
-                        "Seleccionar foto",
-                        style: TextStyle(color: Colors.white),
-                      )),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -192,5 +183,11 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
         );
       }
     }
+  }
+
+  selectSex(PetSex? value) {
+    setState(() {
+      _sex = value!;
+    });
   }
 }
