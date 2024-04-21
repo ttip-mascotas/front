@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
 import 'package:mascotas/bloc/pet_bloc.dart';
-import 'package:mascotas/widget/medical_visit_registration_form.dart';
 import 'package:mascotas/widget/pet_detail.dart';
 import 'package:mascotas/widget/pets_scaffold.dart';
 
@@ -13,31 +12,12 @@ class PetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final purple = Colors.purple.shade200;
     context.read<PetCubit>().getPet(id);
 
-    return PetsScaffold(
+    return const PetsScaffold(
       title: "Historial Médico",
-      body: const PetDetails(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: purple,
-        onPressed: () => openMedicalVisitRegistrationModal(context),
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
-      ),
+      body: PetDetails(),
     );
-  }
-
-  void openMedicalVisitRegistrationModal(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        showDragHandle: true,
-        useSafeArea: true,
-        builder: (BuildContext context) =>
-            const MedicalVisitRegistrationForm());
   }
 }
 
