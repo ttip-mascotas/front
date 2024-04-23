@@ -91,6 +91,8 @@ class Pet extends Equatable {
         sex,
         medicalVisits,
       ];
+
+  void startTreatment(medicalVisitFromResponse) {}
 }
 
 final Map<String, String> typeOfSex = {

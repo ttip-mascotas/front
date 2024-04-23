@@ -6,6 +6,7 @@ import 'package:mascotas/datasource/api.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
+import 'package:mascotas/model/treatment.dart';
 
 class PetsDatasource {
   final Api api;
@@ -84,4 +85,6 @@ class PetsDatasource {
 
   bool _isClientError(Response response) =>
       response.statusCode >= 400 || response.statusCode < 500;
+
+  startTreatment(Treatment treatment, int id) {}
 }

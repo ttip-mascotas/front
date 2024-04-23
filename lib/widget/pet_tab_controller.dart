@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/widget/medical_visit_tab_view.dart';
-import 'package:mascotas/widget/pet_detail.dart';
 import 'package:mascotas/widget/pet_floating_action_button.dart';
+import 'package:mascotas/widget/treatment_form.dart';
 import 'package:mascotas/widget/treatment_tab_view.dart';
 
 import 'analysis_tab_view.dart';
@@ -70,7 +70,7 @@ class _PetTabControllerState extends State<PetTabController> {
         );
       case 2:
         return PetFloatingActionButton(
-          onPressed: () => {},
+          onPressed: () => openTreatmentModal(context),
           icon: Icons.medical_information_outlined,
         );
       default:
@@ -88,6 +88,15 @@ class _PetTabControllerState extends State<PetTabController> {
         showDragHandle: true,
         useSafeArea: true,
         builder: (BuildContext context) =>
-        const MedicalVisitRegistrationForm());
+            const MedicalVisitRegistrationForm());
+  }
+
+  void openTreatmentModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        showDragHandle: true,
+        useSafeArea: true,
+        builder: (BuildContext context) => const TreatmentForm());
   }
 }
