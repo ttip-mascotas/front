@@ -108,6 +108,10 @@ class _TreatmentFormState extends State<TreatmentForm> {
           frequency: _frequency,
         );
         Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text("Se inició el tratamiento de forma exitosa")),
+        );
       } catch (error) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -122,8 +126,8 @@ class _TreatmentFormState extends State<TreatmentForm> {
 
     final DateTime? picked = await showDatePicker(
       context: context,
-      firstDate: DateTime(now.year - 20),
-      lastDate: now,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(now.year + 1),
     );
 
     if (picked != null) {

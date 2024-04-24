@@ -65,6 +65,15 @@ class PetsDatasource {
         message: "Hubo un problema al registrar la visita médica");
   }
 
+  Future<Treatment >startTreatment(Treatment treatment, int id) async {
+    final body = treatment.toJson();
+    final response = await api.post("/pets/$id/treatments", body: body);
+
+    return _manageResponse<Treatment>(response,
+        parseJson: (json) => Treatment.fromJson(json),
+        message: "Hubo un problema al iniciar el tratamiento");
+  }
+
   T _manageResponse<T>(Response response,
       {required T Function(dynamic) parseJson, required String message}) {
     final Map<String, dynamic> json = jsonDecode(response.body);
@@ -73,7 +82,7 @@ class PetsDatasource {
     }
     if (_isClientError(response)) {
       throw DatasourceException(
-        json['message'],
+        json['message'] ?? json['messages'].toString(),
       );
     } else {
       throw DatasourceException(message);
@@ -81,10 +90,8 @@ class PetsDatasource {
   }
 
   bool _isSuccessful(Response response) =>
-      response.statusCode >= 200 || response.statusCode < 300;
+      response.statusCode >= 200 && response.statusCode < 300;
 
   bool _isClientError(Response response) =>
-      response.statusCode >= 400 || response.statusCode < 500;
-
-  startTreatment(Treatment treatment, int id) {}
+      response.statusCode >= 400 && response.statusCode < 500;
 }

@@ -112,4 +112,67 @@ void main() {
       Error(message: "Ocurrió un error inesperado"),
     ],
   );
+
+  blocTest(
+    "Al iniciar un tramamiento para una mascota con el id dado, obtengo ese registro",
+    setUp: () {
+      when(
+        mockApi.get(
+          any,
+        ),
+      ).thenAnswer((_) async => Response(petJson, 200));
+
+      when(
+        mockApi.post("/pets/$petId/treatments", body: treatment.toJson()),
+      ).thenAnswer((_) async => Response(treatmentJson, 200));
+    },
+    build: () => PetCubit(petsDatasource: petsDataSource),
+    act: (cubit) async {
+      await cubit.getPet(petId);
+      return await cubit.startTreatment(
+        medicine: treatment.medicine,
+        startDate: formatDateToString(treatment.startDate),
+        dose: treatment.dose,
+        numberOfTime: treatment.numberOfTime.toString(),
+        frequency: treatment.frequency.toDouble(),
+      );
+    },
+    expect: () => [
+      Loaded(value: petWithTreatment),
+      Loading(),
+      Loaded(value: petWithTreatment),
+    ],
+  );
+
+  blocTest(
+    "Al iniciar un tramamiento para una mascota con el id dado algo sale mal y obtengo un error",
+    setUp: () {
+      when(
+        mockApi.get(
+          any,
+        ),
+      ).thenAnswer((_) async => Response(petJson, 200));
+
+      when(
+        mockApi.post("/pets/$petId/treatments",
+            body: treatment.toJson()),
+      ).thenAnswer((_) async => throw Exception("Algo salió mal"));
+    },
+    build: () => PetCubit(petsDatasource: petsDataSource),
+    act: (cubit) async {
+      await cubit.getPet(petId);
+      return await cubit.startTreatment(
+        medicine: treatment.medicine,
+        startDate: formatDateToString(treatment.startDate),
+        dose: treatment.dose,
+        numberOfTime: treatment.numberOfTime.toString(),
+        frequency: treatment.frequency.toDouble(),
+      );
+    },
+    expect: () => [
+      Loaded(value: pet),
+      Loading(),
+      Error(message: "Ocurrió un error inesperado"),
+    ],
+  );
 }

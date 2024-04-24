@@ -106,6 +106,10 @@ class _MedicalVisitRegistrationFormState
               observations: _observationsController.text,
             );
         Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text("Se agregó la visita médica de forma exitosa")),
+        );
       } catch (error) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(

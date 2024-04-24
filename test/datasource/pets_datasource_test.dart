@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mascotas/datasource/api.dart';
 import 'package:mascotas/datasource/pets_datasource.dart';
-import 'package:mascotas/model/medical_visit.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -40,12 +39,6 @@ void main() {
   test("Record pet medical visit", () async {
     final PetsDatasource petsDataSource = PetsDatasource(api: mockApi);
 
-    final medicalVisit = MedicalVisit(
-        specialist: "Mariana",
-        address: "Alsina 1309, Quilmes",
-        date: DateTime(2023, 03, 30),
-        observations: "observations");
-
     const petId = 1;
 
     when(mockApi.post("/pets/$petId/medical-records",
@@ -56,11 +49,11 @@ void main() {
         await petsDataSource.addMedicalVisit(medicalVisit, petId);
 
     expect(medicalVisitResponse.id, 1);
-    expect(medicalVisitResponse.specialist, medicalVisitResponse.specialist);
-    expect(medicalVisitResponse.date, medicalVisitResponse.date);
+    expect(medicalVisitResponse.specialist, medicalVisit.specialist);
+    expect(medicalVisitResponse.date, medicalVisit.date);
     expect(
-        medicalVisitResponse.observations, medicalVisitResponse.observations);
-    expect(medicalVisitResponse.address, medicalVisitResponse.address);
+        medicalVisitResponse.observations, medicalVisit.observations);
+    expect(medicalVisitResponse.address, medicalVisit.address);
   });
 
   test("Get all pets", () async {
@@ -91,5 +84,26 @@ void main() {
     expect(petResponse.breed, "San Bernardo");
     expect(petResponse.fur, "Largo");
     expect(petResponse.sex, "Hembra");
+  });
+
+  test("Start a treatment for a pet", () async {
+    final PetsDatasource petsDataSource = PetsDatasource(api: mockApi);
+
+    const petId = 1;
+
+    when(mockApi.post("/pets/$petId/treatments",
+        body: treatment.toJson()))
+        .thenAnswer((_) async => Response(treatmentJson, 200));
+
+    final treatmentResponse =
+    await petsDataSource.startTreatment(treatment, petId);
+
+    expect(treatmentResponse.id, 1);
+    expect(treatmentResponse.medicine, treatment.medicine);
+    expect(treatmentResponse.startDate, treatment.startDate);
+    expect(
+        treatmentResponse.dose, treatment.dose);
+    expect(treatmentResponse.numberOfTime, treatment.numberOfTime);
+    expect(treatmentResponse.frequency, treatment.frequency);
   });
 }

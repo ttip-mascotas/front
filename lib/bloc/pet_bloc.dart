@@ -66,15 +66,21 @@ class PetCubit extends Cubit<BlocState> {
       numberOfTime: int.parse(numberOfTime),
       frequency: frequency.round(),
     );
-
-    if (state is Loaded) {
-      final Loaded currentState = state as Loaded;
-      final Pet pet = currentState.value;
-      emit(Loading());
-      final medicalVisitFromResponse =
-          await petsDatasource.startTreatment(treatment, pet.id);
-      pet.startTreatment(medicalVisitFromResponse);
-      emit(Loaded(value: pet));
+    try {
+      if (state is Loaded) {
+        final Loaded currentState = state as Loaded;
+        final Pet pet = currentState.value;
+        emit(Loading());
+        final medicalVisitFromResponse =
+        await petsDatasource.startTreatment(treatment, pet.id);
+        pet.startTreatment(medicalVisitFromResponse);
+        emit(Loaded(value: pet));
+      }
+    } on DatasourceException catch (error) {
+      emit(Error(message: error.message));
+    } catch (error) {
+      debugPrint(error.toString());
+      emit(Error(message: "Ocurrió un error inesperado"));
     }
   }
 }
