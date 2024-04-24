@@ -71,9 +71,9 @@ class PetCubit extends Cubit<BlocState> {
         final Loaded currentState = state as Loaded;
         final Pet pet = currentState.value;
         emit(Loading());
-        final medicalVisitFromResponse =
+        final treatmentFromResponse =
         await petsDatasource.startTreatment(treatment, pet.id);
-        pet.startTreatment(medicalVisitFromResponse);
+        pet.startTreatment(treatmentFromResponse);
         emit(Loaded(value: pet));
       }
     } on DatasourceException catch (error) {
