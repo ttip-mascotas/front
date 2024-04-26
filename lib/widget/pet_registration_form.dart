@@ -10,6 +10,7 @@ import 'package:mascotas/utils/validator.dart';
 import 'package:mascotas/widget/avatar_selector.dart';
 import 'package:mascotas/widget/input_title.dart';
 import 'package:mascotas/widget/sex_input.dart';
+import 'package:mascotas/widget/slider_with_number.dart';
 import 'package:mascotas/widget/text_form_field_with_title.dart';
 
 class PetRegistrationForm extends StatefulWidget {
@@ -46,7 +47,10 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    AvatarSelector(photo: _photo, selectPhoto: selectPhoto,),
+                    AvatarSelector(
+                      photo: _photo,
+                      selectPhoto: selectPhoto,
+                    ),
                     const SizedBox(
                       width: 16,
                     ),
@@ -59,40 +63,22 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 8,),
+                const SizedBox(
+                  height: 8,
+                ),
                 const InputTitle(
                   title: "Peso",
                 ),
-                Row(
-                  children: [
-                    Container(
-                        width: 50,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primary,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(50),
-                          ),
-                        ),
-                        child: Center(
-                            child: Text(
-                          '${_weight.round()} kg',
-                          style: const TextStyle(color: Colors.white),
-                        ))),
-                    Expanded(
-                      child: Slider(
-                        value: _weight,
-                        max: 25,
-                        divisions: 25,
-                        label: _weight.round().toString(),
-                        onChanged: (double value) {
-                          setState(() {
-                            _weight = value;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
+                SliderWithNumber(
+                  value: _weight,
+                  max: 25,
+                  min: 0.1,
+                  divisions: 25,
+                  onChanged: (double value) {
+                    setState(() {
+                      _weight = value;
+                    });
+                  }, text: '${_weight.round()} kg',
                 ),
                 TextFormFieldWithTitle(
                   nameController: _birthdateController,

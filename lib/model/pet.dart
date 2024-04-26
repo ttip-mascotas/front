@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:mascotas/model/medical_visit.dart';
+import 'package:mascotas/model/treatment.dart';
 import 'package:mascotas/utils/format.dart';
 
 class Pet extends Equatable {
@@ -13,6 +14,7 @@ class Pet extends Equatable {
   final String fur;
   final String sex;
   final List<MedicalVisit> medicalVisits;
+  final List<Treatment> treatments;
 
   Pet({
     required this.id,
@@ -25,7 +27,9 @@ class Pet extends Equatable {
     required this.fur,
     required this.sex,
     List<MedicalVisit>? medicalVisits,
-  }) : medicalVisits = medicalVisits ?? [];
+    List<Treatment>? treatments,
+  })  : medicalVisits = medicalVisits ?? [],
+        treatments = [];
 
   Pet.fromJson(Map<String, dynamic> json)
       : id = json["id"],
@@ -37,7 +41,8 @@ class Pet extends Equatable {
         breed = json["breed"],
         fur = json["fur"],
         sex = typeOfSex[json["sex"]] ?? '',
-        medicalVisits = _medicalVisitsFromJson(json["medicalVisits"]);
+        medicalVisits = _medicalVisitsFromJson(json["medicalVisits"]),
+        treatments = [];
 
   static List<MedicalVisit> _medicalVisitsFromJson(List<dynamic>? json) {
     if (json != null) {
@@ -76,6 +81,10 @@ class Pet extends Equatable {
 
   void addMedicalVisit(MedicalVisit medicalVisit) {
     medicalVisits.add(medicalVisit);
+  }
+
+  void startTreatment(Treatment treatment) {
+    treatments.add(treatment);
   }
 
   @override
