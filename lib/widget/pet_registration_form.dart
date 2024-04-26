@@ -84,6 +84,8 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
                   nameController: _birthdateController,
                   title: "Fecha de Nacimiento",
                   validator: emptyFieldValidator,
+                  readOnly: true,
+                  onTap: selectDate,
                 ),
                 const InputTitle(
                   title: "Sexo",
@@ -141,11 +143,8 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
       return;
     }
 
-    final photo = File(selectedPhoto.path).readAsBytesSync();
-    final encodedPhoto = base64Encode(photo);
-
     setState(() {
-      _photo = encodedPhoto;
+      _photo = selectedPhoto.path;
     });
   }
 

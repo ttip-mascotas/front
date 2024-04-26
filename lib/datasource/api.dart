@@ -30,4 +30,18 @@ class Api {
     }
     return "http://localhost:8080";
   }
+
+  Future<http.Response> upload(String path, {required File file, required String field}) async {
+    final request = http.MultipartRequest('POST', _getUrl(path));
+    request.files.add(
+        http.MultipartFile(
+            field,
+            file.readAsBytes().asStream(),
+            file.lengthSync(),
+            filename: file.path.split("/").last
+        )
+    );
+    final response = await request.send();
+    return http.Response.fromStream(response);
+  }
 }

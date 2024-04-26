@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
@@ -72,9 +74,25 @@ class PetCubit extends Cubit<BlocState> {
         final Pet pet = currentState.value;
         emit(Loading());
         final treatmentFromResponse =
-        await petsDatasource.startTreatment(treatment, pet.id);
+            await petsDatasource.startTreatment(treatment, pet.id);
         pet.startTreatment(treatmentFromResponse);
         emit(Loaded(value: pet));
+      }
+    } on DatasourceException catch (error) {
+      emit(Error(message: error.message));
+    } catch (error) {
+      debugPrint(error.toString());
+      emit(Error(message: "Ocurrió un error inesperado"));
+    }
+  }
+
+  void uploadAnalysis(File file) async {
+    try {
+      if (state is Loaded) {
+        final Loaded currentState = state as Loaded;
+        final Pet pet = currentState.value;
+        emit(Loading());
+        await petsDatasource.uploadAnalysis(file, pet.id);
       }
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));

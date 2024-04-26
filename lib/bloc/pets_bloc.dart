@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
@@ -36,22 +38,25 @@ class PetsCubit extends Cubit<BlocState> {
       required String fur,
       required String sex}) async {
     try {
-      final pet = Pet(
-        name: name,
-        photo: photo,
-        weight: weight,
-        birthdate: formatStringToDateTime(birthdate),
-        breed: breed,
-        fur: fur,
-        sex: sex,
-        id: 0,
-        age: 0,
-      );
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
         final List<Pet> pets = currentState.value;
-
         emit(Loading());
+
+        final String url = await petsDatasource.uploadAvatar(File(photo));
+
+        final pet = Pet(
+          name: name,
+          photo: url,
+          weight: weight,
+          birthdate: formatStringToDateTime(birthdate),
+          breed: breed,
+          fur: fur,
+          sex: sex,
+          id: 0,
+          age: 0,
+        );
+
         final petResponse = await petsDatasource.addPet(pet);
         pets.add(petResponse);
         emit(Loaded(value: pets));

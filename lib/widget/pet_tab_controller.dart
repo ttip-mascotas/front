@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mascotas/bloc/pet_bloc.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/widget/medical_visit_tab_view.dart';
 import 'package:mascotas/widget/pet_floating_action_button.dart';
@@ -65,7 +70,7 @@ class _PetTabControllerState extends State<PetTabController> {
     switch (_index) {
       case 1:
         return PetFloatingActionButton(
-          onPressed: () => {},
+          onPressed: uploadPDF,
           icon: Icons.save,
         );
       case 2:
@@ -98,5 +103,14 @@ class _PetTabControllerState extends State<PetTabController> {
         showDragHandle: true,
         useSafeArea: true,
         builder: (BuildContext context) => const TreatmentForm());
+  }
+
+  void uploadPDF() {
+    FilePicker.platform.pickFiles().then((result) {
+      if (result != null) {
+        File file = File(result.files.single.path!);
+        context.read<PetCubit>().uploadAnalysis(file);
+      }
+    });
   }
 }
