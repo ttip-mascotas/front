@@ -43,7 +43,10 @@ class PetsCubit extends Cubit<BlocState> {
         final List<Pet> pets = currentState.value;
         emit(Loading());
 
-        final String url = await petsDatasource.uploadAvatar(File(photo));
+        String url = "";
+        if (photo.isNotEmpty) {
+          url = await petsDatasource.uploadAvatar(File(photo));
+        }
 
         final pet = Pet(
           name: name,
