@@ -66,7 +66,7 @@ class PetsDatasource {
         message: "Hubo un problema al registrar la visita médica");
   }
 
-  Future<Treatment >startTreatment(Treatment treatment, int id) async {
+  Future<Treatment> startTreatment(Treatment treatment, int id) async {
     final body = treatment.toJson();
     final response = await api.post("/pets/$id/treatments", body: body);
 
@@ -76,7 +76,8 @@ class PetsDatasource {
   }
 
   Future<String> uploadAnalysis(File file, int petId) async {
-    final response = await api.upload("/pets/$petId/analyses", file: file, field: 'analysis');
+    final response = await api.upload("/pets/$petId/analyses",
+        file: file, field: 'analysis');
 
     return _manageResponse<String>(response,
         parseJson: (json) => json["url"],
@@ -84,7 +85,8 @@ class PetsDatasource {
   }
 
   Future<String> uploadAvatar(File file) async {
-    final response = await api.upload("/pets/avatars", file: file, field: 'avatars');
+    final response =
+        await api.upload("/pets/avatars", file: file, field: 'avatar');
 
     return _manageResponse<String>(response,
         parseJson: (json) => json["url"],
