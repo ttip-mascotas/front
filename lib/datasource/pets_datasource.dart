@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart';
 import 'package:mascotas/datasource/api.dart';
@@ -72,6 +73,22 @@ class PetsDatasource {
     return _manageResponse<Treatment>(response,
         parseJson: (json) => Treatment.fromJson(json),
         message: "Hubo un problema al iniciar el tratamiento");
+  }
+
+  Future<String> uploadAnalysis(File file, int petId) async {
+    final response = await api.upload("/pets/$petId/analyses", file: file, field: 'analysis');
+
+    return _manageResponse<String>(response,
+        parseJson: (json) => json["url"],
+        message: "Hubo un problema al guardar el archivo");
+  }
+
+  Future<String> uploadAvatar(File file) async {
+    final response = await api.upload("/pets/avatars", file: file, field: 'avatars');
+
+    return _manageResponse<String>(response,
+        parseJson: (json) => json["url"],
+        message: "Hubo un problema al guardar la foto de tu mascota");
   }
 
   T _manageResponse<T>(Response response,

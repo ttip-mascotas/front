@@ -22,7 +22,7 @@ class PetDetail extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Avatar.avatarLarge(photo: pet.photo),
+              Avatar.avatarLargeURL(url: pet.photo,),
               PetAttributes(pet: pet),
             ],
           ),

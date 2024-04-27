@@ -101,7 +101,7 @@ class PetBasicInfo extends StatelessWidget {
           color: Colors.transparent,
           child: Row(
             children: [
-              Avatar.avatarSmall(photo: pet.photo),
+              Avatar.avatarSmallURL(url: pet.photo),
               const SizedBox(
                 width: 8,
               ),
