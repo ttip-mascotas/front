@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
 import 'package:mascotas/bloc/pet_bloc.dart';
 import 'package:mascotas/datasource/pets_datasource.dart';
+import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/utils/format.dart';
 import 'package:mockito/mockito.dart';
@@ -78,13 +79,11 @@ void main() {
     },
     expect: () => [
       Loaded(value: petWithMedicalVisits),
-      Loading(),
-      Loaded(value: petWithMedicalVisits),
     ],
   );
 
   blocTest(
-    "Al registrar una visita médica en una mascota con el id dado algo sale mal y obtengo un error",
+    "Al registrar una visita médica en una mascota con el id dado algo sale mal y no se actualiza la mascota",
     setUp: () {
       when(
         mockApi.get(
@@ -106,10 +105,9 @@ void main() {
           date: formatDateToString(medicalVisit.date),
           observations: medicalVisit.observations);
     },
+    errors: () => [isA<DatasourceException>()],
     expect: () => [
       Loaded(value: pet),
-      Loading(),
-      Error(message: "Ocurrió un error inesperado"),
     ],
   );
 
@@ -139,13 +137,11 @@ void main() {
     },
     expect: () => [
       Loaded(value: petWithTreatment),
-      Loading(),
-      Loaded(value: petWithTreatment),
     ],
   );
 
   blocTest(
-    "Al iniciar un tramamiento para una mascota con el id dado algo sale mal y obtengo un error",
+    "Al iniciar un tramamiento para una mascota con el id dado algo sale mal y no se actualiza la mascota",
     setUp: () {
       when(
         mockApi.get(
@@ -169,10 +165,9 @@ void main() {
         frequency: treatment.frequency.toDouble(),
       );
     },
+    errors: () => [isA<DatasourceException>()],
     expect: () => [
       Loaded(value: pet),
-      Loading(),
-      Error(message: "Ocurrió un error inesperado"),
     ],
   );
 }
