@@ -75,12 +75,11 @@ class PetCubit extends Cubit<BlocState> {
     });
   }
 
-  void uploadAnalysis(File file) async {
+  Future<void> uploadAnalysis(File file) async {
     await tryCatchFormException(() async {
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
         final Pet pet = currentState.value;
-        emit(Loading());
         await petsDatasource.uploadAnalysis(file, pet.id);
         emit(Loaded(value: pet));
       }
