@@ -93,6 +93,7 @@ class PetCubit extends Cubit<BlocState> {
         final Pet pet = currentState.value;
         emit(Loading());
         await petsDatasource.uploadAnalysis(file, pet.id);
+        emit(Loaded(value: pet));
       }
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));

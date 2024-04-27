@@ -75,14 +75,12 @@ class PetsDatasource {
         message: "Hubo un problema al iniciar el tratamiento");
   }
 
-  Future<void> uploadAnalysis(File file, int petId) async {
-    //TODO: poner path correcto para subir analisis
-    print(file.path);
-    /*final response = await api.upload("", file: file, field: 'pdf');
+  Future<String> uploadAnalysis(File file, int petId) async {
+    final response = await api.upload("/pets/$petId/analyses", file: file, field: 'analysis');
 
-    return _manageResponse(response,
-        parseJson: (json) {},
-        message: "Hubo un problema al guardar el archivo");*/
+    return _manageResponse<String>(response,
+        parseJson: (json) => json["url"],
+        message: "Hubo un problema al guardar el archivo");
   }
 
   Future<String> uploadAvatar(File file) async {
