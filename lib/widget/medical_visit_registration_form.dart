@@ -20,6 +20,7 @@ class _MedicalVisitRegistrationFormState
   final _addressController = TextEditingController();
   final _observationsController = TextEditingController();
   final _dateController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +70,12 @@ class _MedicalVisitRegistrationFormState
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: ElevatedButton(
                       onPressed: saveMedicalVisit,
-                      child: const Text(
-                        "Registrar",
-                        style: TextStyle(color: Colors.white),
-                      )),
+                      child: _isLoading
+                          ? const CircularProgressIndicator()
+                          : const Text(
+                              "Registrar",
+                              style: TextStyle(color: Colors.white),
+                            )),
                 )
               ],
             ),
@@ -98,6 +101,9 @@ class _MedicalVisitRegistrationFormState
 
   void saveMedicalVisit() {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
       context
           .read<PetCubit>()
           .addMedicalVisit(
@@ -115,8 +121,14 @@ class _MedicalVisitRegistrationFormState
       }).catchError((error) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('No se pudo agregar la visita médica: ${error.message}')),
+          SnackBar(
+              content: Text(
+                  'No se pudo agregar la visita médica: ${error.message}')),
         );
+      }).whenComplete(() {
+        setState(() {
+          _isLoading = false;
+        });
       });
     }
   }

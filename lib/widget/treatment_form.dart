@@ -21,6 +21,7 @@ class _TreatmentFormState extends State<TreatmentForm> {
       TextEditingController();
   double _frequency = 1;
   final _formKey = GlobalKey<FormState>();
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +87,12 @@ class _TreatmentFormState extends State<TreatmentForm> {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: ElevatedButton(
                       onPressed: startTreatment,
-                      child: const Text(
-                        "Guardar",
-                        style: TextStyle(color: Colors.white),
-                      )),
+                      child: _isLoading
+                          ? const CircularProgressIndicator()
+                          : const Text(
+                              "Guardar",
+                              style: TextStyle(color: Colors.white),
+                            )),
                 )
               ],
             ),
@@ -101,6 +104,9 @@ class _TreatmentFormState extends State<TreatmentForm> {
 
   Future<void> startTreatment() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
       context
           .read<PetCubit>()
           .startTreatment(
@@ -119,8 +125,14 @@ class _TreatmentFormState extends State<TreatmentForm> {
       }).catchError((error) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('No se pudo iniciar el tratamiento: ${error.message}')),
+          SnackBar(
+              content:
+                  Text('No se pudo iniciar el tratamiento: ${error.message}')),
         );
+      }).whenComplete(() {
+        setState(() {
+          _isLoading = false;
+        });
       });
     }
   }

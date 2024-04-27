@@ -27,6 +27,7 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
   double _weight = 8;
   PetSex _sex = PetSex.female;
   String _photo = "";
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -107,10 +108,12 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: ElevatedButton(
                       onPressed: savePet,
-                      child: const Text(
-                        "Registrar",
-                        style: TextStyle(color: Colors.white),
-                      )),
+                      child: _isLoading
+                          ? const CircularProgressIndicator()
+                          : const Text(
+                              "Registrar",
+                              style: TextStyle(color: Colors.white),
+                            )),
                 )
               ],
             ),
@@ -149,6 +152,9 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
 
   void savePet() {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
       context
           .read<PetsCubit>()
           .addPet(
@@ -169,8 +175,14 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
       }).catchError((error) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('No se pudo registrar la mascota: ${error.message}')),
+          SnackBar(
+              content:
+                  Text('No se pudo registrar la mascota: ${error.message}')),
         );
+      }).whenComplete(() {
+        setState(() {
+          _isLoading = false;
+        });
       });
     }
   }
