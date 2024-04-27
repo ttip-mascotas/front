@@ -101,7 +101,7 @@ class PetsDatasource {
     }
     if (_isClientError(response)) {
       throw DatasourceException(
-        json['message'] ?? json['messages'].toString(),
+        json['message'] ?? json['messages'].first,
       );
     } else {
       throw DatasourceException(message);

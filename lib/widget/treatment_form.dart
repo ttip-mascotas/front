@@ -17,7 +17,8 @@ class _TreatmentFormState extends State<TreatmentForm> {
   final TextEditingController _medicineController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   final TextEditingController _doseController = TextEditingController();
-  final TextEditingController _numerOfTimesController = TextEditingController();
+  final TextEditingController _numberOfTimesController =
+      TextEditingController();
   double _frequency = 1;
   final _formKey = GlobalKey<FormState>();
 
@@ -25,7 +26,7 @@ class _TreatmentFormState extends State<TreatmentForm> {
   Widget build(BuildContext context) {
     return Padding(
       padding:
-      EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -62,8 +63,8 @@ class _TreatmentFormState extends State<TreatmentForm> {
                   title: "Cantidad",
                 ),
                 TextFormField(
-                  controller: _numerOfTimesController,
-                  validator: emptyFieldValidator,
+                  controller: _numberOfTimesController,
+                  validator: numberGreaterThanZero,
                   keyboardType: TextInputType.number,
                 ),
                 const InputTitle(
@@ -78,7 +79,8 @@ class _TreatmentFormState extends State<TreatmentForm> {
                     setState(() {
                       _frequency = value;
                     });
-                  }, text: '${_frequency.round()} hr',
+                  },
+                  text: '${_frequency.round()} hr',
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -97,27 +99,29 @@ class _TreatmentFormState extends State<TreatmentForm> {
     );
   }
 
-  void startTreatment() {
+  Future<void> startTreatment() async {
     if (_formKey.currentState!.validate()) {
-      try {
-        context.read<PetCubit>().startTreatment(
-          medicine: _medicineController.text,
-          startDate: _dateController.text,
-          dose: _doseController.text,
-          numberOfTime: _numerOfTimesController.text,
-          frequency: _frequency,
-        );
+      context
+          .read<PetCubit>()
+          .startTreatment(
+            medicine: _medicineController.text,
+            startDate: _dateController.text,
+            dose: _doseController.text,
+            numberOfTime: _numberOfTimesController.text,
+            frequency: _frequency,
+          )
+          .then((_) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
               content: Text("Se inició el tratamiento de forma exitosa")),
         );
-      } catch (error) {
+      }).catchError((error) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error.toString())),
+          SnackBar(content: Text('No se pudo iniciar el tratamiento: ${error.message}')),
         );
-      }
+      });
     }
   }
 
@@ -134,5 +138,4 @@ class _TreatmentFormState extends State<TreatmentForm> {
       _dateController.text = formatDateToString(picked);
     }
   }
-
 }

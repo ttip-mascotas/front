@@ -7,6 +7,7 @@ import 'package:mascotas/datasource/pets_datasource.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/utils/format.dart';
+import 'package:mascotas/utils/tryCatchFormException.dart';
 
 class PetsCubit extends Cubit<BlocState> {
   final PetsDatasource petsDatasource;
@@ -37,7 +38,7 @@ class PetsCubit extends Cubit<BlocState> {
       required String breed,
       required String fur,
       required String sex}) async {
-    try {
+    await tryCatchFormException(() async {
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
         final List<Pet> pets = currentState.value;
@@ -64,11 +65,6 @@ class PetsCubit extends Cubit<BlocState> {
         pets.add(petResponse);
         emit(Loaded(value: pets));
       }
-    } on DatasourceException catch (error) {
-      emit(Error(message: error.message));
-    } catch (error) {
-      debugPrint(error.toString());
-      emit(Error(message: "Ocurrió un error inesperado"));
-    }
+    });
   }
 }

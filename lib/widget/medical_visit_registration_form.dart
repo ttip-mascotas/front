@@ -98,24 +98,26 @@ class _MedicalVisitRegistrationFormState
 
   void saveMedicalVisit() {
     if (_formKey.currentState!.validate()) {
-      try {
-        context.read<PetCubit>().addMedicalVisit(
-              specialist: _specialistController.text,
-              address: _addressController.text,
-              date: _dateController.text,
-              observations: _observationsController.text,
-            );
+      context
+          .read<PetCubit>()
+          .addMedicalVisit(
+            specialist: _specialistController.text,
+            address: _addressController.text,
+            date: _dateController.text,
+            observations: _observationsController.text,
+          )
+          .then((_) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
               content: Text("Se agregó la visita médica de forma exitosa")),
         );
-      } catch (error) {
+      }).catchError((error) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error.toString())),
+          SnackBar(content: Text('No se pudo agregar la visita médica: ${error.message}')),
         );
-      }
+      });
     }
   }
 }
