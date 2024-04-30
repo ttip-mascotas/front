@@ -9,6 +9,7 @@ import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/model/treatment.dart';
 import 'package:mascotas/utils/format.dart';
+import 'package:mascotas/utils/tryCatchFormException.dart';
 
 class PetCubit extends Cubit<BlocState> {
   final PetsDatasource petsDatasource;
@@ -32,7 +33,7 @@ class PetCubit extends Cubit<BlocState> {
       required String address,
       required String date,
       required String observations}) async {
-    try {
+    await tryCatchFormException(() async {
       final medicalVisit = MedicalVisit(
           specialist: specialist,
           address: address,
@@ -41,18 +42,12 @@ class PetCubit extends Cubit<BlocState> {
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
         final Pet pet = currentState.value;
-        emit(Loading());
         final medicalVisitFromResponse =
             await petsDatasource.addMedicalVisit(medicalVisit, pet.id);
         pet.addMedicalVisit(medicalVisitFromResponse);
         emit(Loaded(value: pet));
       }
-    } on DatasourceException catch (error) {
-      emit(Error(message: error.message));
-    } catch (error) {
-      debugPrint(error.toString());
-      emit(Error(message: "Ocurrió un error inesperado"));
-    }
+    });
   }
 
   Future<void> startTreatment(
@@ -61,45 +56,33 @@ class PetCubit extends Cubit<BlocState> {
       required String dose,
       required String numberOfTime,
       required double frequency}) async {
-    final treatment = Treatment(
-      medicine: medicine,
-      startDate: formatStringToDateTime(startDate),
-      dose: dose,
-      numberOfTime: int.parse(numberOfTime),
-      frequency: frequency.round(),
-    );
-    try {
+    await tryCatchFormException(() async {
+      final treatment = Treatment(
+        medicine: medicine,
+        startDate: formatStringToDateTime(startDate),
+        dose: dose,
+        numberOfTime: int.parse(numberOfTime),
+        frequency: frequency.round(),
+      );
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
         final Pet pet = currentState.value;
-        emit(Loading());
         final treatmentFromResponse =
             await petsDatasource.startTreatment(treatment, pet.id);
         pet.startTreatment(treatmentFromResponse);
         emit(Loaded(value: pet));
       }
-    } on DatasourceException catch (error) {
-      emit(Error(message: error.message));
-    } catch (error) {
-      debugPrint(error.toString());
-      emit(Error(message: "Ocurrió un error inesperado"));
-    }
+    });
   }
 
-  void uploadAnalysis(File file) async {
-    try {
+  Future<void> uploadAnalysis(File file) async {
+    await tryCatchFormException(() async {
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
         final Pet pet = currentState.value;
-        emit(Loading());
         await petsDatasource.uploadAnalysis(file, pet.id);
         emit(Loaded(value: pet));
       }
-    } on DatasourceException catch (error) {
-      emit(Error(message: error.message));
-    } catch (error) {
-      debugPrint(error.toString());
-      emit(Error(message: "Ocurrió un error inesperado"));
-    }
+    });
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -29,6 +27,7 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
   double _weight = 8;
   PetSex _sex = PetSex.female;
   String _photo = "";
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +77,8 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
                     setState(() {
                       _weight = value;
                     });
-                  }, text: '${_weight.round()} kg',
+                  },
+                  text: '${_weight.round()} kg',
                 ),
                 TextFormFieldWithTitle(
                   nameController: _birthdateController,
@@ -108,10 +108,12 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: ElevatedButton(
                       onPressed: savePet,
-                      child: const Text(
-                        "Registrar",
-                        style: TextStyle(color: Colors.white),
-                      )),
+                      child: _isLoading
+                          ? const CircularProgressIndicator()
+                          : const Text(
+                              "Registrar",
+                              style: TextStyle(color: Colors.white),
+                            )),
                 )
               ],
             ),
@@ -150,23 +152,38 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
 
   void savePet() {
     if (_formKey.currentState!.validate()) {
-      try {
-        context.read<PetsCubit>().addPet(
-              name: _nameController.text,
-              photo: _photo,
-              weight: _weight,
-              birthdate: _birthdateController.text,
-              breed: _breedController.text,
-              fur: _furController.text,
-              sex: _sex.name.toUpperCase(),
-            );
-        Navigator.pop(context);
-      } catch (error) {
+      setState(() {
+        _isLoading = true;
+      });
+      context
+          .read<PetsCubit>()
+          .addPet(
+            name: _nameController.text,
+            photo: _photo,
+            weight: _weight,
+            birthdate: _birthdateController.text,
+            breed: _breedController.text,
+            fur: _furController.text,
+            sex: _sex.name.toUpperCase(),
+          )
+          .then((_) {
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error.toString())),
+          const SnackBar(
+              content: Text("Se registro la mascota de forma exitosa")),
         );
-      }
+      }).catchError((error) {
+        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content:
+                  Text('No se pudo registrar la mascota: ${error.message}')),
+        );
+      }).whenComplete(() {
+        setState(() {
+          _isLoading = false;
+        });
+      });
     }
   }
 

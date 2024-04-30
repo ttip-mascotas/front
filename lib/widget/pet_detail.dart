@@ -1,10 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
-import 'package:mascotas/utils/format.dart';
 import 'package:mascotas/widget/pet_tab_controller.dart';
-import 'package:mascotas/widget/pets_divider.dart';
 import 'avatar.dart';
 
 class PetDetail extends StatelessWidget {

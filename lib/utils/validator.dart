@@ -4,3 +4,10 @@ String? emptyFieldValidator(String? text) {
   }
   return null;
 }
+
+String? numberGreaterThanZero(String? text) {
+  if (text != null && int.parse(text) <= 0) {
+    return "El numero ingresado debe ser mayor a cero";
+  }
+  return emptyFieldValidator(text);
+}

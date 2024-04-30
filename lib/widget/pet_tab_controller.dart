@@ -106,11 +106,19 @@ class _PetTabControllerState extends State<PetTabController> {
   }
 
   void uploadPDF() {
-    FilePicker.platform.pickFiles().then((result) {
+    FilePicker.platform.pickFiles().then((result) async {
       if (result != null) {
         File file = File(result.files.single.path!);
-        context.read<PetCubit>().uploadAnalysis(file);
+        await context.read<PetCubit>().uploadAnalysis(file);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Se cargo el análisis exitosamente')),
+        );
       }
+    }).catchError((error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('No se pudo cargar el análisis: ${error.message}')),
+      );
     });
   }
 }
