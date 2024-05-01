@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:mascotas/datasource/api.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/medical_visit.dart';
@@ -77,7 +78,9 @@ class PetsDatasource {
 
   Future<String> uploadAnalysis(File file, int petId) async {
     final response = await api.upload("/pets/$petId/analyses",
-        file: file, field: 'analysis');
+        file: file,
+        field: 'analysis',
+        contentType: MediaType('application', 'pdf'));
 
     return _manageResponse<String>(response,
         parseJson: (json) => json["url"],
