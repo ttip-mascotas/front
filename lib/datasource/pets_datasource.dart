@@ -69,7 +69,10 @@ class PetsDatasource {
 
   Future<Treatment> startTreatment(Treatment treatment, int id) async {
     final body = treatment.toJson();
-    final response = await api.post("/pets/$id/treatments", body: body);
+    final response = await api.post(
+      "/pets/$id/treatments",
+      body: body,
+    );
 
     return _manageResponse<Treatment>(response,
         parseJson: (json) => Treatment.fromJson(json),
@@ -88,8 +91,8 @@ class PetsDatasource {
   }
 
   Future<String> uploadAvatar(File file) async {
-    final response =
-        await api.upload("/pets/avatars", file: file, field: 'avatar');
+    final response = await api.upload("/pets/avatars",
+        file: file, field: 'avatar', contentType: MediaType('image', 'jpeg'));
 
     return _manageResponse<String>(response,
         parseJson: (json) => json["url"],
