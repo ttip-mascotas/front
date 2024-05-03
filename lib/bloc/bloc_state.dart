@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart';
-
 class BlocState {}
 
 class Error extends BlocState {

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mascotas/bloc/bloc_state.dart';
-import 'package:mascotas/bloc/pet_bloc.dart';
 import 'package:mascotas/model/treatment.dart';
 import 'package:mascotas/utils/format.dart';
 import 'package:mascotas/widget/pets_divider.dart';
