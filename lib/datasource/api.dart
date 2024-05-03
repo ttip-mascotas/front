@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:http_parser/http_parser.dart';
 
 import 'package:http/http.dart' as http;
 
 class Api {
-
   Future<http.Response> get(String path, {Map<String, String>? headers}) {
     return http
         .get(_getUrl(path), headers: headers)
@@ -31,16 +31,18 @@ class Api {
     return "http://localhost:8080";
   }
 
-  Future<http.Response> upload(String path, {required File file, required String field}) async {
+  Future<http.Response> upload(String path,
+      {required File file,
+      required String field,
+      MediaType? contentType}) async {
     final request = http.MultipartRequest('POST', _getUrl(path));
-    request.files.add(
-        http.MultipartFile(
-            field,
-            file.readAsBytes().asStream(),
-            file.lengthSync(),
-            filename: file.path.split("/").last
-        )
-    );
+    request.files.add(http.MultipartFile(
+      field,
+      file.readAsBytes().asStream(),
+      file.lengthSync(),
+      filename: file.path.split("/").last,
+      contentType: contentType,
+    ));
     final response = await request.send();
     return http.Response.fromStream(response);
   }

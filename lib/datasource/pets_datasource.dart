@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:mascotas/datasource/api.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/medical_visit.dart';
@@ -68,7 +69,10 @@ class PetsDatasource {
 
   Future<Treatment> startTreatment(Treatment treatment, int id) async {
     final body = treatment.toJson();
-    final response = await api.post("/pets/$id/treatments", body: body);
+    final response = await api.post(
+      "/pets/$id/treatments",
+      body: body,
+    );
 
     return _manageResponse<Treatment>(response,
         parseJson: (json) => Treatment.fromJson(json),
@@ -77,7 +81,9 @@ class PetsDatasource {
 
   Future<String> uploadAnalysis(File file, int petId) async {
     final response = await api.upload("/pets/$petId/analyses",
-        file: file, field: 'analysis');
+        file: file,
+        field: 'analysis',
+        contentType: MediaType('application', 'pdf'));
 
     return _manageResponse<String>(response,
         parseJson: (json) => json["url"],
@@ -85,8 +91,8 @@ class PetsDatasource {
   }
 
   Future<String> uploadAvatar(File file) async {
-    final response =
-        await api.upload("/pets/avatars", file: file, field: 'avatar');
+    final response = await api.upload("/pets/avatars",
+        file: file, field: 'avatar', contentType: MediaType('image', 'jpeg'));
 
     return _manageResponse<String>(response,
         parseJson: (json) => json["url"],

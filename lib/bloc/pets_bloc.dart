@@ -42,7 +42,6 @@ class PetsCubit extends Cubit<BlocState> {
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
         final List<Pet> pets = currentState.value;
-        emit(Loading());
 
         String url = "";
         if (photo.isNotEmpty) {
