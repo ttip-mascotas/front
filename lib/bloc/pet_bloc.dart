@@ -45,21 +45,23 @@ class PetCubit extends Cubit<BlocState> {
         final medicalVisitFromResponse =
             await petsDatasource.addMedicalVisit(medicalVisit, pet.id);
         pet.addMedicalVisit(medicalVisitFromResponse);
+        emit(Loading());
         emit(Loaded(value: pet));
       }
     });
   }
 
-  Future<void> startTreatment(
-      {required String medicine,
-      required String startDate,
-      required String dose,
-      required String numberOfTime,
-      required double frequency}) async {
+  Future<void> startTreatment({
+    required String medicine,
+    required String dose,
+    required String numberOfTime,
+    required double frequency,
+    required String time,
+  }) async {
     await tryCatchFormException(() async {
       final treatment = Treatment(
         medicine: medicine,
-        startDate: formatStringToDateTime(startDate),
+        startDate: formatTimeOfDayToDateTime(time),
         dose: dose,
         numberOfTime: int.parse(numberOfTime),
         frequency: frequency.round(),
@@ -70,6 +72,7 @@ class PetCubit extends Cubit<BlocState> {
         final treatmentFromResponse =
             await petsDatasource.startTreatment(treatment, pet.id);
         pet.startTreatment(treatmentFromResponse);
+        emit(Loading());
         emit(Loaded(value: pet));
       }
     });
@@ -81,6 +84,7 @@ class PetCubit extends Cubit<BlocState> {
         final Loaded currentState = state as Loaded;
         final Pet pet = currentState.value;
         await petsDatasource.uploadAnalysis(file, pet.id);
+        emit(Loading());
         emit(Loaded(value: pet));
       }
     });

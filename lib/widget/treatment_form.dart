@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/pet_bloc.dart';
-import 'package:mascotas/utils/format.dart';
 import 'package:mascotas/utils/validator.dart';
 import 'package:mascotas/widget/input_title.dart';
 import 'package:mascotas/widget/slider_with_number.dart';
@@ -15,7 +14,7 @@ class TreatmentForm extends StatefulWidget {
 
 class _TreatmentFormState extends State<TreatmentForm> {
   final TextEditingController _medicineController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
+  final TextEditingController _timeController = TextEditingController();
   final TextEditingController _doseController = TextEditingController();
   final TextEditingController _numberOfTimesController =
       TextEditingController();
@@ -45,13 +44,13 @@ class _TreatmentFormState extends State<TreatmentForm> {
                   validator: emptyFieldValidator,
                 ),
                 const InputTitle(
-                  title: "Fecha de inicio",
+                  title: "Hora de inicio",
                 ),
                 TextFormField(
-                  controller: _dateController,
+                  controller: _timeController,
                   validator: emptyFieldValidator,
                   readOnly: true,
-                  onTap: selectDate,
+                  onTap: selectTime,
                 ),
                 const InputTitle(
                   title: "Dosis",
@@ -111,10 +110,10 @@ class _TreatmentFormState extends State<TreatmentForm> {
           .read<PetCubit>()
           .startTreatment(
             medicine: _medicineController.text,
-            startDate: _dateController.text,
             dose: _doseController.text,
             numberOfTime: _numberOfTimesController.text,
             frequency: _frequency,
+            time: _timeController.text,
           )
           .then((_) {
         Navigator.pop(context);
@@ -137,17 +136,14 @@ class _TreatmentFormState extends State<TreatmentForm> {
     }
   }
 
-  void selectDate() async {
-    final now = DateTime.now();
-
-    final DateTime? picked = await showDatePicker(
+  void selectTime() {
+    showTimePicker(
+      initialTime: TimeOfDay.now(),
       context: context,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(now.year + 1),
-    );
-
-    if (picked != null) {
-      _dateController.text = formatDateToString(picked);
-    }
+    ).then((selectedTime) {
+      if (selectedTime != null) {
+        _timeController.text = selectedTime.format(context);
+      }
+    });
   }
 }
