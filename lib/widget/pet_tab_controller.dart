@@ -57,7 +57,7 @@ class _PetTabControllerState extends State<PetTabController> {
             children: [
               MedicalVisits(medicalVisits: widget.pet.medicalVisits),
               const AnalysisTabView(),
-              const TreatmentTabView(),
+              TreatmentTabView(treatments: widget.pet.treatments),
             ],
           ),
           floatingActionButton: _floatingActionButton(),
