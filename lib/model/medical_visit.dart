@@ -31,5 +31,11 @@ class MedicalVisit extends Equatable {
       };
 
   @override
-  List<Object?> get props => [id, specialist, address, date, observations];
+  List<Object?> get props => [
+        id,
+        specialist,
+        address,
+        date,
+        observations,
+      ];
 }
