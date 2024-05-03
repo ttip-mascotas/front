@@ -16,8 +16,6 @@ class Error extends BlocState {
 }
 
 class Loading extends BlocState {
-  @override
-  List<Object?> get props => [];
 }
 
 class Loaded extends BlocState {
@@ -25,4 +23,6 @@ class Loaded extends BlocState {
 
   Loaded({required this.value});
 
+  @override
+  List<Object?> get props => [value];
 }
