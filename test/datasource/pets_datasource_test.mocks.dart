@@ -5,8 +5,10 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
 import 'dart:convert' as _i5;
+import 'dart:io' as _i6;
 
 import 'package:http/http.dart' as _i2;
+import 'package:http_parser/http_parser.dart' as _i7;
 import 'package:mascotas/datasource/api.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -106,6 +108,50 @@ class MockApi extends _i1.Mock implements _i3.Api {
               #headers: headers,
               #body: body,
               #encoding: encoding,
+            },
+          ),
+        )),
+      ) as _i4.Future<_i2.Response>);
+
+  @override
+  _i4.Future<_i2.Response> upload(
+    String? path, {
+    required _i6.File? file,
+    required String? field,
+    _i7.MediaType? contentType,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #upload,
+          [path],
+          {
+            #file: file,
+            #field: field,
+            #contentType: contentType,
+          },
+        ),
+        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #upload,
+            [path],
+            {
+              #file: file,
+              #field: field,
+              #contentType: contentType,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #upload,
+            [path],
+            {
+              #file: file,
+              #field: field,
+              #contentType: contentType,
             },
           ),
         )),

@@ -79,6 +79,8 @@ void main() {
     },
     expect: () => [
       Loaded(value: petWithMedicalVisits),
+      Loading(),
+      Loaded(value: petWithMedicalVisits),
     ],
   );
 
@@ -128,14 +130,15 @@ void main() {
     act: (cubit) async {
       await cubit.getPet(petId);
       return await cubit.startTreatment(
-        medicine: treatment.medicine,
-        startDate: formatDateToString(treatment.startDate),
-        dose: treatment.dose,
-        numberOfTime: treatment.numberOfTime.toString(),
-        frequency: treatment.frequency.toDouble(),
-      );
+          medicine: treatment.medicine,
+          dose: treatment.dose,
+          numberOfTime: treatment.numberOfTime.toString(),
+          frequency: treatment.frequency.toDouble(),
+          time: '5:20 AM');
     },
     expect: () => [
+      Loaded(value: petWithTreatment),
+      Loading(),
       Loaded(value: petWithTreatment),
     ],
   );
@@ -150,20 +153,18 @@ void main() {
       ).thenAnswer((_) async => Response(petJson, 200));
 
       when(
-        mockApi.post("/pets/$petId/treatments",
-            body: treatment.toJson()),
+        mockApi.post("/pets/$petId/treatments", body: treatment.toJson()),
       ).thenAnswer((_) async => throw Exception("Algo salió mal"));
     },
     build: () => PetCubit(petsDatasource: petsDataSource),
     act: (cubit) async {
       await cubit.getPet(petId);
       return await cubit.startTreatment(
-        medicine: treatment.medicine,
-        startDate: formatDateToString(treatment.startDate),
-        dose: treatment.dose,
-        numberOfTime: treatment.numberOfTime.toString(),
-        frequency: treatment.frequency.toDouble(),
-      );
+          medicine: treatment.medicine,
+          dose: treatment.dose,
+          numberOfTime: treatment.numberOfTime.toString(),
+          frequency: treatment.frequency.toDouble(),
+          time: '5:20 AM');
     },
     errors: () => [isA<DatasourceException>()],
     expect: () => [

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/model/treatment.dart';
+import 'package:mascotas/utils/format.dart';
 
 final Map<String, dynamic> petMap = {
   "id": 1,
@@ -46,10 +47,12 @@ final pet = Pet.fromJson(petMap);
 final Pet petWithMedicalVisits = Pet.fromJson(petMap)
   ..addMedicalVisit(MedicalVisit.fromJson(medicalVisitMap));
 
+final dateTime = formatTimeOfDayToDateTime("05:20 AM");
+
 final treatment = Treatment(
   id: 1,
   medicine: 'Tramadol',
-  startDate: DateTime(2023, 03, 30),
+  startDate: dateTime,
   dose: '1/4',
   numberOfTime: 10,
   frequency: 8,
@@ -59,7 +62,7 @@ final treatmentMap = {
   "id": 1,
   "medicine": "Tramadol",
   "dose": "1/4",
-  "datetime": "2023-03-30",
+  "datetime": dateTime.toIso8601String(),
   "numberOfTimes": 10,
   "frequency": 8,
 };

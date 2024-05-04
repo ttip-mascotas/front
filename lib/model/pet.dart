@@ -42,13 +42,20 @@ class Pet extends Equatable {
         fur = json["fur"],
         sex = typeOfSex[json["sex"]] ?? '',
         medicalVisits = _medicalVisitsFromJson(json["medicalVisits"]),
-        treatments = [];
+        treatments = _treatmentFromJson(json["treatments"]);
 
   static List<MedicalVisit> _medicalVisitsFromJson(List<dynamic>? json) {
     if (json != null) {
       return json
           .map<MedicalVisit>((json) => MedicalVisit.fromJson(json))
           .toList();
+    }
+    return [];
+  }
+
+  static List<Treatment> _treatmentFromJson(List<dynamic>? json) {
+    if (json != null) {
+      return json.map<Treatment>((json) => Treatment.fromJson(json)).toList();
     }
     return [];
   }
@@ -99,6 +106,7 @@ class Pet extends Equatable {
         fur,
         sex,
         medicalVisits,
+        treatments,
       ];
 }
 

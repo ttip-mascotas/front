@@ -16,8 +16,6 @@ class Error extends BlocState {
 }
 
 class Loading extends BlocState {
-  @override
-  List<Object?> get props => [];
 }
 
 class Loaded extends BlocState {

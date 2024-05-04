@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
 import 'package:mascotas/utils/format.dart';
 
-class Treatment {
+class Treatment extends Equatable {
   final int? id;
   final DateTime startDate;
   final String dose;
@@ -32,4 +33,14 @@ class Treatment {
         startDate = formatStringToDateTimeFromBack(json['datetime']),
         numberOfTime = json['numberOfTimes'],
         frequency = json['frequency'];
+
+  @override
+  List<Object?> get props => [
+        id,
+        startDate,
+        dose,
+        medicine,
+        numberOfTime,
+        frequency,
+      ];
 }
