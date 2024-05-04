@@ -36,8 +36,14 @@ class Avatar extends StatelessWidget {
   }
 
   static NetworkImage? getImageFromUrl(String url) {
+    const host = "10.0.2.2";
     return url.isNotEmpty
-        ? NetworkImage(url.replaceFirst('minio', '10.0.2.2'))
+        ? NetworkImage(
+            url
+                .replaceFirst("localhost", host)
+                .replaceFirst("127.0.0.1", host)
+                .replaceFirst("minio", host),
+          )
         : null;
   }
 
