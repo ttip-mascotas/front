@@ -56,7 +56,7 @@ class _PetTabControllerState extends State<PetTabController> {
           body: TabBarView(
             children: [
               MedicalVisits(medicalVisits: widget.pet.medicalVisits),
-              const AnalysisTabView(),
+              AnalysisTabView(analyses: widget.pet.analyses),
               TreatmentTabView(treatments: widget.pet.treatments),
             ],
           ),

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mascotas/model/analysis.dart';
 import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/treatment.dart';
 import 'package:mascotas/utils/format.dart';
@@ -15,6 +16,7 @@ class Pet extends Equatable {
   final String sex;
   final List<MedicalVisit> medicalVisits;
   final List<Treatment> treatments;
+  final List<Analysis> analyses;
 
   Pet({
     required this.id,
@@ -28,8 +30,10 @@ class Pet extends Equatable {
     required this.sex,
     List<MedicalVisit>? medicalVisits,
     List<Treatment>? treatments,
+    List<Analysis>? analyses,
   })  : medicalVisits = medicalVisits ?? [],
-        treatments = [];
+        treatments = [],
+        analyses = [];
 
   Pet.fromJson(Map<String, dynamic> json)
       : id = json["id"],
@@ -42,7 +46,8 @@ class Pet extends Equatable {
         fur = json["fur"],
         sex = typeOfSex[json["sex"]] ?? '',
         medicalVisits = _medicalVisitsFromJson(json["medicalVisits"]),
-        treatments = _treatmentFromJson(json["treatments"]);
+        treatments = _treatmentFromJson(json["treatments"]),
+        analyses = _analysesFromJson(json["analyses"]);
 
   static List<MedicalVisit> _medicalVisitsFromJson(List<dynamic>? json) {
     if (json != null) {
@@ -56,6 +61,13 @@ class Pet extends Equatable {
   static List<Treatment> _treatmentFromJson(List<dynamic>? json) {
     if (json != null) {
       return json.map<Treatment>((json) => Treatment.fromJson(json)).toList();
+    }
+    return [];
+  }
+
+  static List<Analysis> _analysesFromJson(List<dynamic>? json) {
+    if (json != null) {
+      return json.map<Analysis>((json) => Analysis.fromJson(json)).toList();
     }
     return [];
   }
@@ -92,6 +104,10 @@ class Pet extends Equatable {
 
   void startTreatment(Treatment treatment) {
     treatments.add(treatment);
+  }
+
+  void addAnalysis(Analysis analysis) {
+    analyses.add(analysis);
   }
 
   @override

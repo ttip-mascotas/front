@@ -6,6 +6,7 @@ import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mascotas/datasource/api.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
+import 'package:mascotas/model/analysis.dart';
 import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/model/treatment.dart';
@@ -79,14 +80,14 @@ class PetsDatasource {
         message: "Hubo un problema al iniciar el tratamiento");
   }
 
-  Future<String> uploadAnalysis(File file, int petId) async {
+  Future<Analysis> uploadAnalysis(File file, int petId) async {
     final response = await api.upload("/pets/$petId/analyses",
         file: file,
         field: 'analysis',
         contentType: MediaType('application', 'pdf'));
 
-    return _manageResponse<String>(response,
-        parseJson: (json) => json["url"],
+    return _manageResponse<Analysis>(response,
+        parseJson: (json) => Analysis.fromJson(json),
         message: "Hubo un problema al guardar el archivo");
   }
 
