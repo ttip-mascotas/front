@@ -83,7 +83,9 @@ class PetCubit extends Cubit<BlocState> {
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
         final Pet pet = currentState.value;
-        await petsDatasource.uploadAnalysis(file, pet.id);
+        final analysisFromResponse =
+            await petsDatasource.uploadAnalysis(file, pet.id);
+        pet.addAnalysis(analysisFromResponse);
         emit(Loading());
         emit(Loaded(value: pet));
       }
