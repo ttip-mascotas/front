@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/pet_bloc.dart';
 import 'package:mascotas/utils/format.dart';
 import 'package:mascotas/utils/validator.dart';
+import 'package:mascotas/widget/form_structure.dart';
 import 'package:mascotas/widget/input_title.dart';
 
 class MedicalVisitRegistrationForm extends StatefulWidget {
@@ -15,72 +16,59 @@ class MedicalVisitRegistrationForm extends StatefulWidget {
 
 class _MedicalVisitRegistrationFormState
     extends State<MedicalVisitRegistrationForm> {
-  final _formKey = GlobalKey<FormState>();
   final _specialistController = TextEditingController();
   final _addressController = TextEditingController();
   final _observationsController = TextEditingController();
   final _dateController = TextEditingController();
-  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const InputTitle(
-                  title: "Especialista",
-                ),
-                TextFormField(
-                  controller: _specialistController,
-                  validator: emptyFieldValidator,
-                ),
-                const InputTitle(
-                  title: "Dirección",
-                ),
-                TextFormField(
-                  controller: _addressController,
-                  validator: emptyFieldValidator,
-                ),
-                const InputTitle(
-                  title: "Fecha",
-                ),
-                TextFormField(
-                  controller: _dateController,
-                  validator: emptyFieldValidator,
-                  readOnly: true,
-                  onTap: selectDate,
-                ),
-                const InputTitle(
-                  title: "Observaciones",
-                ),
-                TextFormField(
-                  controller: _observationsController,
-                  maxLines: 2,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: ElevatedButton(
-                      onPressed: saveMedicalVisit,
-                      child: _isLoading
-                          ? const CircularProgressIndicator()
-                          : const Text(
-                              "Registrar",
-                              style: TextStyle(color: Colors.white),
-                            )),
-                )
-              ],
-            ),
+    return FormStructure(
+      onSave: () => context.read<PetCubit>().addMedicalVisit(
+            specialist: _specialistController.text,
+            address: _addressController.text,
+            date: _dateController.text,
+            observations: _observationsController.text,
           ),
-        ),
+      successfulMessage: "Se agregó la visita médica de forma exitosa",
+      errorMessage: (error) =>
+          'No se pudo agregar la visita médica: ${error.message}',
+      buttonMessage: "Registrar",
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const InputTitle(
+            title: "Especialista",
+          ),
+          TextFormField(
+            controller: _specialistController,
+            validator: emptyFieldValidator,
+          ),
+          const InputTitle(
+            title: "Dirección",
+          ),
+          TextFormField(
+            controller: _addressController,
+            validator: emptyFieldValidator,
+          ),
+          const InputTitle(
+            title: "Fecha",
+          ),
+          TextFormField(
+            controller: _dateController,
+            validator: emptyFieldValidator,
+            readOnly: true,
+            onTap: selectDate,
+          ),
+          const InputTitle(
+            title: "Observaciones",
+          ),
+          TextFormField(
+            controller: _observationsController,
+            maxLines: 2,
+          ),
+        ],
       ),
     );
   }
@@ -96,40 +84,6 @@ class _MedicalVisitRegistrationFormState
 
     if (picked != null) {
       _dateController.text = formatDateToString(picked);
-    }
-  }
-
-  void saveMedicalVisit() {
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        _isLoading = true;
-      });
-      context
-          .read<PetCubit>()
-          .addMedicalVisit(
-            specialist: _specialistController.text,
-            address: _addressController.text,
-            date: _dateController.text,
-            observations: _observationsController.text,
-          )
-          .then((_) {
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text("Se agregó la visita médica de forma exitosa")),
-        );
-      }).catchError((error) {
-        Navigator.pop(context);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(
-                  'No se pudo agregar la visita médica: ${error.message}')),
-        );
-      }).whenComplete(() {
-        setState(() {
-          _isLoading = false;
-        });
-      });
     }
   }
 }
