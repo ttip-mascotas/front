@@ -67,7 +67,12 @@ class AnalysisDetail extends StatelessWidget {
             padding: const EdgeInsets.only(right: 8.0),
             child: Icon(icon, color: Colors.purple.shade200),
           ),
-          Text(text),
+          Expanded(
+            child: Text(
+              text,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );
