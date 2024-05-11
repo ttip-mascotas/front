@@ -6,7 +6,9 @@ import 'package:mascotas/widget/analysis_tab_view.dart';
 import 'package:mascotas/widget/pets_scaffold.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key,});
+  const SearchScreen({
+    super.key,
+  });
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -14,6 +16,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   List<Analysis> analysis = [];
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +33,14 @@ class _SearchScreenState extends State<SearchScreen> {
               leading: const Icon(Icons.search),
             ),
             Expanded(
-              child: AnalysisList(
-                analyses: analysis,
-                messageEmptyList: 'Buscá análisis en base a su contenido',
-              ),
+              child: _isLoading
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : AnalysisList(
+                      analyses: analysis,
+                      messageEmptyList: 'Buscá análisis en base a su contenido',
+                    ),
             )
           ],
         ),
@@ -43,9 +50,13 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void searchAnalysis(String text) async {
+    setState(() {
+      _isLoading = true;
+    });
     final analysis = await context.read<PetCubit>().searchAnalysis(text);
     setState(() {
       this.analysis = analysis;
+      _isLoading = false;
     });
   }
 }
