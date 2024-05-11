@@ -120,4 +120,15 @@ class PetsDatasource {
 
   bool _isClientError(Response response) =>
       response.statusCode >= 400 && response.statusCode < 500;
+
+  Future<List<Analysis>> searchAnalysis(String text, int petId) async {
+    final response =
+        await api.get("/pets/$petId/analyses", queryParameters: {'q': text});
+
+    return _manageResponse<List<Analysis>>(response,
+        parseJson: (json) => json['results']
+            .map<Analysis>((json) => Analysis.fromJson(json))
+            .toList(),
+        message: "Hubo un problema al obtener los análisis");
+  }
 }

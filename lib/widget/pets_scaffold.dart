@@ -4,11 +4,13 @@ class PetsScaffold extends StatelessWidget {
   final Widget body;
   final String title;
   final Widget? floatingActionButton;
+  final Widget? drawer;
 
   const PetsScaffold({
     required this.body,
     required this.title,
     this.floatingActionButton,
+    this.drawer,
     super.key,
   });
 
@@ -25,6 +27,7 @@ class PetsScaffold extends StatelessWidget {
       ),
       body: body,
       floatingActionButton: floatingActionButton,
+      endDrawer: drawer,
     );
   }
 }

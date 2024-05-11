@@ -3,12 +3,14 @@ import 'package:mascotas/model/analysis.dart';
 import 'package:mascotas/utils/format.dart';
 import 'package:mascotas/widget/pets_divider.dart';
 
-class AnalysisTabView extends StatelessWidget {
+class AnalysisList extends StatelessWidget {
   final List<Analysis> analyses;
+  final String messageEmptyList;
 
-  const AnalysisTabView({
+  const AnalysisList({
     super.key,
     required this.analyses,
+    required this.messageEmptyList,
   });
 
   @override
@@ -40,9 +42,9 @@ class AnalysisTabView extends StatelessWidget {
             },
             separatorBuilder: (context, index) => const PetsDivider(),
             itemCount: analyses.length)
-        : const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text('No hay analisis registrados'),
+        : Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(messageEmptyList),
           );
   }
 }

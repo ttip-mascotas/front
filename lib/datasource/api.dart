@@ -5,9 +5,13 @@ import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 
 class Api {
-  Future<http.Response> get(String path, {Map<String, String>? headers}) {
+  Future<http.Response> get(
+    String path, {
+    Map<String, String>? headers,
+    Map<String, dynamic>? queryParameters,
+  }) {
     return http
-        .get(_getUrl(path), headers: headers)
+        .get(_getUrl(path, queryParameters: queryParameters), headers: headers,)
         .timeout(const Duration(seconds: 30));
   }
 
@@ -20,15 +24,15 @@ class Api {
         headers: headers, body: jsonEncode(body), encoding: encoding);
   }
 
-  Uri _getUrl(String path) {
-    return Uri.parse(_baseURL() + path);
+  Uri _getUrl(String path, {Map<String, dynamic>? queryParameters}) {
+    return Uri.http(_baseURL(), path, queryParameters);
   }
 
   String _baseURL() {
     if (Platform.isAndroid) {
-      return "http://10.0.2.2:8080";
+      return "10.0.2.2:8080";
     }
-    return "http://localhost:8080";
+    return "localhost:8080";
   }
 
   Future<http.Response> upload(String path,

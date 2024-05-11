@@ -51,8 +51,7 @@ void main() {
     expect(medicalVisitResponse.id, 1);
     expect(medicalVisitResponse.specialist, medicalVisit.specialist);
     expect(medicalVisitResponse.date, medicalVisit.date);
-    expect(
-        medicalVisitResponse.observations, medicalVisit.observations);
+    expect(medicalVisitResponse.observations, medicalVisit.observations);
     expect(medicalVisitResponse.address, medicalVisit.address);
   });
 
@@ -91,19 +90,37 @@ void main() {
 
     const petId = 1;
 
-    when(mockApi.post("/pets/$petId/treatments",
-        body: treatment.toJson()))
+    when(mockApi.post("/pets/$petId/treatments", body: treatment.toJson()))
         .thenAnswer((_) async => Response(treatmentJson, 200));
 
     final treatmentResponse =
-    await petsDataSource.startTreatment(treatment, petId);
+        await petsDataSource.startTreatment(treatment, petId);
 
     expect(treatmentResponse.id, 1);
     expect(treatmentResponse.medicine, treatment.medicine);
     expect(treatmentResponse.startDate, treatment.startDate);
-    expect(
-        treatmentResponse.dose, treatment.dose);
+    expect(treatmentResponse.dose, treatment.dose);
     expect(treatmentResponse.numberOfTime, treatment.numberOfTime);
     expect(treatmentResponse.frequency, treatment.frequency);
+  });
+
+  test("Search analysis based on its content", () async {
+    final PetsDatasource petsDataSource = PetsDatasource(api: mockApi);
+
+    const petId = 1;
+
+    when(mockApi
+        .get("/pets/$petId/analyses", queryParameters: {'q': 'ejemplo'}))
+        .thenAnswer((_) async => Response(analysisJson, 200));
+
+    final analysisResponse =
+        await petsDataSource.searchAnalysis('ejemplo', petId);
+
+    final firstAnalysis = analysisResponse.first;
+
+    expect(firstAnalysis.id, 1);
+    expect(firstAnalysis.name, analysis.name);
+    expect(firstAnalysis.size, analysis.size);
+    expect(firstAnalysis.createdAt, analysis.createdAt);
   });
 }
