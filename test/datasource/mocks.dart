@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:mascotas/model/analysis.dart';
 import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/model/treatment.dart';
@@ -70,3 +71,23 @@ final treatmentMap = {
 final String treatmentJson = jsonEncode(treatmentMap);
 
 final Pet petWithTreatment = Pet.fromJson(petMap)..startTreatment(treatment);
+
+final analysis = Analysis(
+  id: 1,
+  name: 'ejemplo.pdf',
+  size: 1,
+  createdAt: DateTime(2023, 1, 1),
+);
+
+final analysisMap = {
+  'results': [
+    {
+      "id": 1,
+      "name": 'ejemplo.pdf',
+      "size": 1,
+      "createdAt": DateTime(2023, 1, 1).toIso8601String(),
+    }
+  ]
+};
+
+final String analysisJson = jsonEncode(analysisMap);
