@@ -106,9 +106,15 @@ class _PetTabControllerState extends State<PetTabController> {
   }
 
   void uploadPDF() {
-    FilePicker.platform.pickFiles().then((result) async {
+    FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    ).then((result) async {
       if (result != null) {
         File file = File(result.files.single.path!);
+        if (!file.path.endsWith('.pdf')) {
+          throw Exception('el archivo ingresado no es un pdf');
+        }
         await context.read<PetCubit>().uploadAnalysis(file);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Se cargo el análisis exitosamente')),
