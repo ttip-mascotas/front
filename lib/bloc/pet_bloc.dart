@@ -97,10 +97,7 @@ class PetCubit extends Cubit<BlocState> {
     if (state is Loaded) {
       final Loaded currentState = state as Loaded;
       final Pet pet = currentState.value;
-      //TODO: usar cuando este listo el endpoint
-      //final analysis = await petsDatasource.searchAnalysis(text, pet.id);
-
-      return pet.analyses;
+      return await petsDatasource.searchAnalysis(text, pet.id);
     }
     return [];
   }
