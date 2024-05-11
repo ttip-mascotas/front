@@ -9,7 +9,7 @@ class Treatment extends Equatable {
   final int numberOfTime;
   final int frequency;
 
-  Treatment({
+  const Treatment({
     this.id,
     required this.medicine,
     required this.startDate,

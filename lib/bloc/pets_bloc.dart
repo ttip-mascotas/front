@@ -7,7 +7,7 @@ import 'package:mascotas/datasource/pets_datasource.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/utils/format.dart';
-import 'package:mascotas/utils/tryCatchFormException.dart';
+import 'package:mascotas/utils/try_catch_form_exception.dart';
 
 class PetsCubit extends Cubit<BlocState> {
   final PetsDatasource petsDatasource;

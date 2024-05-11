@@ -43,19 +43,26 @@ class MockApi extends _i1.Mock implements _i3.Api {
   _i4.Future<_i2.Response> get(
     String? path, {
     Map<String, String>? headers,
+    Map<String, dynamic>? queryParameters,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
           #get,
           [path],
-          {#headers: headers},
+          {
+            #headers: headers,
+            #queryParameters: queryParameters,
+          },
         ),
         returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #get,
             [path],
-            {#headers: headers},
+            {
+              #headers: headers,
+              #queryParameters: queryParameters,
+            },
           ),
         )),
         returnValueForMissingStub:
@@ -64,7 +71,10 @@ class MockApi extends _i1.Mock implements _i3.Api {
           Invocation.method(
             #get,
             [path],
-            {#headers: headers},
+            {
+              #headers: headers,
+              #queryParameters: queryParameters,
+            },
           ),
         )),
       ) as _i4.Future<_i2.Response>);

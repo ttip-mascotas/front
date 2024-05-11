@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
 import 'package:mascotas/bloc/pet_bloc.dart';
+import 'package:mascotas/model/pet.dart';
+import 'package:mascotas/navigation/navigation.dart';
+import 'package:mascotas/widget/avatar.dart';
 import 'package:mascotas/widget/pet_detail.dart';
 import 'package:mascotas/widget/pets_scaffold.dart';
 
@@ -16,8 +19,54 @@ class PetScreen extends StatelessWidget {
 
     return const PetsScaffold(
       title: "Historial Médico",
+      drawer: PetDrawer(),
       body: PetDetails(),
     );
+  }
+}
+
+class PetDrawer extends StatelessWidget {
+  const PetDrawer({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PetCubit, BlocState>(builder: (context, state) {
+      switch (state) {
+        case Loaded():
+          final Pet pet = state.value;
+          return Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                  ),
+                  child: Column(
+                    children: [
+                      Avatar.avatarSmallURL(url: pet.photo),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Text(pet.name,
+                          style: Theme.of(context).textTheme.titleLarge),
+                    ],
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.search),
+                  title: const Text('Buscar análisis'),
+                  onTap: () => Navigation.goToSearchScreen(context: context),
+                ),
+              ],
+            ),
+          );
+        default:
+          return const SizedBox();
+      }
+    });
   }
 }
 

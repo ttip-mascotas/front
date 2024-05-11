@@ -5,11 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
 import 'package:mascotas/datasource/pets_datasource.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
+import 'package:mascotas/model/analysis.dart';
 import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/model/treatment.dart';
 import 'package:mascotas/utils/format.dart';
-import 'package:mascotas/utils/tryCatchFormException.dart';
+import 'package:mascotas/utils/try_catch_form_exception.dart';
 
 class PetCubit extends Cubit<BlocState> {
   final PetsDatasource petsDatasource;
@@ -90,5 +91,17 @@ class PetCubit extends Cubit<BlocState> {
         emit(Loaded(value: pet));
       }
     });
+  }
+
+  Future<List<Analysis>> searchAnalysis(String text) async {
+    if (state is Loaded) {
+      final Loaded currentState = state as Loaded;
+      final Pet pet = currentState.value;
+      //TODO: usar cuando este listo el endpoint
+      //final analysis = await petsDatasource.searchAnalysis(text, pet.id);
+
+      return pet.analyses;
+    }
+    return [];
   }
 }
