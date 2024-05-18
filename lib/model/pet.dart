@@ -41,7 +41,7 @@ class Pet extends Equatable {
         age = json["age"],
         weight = json["weight"],
         photo = json["photo"],
-        birthdate = formatStringToDateTimeFromBack(json["birthdate"]),
+        birthdate = parseDateTimeStringAsDateTimeFromBack(json["birthdate"]),
         breed = json["breed"],
         fur = json["fur"],
         sex = typeOfSex[json["sex"]] ?? '',
@@ -123,12 +123,13 @@ class Pet extends Equatable {
         sex,
         medicalVisits,
         treatments,
+        analyses,
       ];
 }
 
 final Map<String, String> typeOfSex = {
-  PetSex.female.name.toUpperCase(): 'Hembra',
-  PetSex.male.name.toUpperCase(): 'Macho',
+  PetSex.female.name.toUpperCase(): "Hembra",
+  PetSex.male.name.toUpperCase(): "Macho",
 };
 
 enum PetSex {

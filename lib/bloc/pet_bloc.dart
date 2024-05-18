@@ -38,7 +38,7 @@ class PetCubit extends Cubit<BlocState> {
       final medicalVisit = MedicalVisit(
           specialist: specialist,
           address: address,
-          date: formatStringToDateTime(date),
+          date: parseDateStringAsDateTime(date),
           observations: observations);
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
@@ -62,7 +62,7 @@ class PetCubit extends Cubit<BlocState> {
     await tryCatchFormException(() async {
       final treatment = Treatment(
         medicine: medicine,
-        startDate: formatTimeOfDayToDateTime(time),
+        startDate: parseTimeOfDayStringAsDateTime(time),
         dose: dose,
         numberOfTime: int.parse(numberOfTime),
         frequency: frequency.round(),
