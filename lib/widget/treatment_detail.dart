@@ -21,7 +21,12 @@ class TreatmentDetail extends StatelessWidget {
             ],
           ),
         ),
-        SchedulePerDayTable(dailySchedules: treatment.schedulesPerDay),
+        Expanded(
+          child: SingleChildScrollView(
+            child: SchedulePerDayTable(
+                dailySchedules: treatment.schedulesPerDay),
+          ),
+        ),
       ],
     );
   }

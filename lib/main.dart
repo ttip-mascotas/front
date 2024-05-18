@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/pet_bloc.dart';
 import 'package:mascotas/bloc/pets_bloc.dart';
-import 'package:mascotas/bloc/treatment.dart';
 import 'package:mascotas/datasource/api.dart';
-import 'package:mascotas/datasource/treatment.dart';
 import 'package:mascotas/screen/pets_screen.dart';
 import 'package:mascotas/style/theme.dart';
 
+import 'bloc/treatment_cubit.dart';
 import 'datasource/pets_datasource.dart';
+import 'datasource/treatment_datasource.dart';
 
 void main() {
   runApp(const MainApp());

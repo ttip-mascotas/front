@@ -39,22 +39,25 @@ class TreatmentItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigation.goToTreatmentScheduleScreen(
           context: context, id: treatment.id!),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          TreatmentAttribute(
-            text: treatment.medicine,
-            icon: Icons.medication,
-          ),
-          TreatmentAttribute(
-            text: treatment.dose,
-            icon: Icons.numbers_rounded,
-          ),
-          TreatmentAttribute(
-            text: formatDateToString(treatment.startDate),
-            icon: Icons.schedule_rounded,
-          ),
-        ]),
+      child: Container(
+        color: Colors.transparent,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            TreatmentAttribute(
+              text: treatment.medicine,
+              icon: Icons.medication,
+            ),
+            TreatmentAttribute(
+              text: treatment.dose,
+              icon: Icons.numbers_rounded,
+            ),
+            TreatmentAttribute(
+              text: formatDateToString(treatment.startDate),
+              icon: Icons.schedule_rounded,
+            ),
+          ]),
+        ),
       ),
     );
   }

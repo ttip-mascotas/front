@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
-import 'package:mascotas/bloc/treatment.dart';
+import 'package:mascotas/bloc/treatment_cubit.dart';
 import 'package:mascotas/widget/pets_scaffold.dart';
 import 'package:mascotas/widget/treatment_detail.dart';
 
