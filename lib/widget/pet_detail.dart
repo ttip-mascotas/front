@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/widget/pet_tab_controller.dart';
+
 import 'avatar.dart';
 
 class PetDetail extends StatelessWidget {
@@ -18,7 +19,9 @@ class PetDetail extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Avatar.avatarLargeURL(url: pet.photo,),
+              Avatar.avatarLargeURL(
+                url: pet.photo,
+              ),
               PetAttributes(pet: pet),
             ],
           ),
