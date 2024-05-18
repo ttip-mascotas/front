@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:mascotas/utils/format.dart';
 
 class DoseControl extends Equatable {
   final int id;
@@ -13,7 +14,7 @@ class DoseControl extends Equatable {
 
   DoseControl.fromJson(Map<String, dynamic> json)
       : id = json["id"],
-        time = json["time"],
+        time = formatDateTimeStringToDateTimeFromBack(json["time"]),
         supplied = json["supplied"];
 
   @override

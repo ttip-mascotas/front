@@ -41,7 +41,7 @@ class Pet extends Equatable {
         age = json["age"],
         weight = json["weight"],
         photo = json["photo"],
-        birthdate = formatStringToDateTimeFromBack(json["birthdate"]),
+        birthdate = formatDateTimeStringToDateTimeFromBack(json["birthdate"]),
         breed = json["breed"],
         fur = json["fur"],
         sex = typeOfSex[json["sex"]] ?? '',

@@ -6,11 +6,16 @@ String formatDateToString(DateTime date) {
   return DateFormat("dd-MM-yy").format(date);
 }
 
-DateTime formatStringToDateTimeFromBack(String date) {
+DateTime formatDateTimeStringToDateTimeFromBack(String date) {
   return DateTime.parse(date);
 }
 
-DateTime formatStringToDateTime(String date) {
+DateTime formatDateStringToDateTime(String date) {
+  return DateFormat("dd-MM-yy").parse(date);
+}
+
+DateTime formatDateTimeStringToDateTime(String date) {
+  // 2024-05-26T08:00:00
   return DateFormat("dd-MM-yy").parse(date);
 }
 

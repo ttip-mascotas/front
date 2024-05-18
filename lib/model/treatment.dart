@@ -25,10 +25,10 @@ class Treatment extends Equatable {
       : id = json["id"],
         medicine = json["medicine"],
         dose = json["dose"],
-        startDate = formatStringToDateTimeFromBack(json["datetime"]),
+        startDate = formatDateTimeStringToDateTimeFromBack(json["datetime"]),
         numberOfTime = json["numberOfTimes"],
         frequency = json["frequency"],
-        schedulesPerDay = _schedulesPerDayFromJson(json["schedulePerDay"]);
+        schedulesPerDay = _schedulesPerDayFromJson(json["schedulesPerDay"]);
 
   static List<SchedulePerDay> _schedulesPerDayFromJson(List<dynamic>? json) {
     if (json != null) {

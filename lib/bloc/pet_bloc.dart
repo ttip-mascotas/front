@@ -38,7 +38,7 @@ class PetCubit extends Cubit<BlocState> {
       final medicalVisit = MedicalVisit(
           specialist: specialist,
           address: address,
-          date: formatStringToDateTime(date),
+          date: formatDateStringToDateTime(date),
           observations: observations);
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;

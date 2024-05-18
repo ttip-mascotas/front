@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:mascotas/model/dose_control.dart';
+import 'package:mascotas/utils/format.dart';
 
 class SchedulePerDay extends Equatable {
   final int id;
@@ -14,7 +15,7 @@ class SchedulePerDay extends Equatable {
 
   SchedulePerDay.fromJson(Map<String, dynamic> json)
       : id = json["id"],
-        date = json["date"],
+        date = formatDateTimeStringToDateTimeFromBack(json["date"]),
         doseControls = _doseControlsFromJson(json["doseControls"]);
 
   static List<DoseControl> _doseControlsFromJson(List<dynamic>? json) {

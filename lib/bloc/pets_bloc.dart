@@ -52,7 +52,7 @@ class PetsCubit extends Cubit<BlocState> {
           name: name,
           photo: url,
           weight: weight,
-          birthdate: formatStringToDateTime(birthdate),
+          birthdate: formatDateStringToDateTime(birthdate),
           breed: breed,
           fur: fur,
           sex: sex,
