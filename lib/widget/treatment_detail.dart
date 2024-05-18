@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mascotas/model/treatment.dart';
+import 'package:mascotas/widget/schedule_per_day_table.dart';
 
 class TreatmentDetail extends StatelessWidget {
-  const TreatmentDetail({super.key, required this.treatment});
-
   final Treatment treatment;
+
+  const TreatmentDetail({super.key, required this.treatment});
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +17,42 @@ class TreatmentDetail extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Flexible(child: Text(treatment.medicine)),
+              TreatmentAttributes(treatment: treatment),
             ],
           ),
         ),
+        SchedulePerDayTable(dailySchedules: treatment.schedulesPerDay),
       ],
+    );
+  }
+}
+
+class TreatmentAttributes extends StatelessWidget {
+  final Treatment treatment;
+
+  const TreatmentAttributes({super.key, required this.treatment});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Medicamento: ${treatment.medicine}",
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 25,
+            ),
+          ),
+          Text(
+            "Dosis: ${treatment.dose}",
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
