@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:mascotas/model/dose_control.dart';
 import 'package:mascotas/model/schedule_per_day.dart';
@@ -10,7 +12,9 @@ class SchedulePerDayTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int doseControlsRowLength = dailySchedules.first.doseControls.length;
+    final int doseControlsRowLength = dailySchedules
+        .map((schedulePerDay) => schedulePerDay.doseControls.length)
+        .reduce(max);
 
     final List<TableRow> rows = List.generate(
       dailySchedules.length,
@@ -81,30 +85,32 @@ class DoseControlCell extends StatelessWidget {
 
     return TableCell(
       verticalAlignment: TableCellVerticalAlignment.middle,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: const CircleBorder(),
-                padding: EdgeInsets.all(buttonInsetsAll),
+      child: FittedBox(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: EdgeInsets.all(buttonInsetsAll),
+                ),
+                onPressed: () {},
+                child: Icon(
+                  iconData,
+                  color: Colors.white,
+                  size: iconSize,
+                ),
               ),
-              onPressed: () {},
-              child: Icon(
-                iconData,
-                color: Colors.white,
-                size: iconSize,
+              Text(
+                formatTimeToString(doseControl.time),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Text(
-              formatTimeToString(doseControl.time),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -130,12 +136,14 @@ class DateCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return TableCell(
       verticalAlignment: TableCellVerticalAlignment.middle,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          formatDateToShortString(dailySchedule.date),
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
+      child: FittedBox(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(
+            formatDateToShortString(dailySchedule.date),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
