@@ -48,9 +48,9 @@ class MedicalVisits extends StatelessWidget {
             separatorBuilder: (context, index) => const PetsDivider(),
             itemCount: medicalVisits.length)
         : const Padding(
-      padding: EdgeInsets.all(16),
-      child: Text("No hay visitas médicas registradas."),
-    );
+            padding: EdgeInsets.all(16),
+            child: Text("No hay visitas médicas registradas."),
+          );
   }
 }
 
