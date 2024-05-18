@@ -6,6 +6,14 @@ String formatDateToString(DateTime date) {
   return DateFormat("dd-MM-yy").format(date);
 }
 
+String formatDateToShortString(DateTime date) {
+  return DateFormat("dd-MM").format(date);
+}
+
+String formatTimeToString(DateTime date) {
+  return DateFormat("h:mm a").format(date);
+}
+
 DateTime parseDateTimeStringAsDateTimeFromBack(String date) {
   return DateTime.parse(date);
 }
