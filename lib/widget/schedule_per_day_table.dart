@@ -34,16 +34,16 @@ class SchedulePerDayTable extends StatelessWidget {
       ];
 
       for (var doseControl in dailySchedule.doseControls) {
-        Icon? icon;
+        IconData? iconData;
         if (doseControl.supplied) {
-          icon = const Icon(Icons.check, color: Colors.white);
-        } else {
-          icon = null;
+          iconData = Icons.check;
         }
 
-        double buttonInsetsAll = 24.0;
+        double buttonInsetsAll = 4.0;
+        double iconSize = 20;
         if (calculateDateDifferenceWithToday(doseControl.time) == 0) {
-          buttonInsetsAll = 32.0;
+          buttonInsetsAll = 8.0;
+          iconSize = 40;
         }
 
         cells.add(
@@ -60,7 +60,11 @@ class SchedulePerDayTable extends StatelessWidget {
                       padding: EdgeInsets.all(buttonInsetsAll),
                     ),
                     onPressed: () {},
-                    child: icon,
+                    child: Icon(
+                      iconData,
+                      color: Colors.white,
+                      size: iconSize,
+                    ),
                   ),
                   Text(
                     formatTimeToString(doseControl.time),
@@ -80,26 +84,32 @@ class SchedulePerDayTable extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: Table(
-        border: const TableBorder(
-          horizontalInside: BorderSide(
-            width: 1,
-            color: Colors.purple,
-            style: BorderStyle.solid,
-          ),
-          verticalInside: BorderSide(
-            width: 1,
-            color: Colors.purple,
-            style: BorderStyle.solid,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Table(
+            border: const TableBorder(
+              horizontalInside: BorderSide(
+                width: 1,
+                color: Colors.purple,
+                style: BorderStyle.solid,
+              ),
+              verticalInside: BorderSide(
+                width: 1,
+                color: Colors.purple,
+                style: BorderStyle.solid,
+              ),
+            ),
+            columnWidths: const <int, TableColumnWidth>{
+              0: IntrinsicColumnWidth(),
+              1: FlexColumnWidth(),
+              2: FlexColumnWidth(),
+            },
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            children: rows,
           ),
         ),
-        columnWidths: const <int, TableColumnWidth>{
-          0: IntrinsicColumnWidth(),
-          1: FlexColumnWidth(),
-          2: FlexColumnWidth(),
-        },
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        children: rows,
       ),
     );
   }
