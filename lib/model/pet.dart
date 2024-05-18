@@ -123,12 +123,13 @@ class Pet extends Equatable {
         sex,
         medicalVisits,
         treatments,
+        analyses,
       ];
 }
 
 final Map<String, String> typeOfSex = {
-  PetSex.female.name.toUpperCase(): 'Hembra',
-  PetSex.male.name.toUpperCase(): 'Macho',
+  PetSex.female.name.toUpperCase(): "Hembra",
+  PetSex.male.name.toUpperCase(): "Macho",
 };
 
 enum PetSex {
