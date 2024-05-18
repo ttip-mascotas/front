@@ -1,26 +1,22 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:mascotas/datasource/api.dart';
+import 'package:mascotas/datasource/datasource.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/analysis.dart';
 import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/model/treatment.dart';
 
-class PetsDatasource {
-  final Api api;
-
-  PetsDatasource({required this.api});
+class PetsDatasource extends BaseDatasource {
+  PetsDatasource({required super.api});
 
   Future<Pet> getPet(int id) async {
     try {
       final response = await api.get("/pets/$id");
 
-      return _manageResponse<Pet>(
+      return super.manageResponse<Pet>(
         response,
         parseJson: (json) => Pet.fromJson(json),
         message: "Hubo un error al cargar la información de la mascota",
@@ -34,7 +30,7 @@ class PetsDatasource {
   Future<List<Pet>> getPets() async {
     final response = await api.get("/pets");
 
-    return _manageResponse<List<Pet>>(
+    return super.manageResponse<List<Pet>>(
       response,
       parseJson: (json) =>
           json['results'].map<Pet>((json) => Pet.fromJson(json)).toList(),
@@ -47,7 +43,7 @@ class PetsDatasource {
       final body = pet.toJson();
       final response = await api.post("/pets", body: body);
 
-      return _manageResponse<Pet>(
+      return super.manageResponse<Pet>(
         response,
         parseJson: (json) => Pet.fromJson(json),
         message: "Hubo un problema al registrar la mascota",
@@ -63,7 +59,7 @@ class PetsDatasource {
     final body = medicalVisit.toJson();
     final response = await api.post("/pets/$id/medical-records", body: body);
 
-    return _manageResponse<MedicalVisit>(response,
+    return super.manageResponse<MedicalVisit>(response,
         parseJson: (json) => MedicalVisit.fromJson(json),
         message: "Hubo un problema al registrar la visita médica");
   }
@@ -75,7 +71,7 @@ class PetsDatasource {
       body: body,
     );
 
-    return _manageResponse<Treatment>(response,
+    return super.manageResponse<Treatment>(response,
         parseJson: (json) => Treatment.fromJson(json),
         message: "Hubo un problema al iniciar el tratamiento");
   }
@@ -86,7 +82,7 @@ class PetsDatasource {
         field: 'analysis',
         contentType: MediaType('application', 'pdf'));
 
-    return _manageResponse<Analysis>(response,
+    return super.manageResponse<Analysis>(response,
         parseJson: (json) => Analysis.fromJson(json),
         message: "Hubo un problema al guardar el archivo");
   }
@@ -95,37 +91,16 @@ class PetsDatasource {
     final response = await api.upload("/pets/avatars",
         file: file, field: 'avatar', contentType: MediaType('image', 'jpeg'));
 
-    return _manageResponse<String>(response,
+    return super.manageResponse<String>(response,
         parseJson: (json) => json["url"],
         message: "Hubo un problema al guardar la foto de tu mascota");
   }
-
-  T _manageResponse<T>(Response response,
-      {required T Function(dynamic) parseJson, required String message}) {
-    final Map<String, dynamic> json = jsonDecode(response.body);
-    if (_isSuccessful(response)) {
-      return parseJson(json);
-    }
-    if (_isClientError(response)) {
-      throw DatasourceException(
-        json['message'] ?? json['messages'].first,
-      );
-    } else {
-      throw DatasourceException(message);
-    }
-  }
-
-  bool _isSuccessful(Response response) =>
-      response.statusCode >= 200 && response.statusCode < 300;
-
-  bool _isClientError(Response response) =>
-      response.statusCode >= 400 && response.statusCode < 500;
 
   Future<List<Analysis>> searchAnalysis(String text, int petId) async {
     final response =
         await api.get("/pets/$petId/analyses", queryParameters: {'q': text});
 
-    return _manageResponse<List<Analysis>>(response,
+    return super.manageResponse<List<Analysis>>(response,
         parseJson: (json) => json['results']
             .map<Analysis>((json) => Analysis.fromJson(json))
             .toList(),
