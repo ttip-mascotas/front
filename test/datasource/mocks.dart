@@ -48,7 +48,7 @@ final pet = Pet.fromJson(petMap);
 final Pet petWithMedicalVisits = Pet.fromJson(petMap)
   ..addMedicalVisit(MedicalVisit.fromJson(medicalVisitMap));
 
-final dateTime = formatTimeOfDayToDateTime("05:20 AM");
+final dateTime = parseTimeOfDayStringAsDateTime("05:20 AM");
 
 final treatment = Treatment(
   id: 1,

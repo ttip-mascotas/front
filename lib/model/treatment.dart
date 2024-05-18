@@ -25,7 +25,7 @@ class Treatment extends Equatable {
       : id = json["id"],
         medicine = json["medicine"],
         dose = json["dose"],
-        startDate = formatDateTimeStringToDateTimeFromBack(json["datetime"]),
+        startDate = parseDateTimeStringAsDateTimeFromBack(json["datetime"]),
         numberOfTime = json["numberOfTimes"],
         frequency = json["frequency"],
         schedulesPerDay = _schedulesPerDayFromJson(json["schedulesPerDay"]);

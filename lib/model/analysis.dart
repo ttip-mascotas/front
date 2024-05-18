@@ -18,7 +18,7 @@ class Analysis extends Equatable {
       : id = json['id'],
         name = json['name'],
         size = json['size'],
-        createdAt = formatDateTimeStringToDateTimeFromBack(json['createdAt']);
+        createdAt = parseDateTimeStringAsDateTimeFromBack(json['createdAt']);
 
   @override
   List<Object?> get props => [

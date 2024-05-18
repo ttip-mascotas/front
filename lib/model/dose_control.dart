@@ -14,7 +14,7 @@ class DoseControl extends Equatable {
 
   DoseControl.fromJson(Map<String, dynamic> json)
       : id = json["id"],
-        time = formatDateTimeStringToDateTimeFromBack(json["time"]),
+        time = parseDateTimeStringAsDateTimeFromBack(json["time"]),
         supplied = json["supplied"];
 
   @override

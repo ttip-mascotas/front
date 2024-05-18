@@ -6,20 +6,15 @@ String formatDateToString(DateTime date) {
   return DateFormat("dd-MM-yy").format(date);
 }
 
-DateTime formatDateTimeStringToDateTimeFromBack(String date) {
+DateTime parseDateTimeStringAsDateTimeFromBack(String date) {
   return DateTime.parse(date);
 }
 
-DateTime formatDateStringToDateTime(String date) {
+DateTime parseDateStringAsDateTime(String date) {
   return DateFormat("dd-MM-yy").parse(date);
 }
 
-DateTime formatDateTimeStringToDateTime(String date) {
-  // 2024-05-26T08:00:00
-  return DateFormat("dd-MM-yy").parse(date);
-}
-
-DateTime formatTimeOfDayToDateTime(String timeOfDay) {
+DateTime parseTimeOfDayStringAsDateTime(String timeOfDay) {
   final format = DateFormat("h:mm a");
   final selectedDate = format.parse(timeOfDay);
   final now = DateTime.now();

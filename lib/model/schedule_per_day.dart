@@ -15,7 +15,7 @@ class SchedulePerDay extends Equatable {
 
   SchedulePerDay.fromJson(Map<String, dynamic> json)
       : id = json["id"],
-        date = formatDateTimeStringToDateTimeFromBack(json["date"]),
+        date = parseDateTimeStringAsDateTimeFromBack(json["date"]),
         doseControls = _doseControlsFromJson(json["doseControls"]);
 
   static List<DoseControl> _doseControlsFromJson(List<dynamic>? json) {

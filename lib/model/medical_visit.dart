@@ -20,7 +20,7 @@ class MedicalVisit extends Equatable {
       : id = json['id'],
         specialist = json['specialist'],
         address = json['address'],
-        date = formatDateTimeStringToDateTimeFromBack(json['datetime']),
+        date = parseDateTimeStringAsDateTimeFromBack(json['datetime']),
         observations = json['observations'];
 
   Map<String, dynamic> toJson() => {
