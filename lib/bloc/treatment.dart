@@ -11,8 +11,8 @@ class TreatmentCubit extends Cubit<BlocState> {
 
   Future<void> getTreatment(int id) async {
     try {
-      final pet = await treatmentsDatasource.getTreatment(id);
-      emit(Loaded(value: pet));
+      final treatment = await treatmentsDatasource.getTreatment(id);
+      emit(Loaded(value: treatment));
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));
     } catch (error) {
