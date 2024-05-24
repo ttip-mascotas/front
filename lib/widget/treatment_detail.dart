@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mascotas/model/treatment.dart';
-import 'package:mascotas/widget/schedule_per_day_table.dart';
+import 'package:mascotas/widget/treatment_logs_table.dart';
 
 class TreatmentDetail extends StatelessWidget {
   final Treatment treatment;
@@ -23,8 +23,7 @@ class TreatmentDetail extends StatelessWidget {
         ),
         Expanded(
           child: SingleChildScrollView(
-            child: SchedulePerDayTable(
-                dailySchedules: treatment.schedulesPerDay),
+            child: TreatmentLogsTable(treatmentLogs: treatment.logs),
           ),
         ),
       ],

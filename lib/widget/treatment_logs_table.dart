@@ -1,39 +1,41 @@
 import 'dart:math';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:mascotas/model/dose_control.dart';
-import 'package:mascotas/model/schedule_per_day.dart';
+import 'package:mascotas/model/treatment_log.dart';
 import 'package:mascotas/utils/format.dart';
 
-class SchedulePerDayTable extends StatelessWidget {
-  final List<SchedulePerDay> dailySchedules;
+class TreatmentLogsTable extends StatelessWidget {
+  final List<TreatmentLog> treatmentLogs;
 
-  const SchedulePerDayTable({super.key, required this.dailySchedules});
+  const TreatmentLogsTable({super.key, required this.treatmentLogs});
 
   @override
   Widget build(BuildContext context) {
-    final int doseControlsRowLength = dailySchedules
-        .map((schedulePerDay) => schedulePerDay.doseControls.length)
+    final Map<DateTime, List<TreatmentLog>> treatmentLogsGroupedByDate =
+        groupBy(treatmentLogs, (TreatmentLog log) {
+      return DateTime(log.datetime.year, log.datetime.month, log.datetime.day);
+    });
+
+    final int treatmentLogsRowLength = treatmentLogsGroupedByDate.entries
+        .map((entry) => entry.value.length)
         .reduce(max);
 
-    final List<TableRow> rows = List.generate(
-      dailySchedules.length,
-      (index) {
-        final dailySchedule = dailySchedules[index];
-        final doseControls = dailySchedule.doseControls;
+    final List<TableRow> rows = treatmentLogsGroupedByDate.entries.map((entry) {
+      final date = entry.key;
+      final treatmentLogs = entry.value;
 
-        final dateCell = DateCell(dailySchedule: dailySchedule);
+      final dateCell = DateCell(date: date);
 
-        final doseControlsCells = List.generate(doseControlsRowLength, (index) {
-          if (index < doseControls.length) {
-            return DoseControlCell(doseControl: doseControls[index]);
-          }
-          return const TableCell(child: SizedBox());
-        });
+      final treatmentLogCells = List.generate(treatmentLogsRowLength, (index) {
+        if (index < treatmentLogs.length) {
+          return TreatmentLogCell(treatmentLog: treatmentLogs[index]);
+        }
+        return const TableCell(child: SizedBox());
+      });
 
-        return TableRow(children: [dateCell, ...doseControlsCells]);
-      },
-    );
+      return TableRow(children: [dateCell, ...treatmentLogCells]);
+    }).toList();
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -61,24 +63,24 @@ class SchedulePerDayTable extends StatelessWidget {
   }
 }
 
-class DoseControlCell extends StatelessWidget {
-  const DoseControlCell({
+class TreatmentLogCell extends StatelessWidget {
+  const TreatmentLogCell({
     super.key,
-    required this.doseControl,
+    required this.treatmentLog,
   });
 
-  final DoseControl doseControl;
+  final TreatmentLog treatmentLog;
 
   @override
   Widget build(BuildContext context) {
     IconData? iconData;
-    if (doseControl.supplied) {
+    if (treatmentLog.administered) {
       iconData = Icons.check;
     }
 
     double buttonInsetsAll = 4.0;
     double iconSize = 20;
-    if (calculateDateDifferenceWithToday(doseControl.time) == 0) {
+    if (calculateDateDifferenceWithToday(treatmentLog.datetime) == 0) {
       buttonInsetsAll = 8.0;
       iconSize = 40;
     }
@@ -104,7 +106,7 @@ class DoseControlCell extends StatelessWidget {
                 ),
               ),
               Text(
-                formatTimeToString(doseControl.time),
+                formatTimeToString(treatmentLog.datetime),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -127,10 +129,10 @@ class DoseControlCell extends StatelessWidget {
 class DateCell extends StatelessWidget {
   const DateCell({
     super.key,
-    required this.dailySchedule,
+    required this.date,
   });
 
-  final SchedulePerDay dailySchedule;
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +142,7 @@ class DateCell extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            formatDateToShortString(dailySchedule.date),
+            formatDateToShortString(date),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
