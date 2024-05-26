@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
@@ -9,13 +8,17 @@ import 'package:mascotas/model/analysis.dart';
 import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/model/treatment.dart';
+import 'package:mascotas/notifications/notifier.dart';
 import 'package:mascotas/utils/format.dart';
 import 'package:mascotas/utils/try_catch_form_exception.dart';
 
 class PetCubit extends Cubit<BlocState> {
   final PetsDatasource petsDatasource;
 
-  PetCubit({required this.petsDatasource}) : super(Loading());
+  final Notifier notifier;
+
+  PetCubit({required this.petsDatasource, required this.notifier})
+      : super(Loading());
 
   Future<void> getPet(int id) async {
     try {
@@ -73,10 +76,23 @@ class PetCubit extends Cubit<BlocState> {
         final treatmentFromResponse =
             await petsDatasource.startTreatment(treatment, pet.id);
         pet.startTreatment(treatmentFromResponse);
+        scheduledNotification(treatmentFromResponse);
         emit(Loading());
         emit(Loaded(value: pet));
       }
     });
+  }
+
+  void scheduledNotification(Treatment treatment) {
+    DateTime dateTime = DateTime.now().add(const Duration(minutes: 2));
+    for (var i = 1; i <= treatment.numberOfTime; i++) {
+      notifier.scheduleTreatmentNotification(
+          id: i,
+          scheduledDate: dateTime,
+          medicine: treatment.medicine,
+          dose: treatment.dose);
+      dateTime = dateTime.add(Duration(minutes: treatment.frequency));
+    }
   }
 
   Future<void> uploadAnalysis(File file) async {

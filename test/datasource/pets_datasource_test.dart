@@ -2,13 +2,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mascotas/datasource/api.dart';
 import 'package:mascotas/datasource/pets_datasource.dart';
+import 'package:mascotas/notifications/notifier.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'mocks.dart';
 import 'pets_datasource_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<Api>()])
+@GenerateNiceMocks([MockSpec<Api>(), MockSpec<Notifier>()])
 void main() {
   late MockApi mockApi;
 
