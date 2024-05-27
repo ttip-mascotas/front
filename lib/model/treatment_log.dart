@@ -1,0 +1,26 @@
+import 'package:equatable/equatable.dart';
+import 'package:mascotas/utils/format.dart';
+
+class TreatmentLog extends Equatable {
+  final int id;
+  final DateTime datetime;
+  final bool administered;
+
+  const TreatmentLog({
+    required this.id,
+    required this.datetime,
+    required this.administered,
+  });
+
+  TreatmentLog.fromJson(Map<String, dynamic> json)
+      : id = json["id"],
+        datetime = parseDateTimeStringAsDateTimeFromBack(json["datetime"]),
+        administered = json["administered"];
+
+  @override
+  List<Object?> get props => [
+        id,
+        datetime,
+        administered,
+      ];
+}

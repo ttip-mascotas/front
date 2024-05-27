@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:mascotas/model/schedule_per_day.dart';
+import 'package:mascotas/model/treatment_log.dart';
 import 'package:mascotas/utils/format.dart';
 
 class Treatment extends Equatable {
@@ -9,7 +9,7 @@ class Treatment extends Equatable {
   final String medicine;
   final int numberOfTime;
   final int frequency;
-  final List<SchedulePerDay> schedulesPerDay;
+  final List<TreatmentLog> logs;
 
   Treatment({
     this.id,
@@ -18,8 +18,8 @@ class Treatment extends Equatable {
     required this.dose,
     required this.numberOfTime,
     required this.frequency,
-    List<SchedulePerDay>? schedulesPerDay,
-  }) : schedulesPerDay = schedulesPerDay ?? [];
+    List<TreatmentLog>? logs,
+  }) : logs = logs ?? [];
 
   Treatment.fromJson(Map<String, dynamic> json)
       : id = json["id"],
@@ -28,12 +28,12 @@ class Treatment extends Equatable {
         startDate = parseDateTimeStringAsDateTimeFromBack(json["datetime"]),
         numberOfTime = json["numberOfTimes"],
         frequency = json["frequency"],
-        schedulesPerDay = _schedulesPerDayFromJson(json["schedulesPerDay"]);
+        logs = _logsFromJson(json["logs"]);
 
-  static List<SchedulePerDay> _schedulesPerDayFromJson(List<dynamic>? json) {
+  static List<TreatmentLog> _logsFromJson(List<dynamic>? json) {
     if (json != null) {
       return json
-          .map<SchedulePerDay>((json) => SchedulePerDay.fromJson(json))
+          .map<TreatmentLog>((json) => TreatmentLog.fromJson(json))
           .toList();
     }
     return [];
@@ -55,6 +55,6 @@ class Treatment extends Equatable {
         medicine,
         numberOfTime,
         frequency,
-        schedulesPerDay,
+        logs,
       ];
 }
