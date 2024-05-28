@@ -15,7 +15,9 @@ class Notifier {
         InitializationSettings(
       android: initializationSettingsAndroid,
     );
-    flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+    );
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
   }
@@ -60,5 +62,14 @@ class Notifier {
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
     );
+  }
+
+  Future<NotificationResponse?> notificationResponse() async {
+    NotificationAppLaunchDetails? launchDetails =
+        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    if (launchDetails != null) {
+      return launchDetails.notificationResponse;
+    }
+    return null;
   }
 }
