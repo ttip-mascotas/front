@@ -84,14 +84,14 @@ class PetCubit extends Cubit<BlocState> {
   }
 
   void scheduledNotification(Treatment treatment) {
-    DateTime dateTime = DateTime.now().add(const Duration(minutes: 2));
-    for (var i = 1; i <= treatment.numberOfTime; i++) {
+    DateTime dateTime = treatment.startDate;
+    for (var i = 0; i < treatment.numberOfTime; i++) {
       notifier.scheduleTreatmentNotification(
           id: i,
           scheduledDate: dateTime,
           medicine: treatment.medicine,
           dose: treatment.dose);
-      dateTime = dateTime.add(Duration(minutes: treatment.frequency));
+      dateTime = dateTime.add(Duration(hours: treatment.frequency));
     }
   }
 

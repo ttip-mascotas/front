@@ -23,17 +23,22 @@ DateTime parseDateStringAsDateTime(String date) {
 }
 
 DateTime parseTimeOfDayStringAsDateTime(String timeOfDay) {
-  final format = DateFormat("h:mm a");
-  final selectedDate = format.parse(timeOfDay);
+  final format = DateFormat("HH:mm a");
+  final selectedTime = format.parse(timeOfDay);
   final now = DateTime.now();
-
-  return DateTime(
+  final selectedDate = DateTime(
     now.year,
     now.month,
-    now.day + 1,
-    selectedDate.hour,
-    selectedDate.minute,
+    now.day,
+    selectedTime.hour,
+    selectedTime.minute,
   );
+
+  if (now.isBefore(selectedDate)) {
+    return selectedDate;
+  }
+
+  return selectedDate.add(const Duration(days: 1));
 }
 
 String formatBytes(int bytes, int decimals) {
