@@ -88,6 +88,7 @@ class TreatmentLogCell extends StatelessWidget {
     return TableCell(
       verticalAlignment: TableCellVerticalAlignment.middle,
       child: FittedBox(
+        fit: BoxFit.scaleDown,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(

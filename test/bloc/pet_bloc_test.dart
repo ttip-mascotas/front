@@ -17,10 +17,12 @@ import '../datasource/pets_datasource_test.mocks.dart';
 void main() {
   late MockApi mockApi;
   late PetsDatasource petsDataSource;
+  late MockNotifier notifier;
   const int petId = 1;
 
   setUp(() {
     mockApi = MockApi();
+    notifier = MockNotifier();
     petsDataSource = PetsDatasource(api: mockApi);
   });
 
@@ -33,7 +35,7 @@ void main() {
         ),
       ).thenAnswer((_) async => Response(petJson, 200));
     },
-    build: () => PetCubit(petsDatasource: petsDataSource),
+    build: () => PetCubit(petsDatasource: petsDataSource, notifier: notifier),
     act: (cubit) => cubit.getPet(1),
     expect: () => [
       Loaded(value: Pet.fromJson(jsonDecode(petJson))),
@@ -49,7 +51,7 @@ void main() {
         ),
       ).thenAnswer((_) async => throw Exception("Algo salió mal"));
     },
-    build: () => PetCubit(petsDatasource: petsDataSource),
+    build: () => PetCubit(petsDatasource: petsDataSource, notifier: notifier),
     act: (cubit) => cubit.getPet(petId),
     expect: () => [Error(message: "Ocurrió un error inesperado")],
   );
@@ -68,7 +70,7 @@ void main() {
             body: medicalVisit.toJson()),
       ).thenAnswer((_) async => Response(medicalVisitJson, 200));
     },
-    build: () => PetCubit(petsDatasource: petsDataSource)..getPet(petId),
+    build: () => PetCubit(petsDatasource: petsDataSource, notifier: notifier)..getPet(petId),
     act: (cubit) async {
       await cubit.getPet(petId);
       return await cubit.addMedicalVisit(
@@ -98,7 +100,7 @@ void main() {
             body: medicalVisit.toJson()),
       ).thenAnswer((_) async => throw Exception("Algo salió mal"));
     },
-    build: () => PetCubit(petsDatasource: petsDataSource)..getPet(petId),
+    build: () => PetCubit(petsDatasource: petsDataSource, notifier: notifier)..getPet(petId),
     act: (cubit) async {
       await cubit.getPet(petId);
       return await cubit.addMedicalVisit(
@@ -126,7 +128,7 @@ void main() {
         mockApi.post("/pets/$petId/treatments", body: treatment.toJson()),
       ).thenAnswer((_) async => Response(treatmentJson, 200));
     },
-    build: () => PetCubit(petsDatasource: petsDataSource),
+    build: () => PetCubit(petsDatasource: petsDataSource, notifier: notifier),
     act: (cubit) async {
       await cubit.getPet(petId);
       return await cubit.startTreatment(
@@ -156,7 +158,7 @@ void main() {
         mockApi.post("/pets/$petId/treatments", body: treatment.toJson()),
       ).thenAnswer((_) async => throw Exception("Algo salió mal"));
     },
-    build: () => PetCubit(petsDatasource: petsDataSource),
+    build: () => PetCubit(petsDatasource: petsDataSource, notifier: notifier),
     act: (cubit) async {
       await cubit.getPet(petId);
       return await cubit.startTreatment(

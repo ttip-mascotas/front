@@ -3,14 +3,18 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
-import 'dart:convert' as _i5;
-import 'dart:io' as _i6;
+import 'dart:async' as _i5;
+import 'dart:convert' as _i6;
+import 'dart:io' as _i7;
 
+import 'package:flutter_local_notifications/flutter_local_notifications.dart'
+    as _i3;
 import 'package:http/http.dart' as _i2;
-import 'package:http_parser/http_parser.dart' as _i7;
-import 'package:mascotas/datasource/api.dart' as _i3;
+import 'package:http_parser/http_parser.dart' as _i8;
+import 'package:mascotas/datasource/api.dart' as _i4;
+import 'package:mascotas/notifications/notifier.dart' as _i9;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i10;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -35,12 +39,23 @@ class _FakeResponse_0 extends _i1.SmartFake implements _i2.Response {
         );
 }
 
+class _FakeFlutterLocalNotificationsPlugin_1 extends _i1.SmartFake
+    implements _i3.FlutterLocalNotificationsPlugin {
+  _FakeFlutterLocalNotificationsPlugin_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [Api].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockApi extends _i1.Mock implements _i3.Api {
+class MockApi extends _i1.Mock implements _i4.Api {
   @override
-  _i4.Future<_i2.Response> get(
+  _i5.Future<_i2.Response> get(
     String? path, {
     Map<String, String>? headers,
     Map<String, dynamic>? queryParameters,
@@ -54,7 +69,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
             #queryParameters: queryParameters,
           },
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i5.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #get,
@@ -66,7 +81,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Response>.value(_FakeResponse_0(
+            _i5.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #get,
@@ -77,14 +92,14 @@ class MockApi extends _i1.Mock implements _i3.Api {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Response>);
+      ) as _i5.Future<_i2.Response>);
 
   @override
-  _i4.Future<_i2.Response> post(
+  _i5.Future<_i2.Response> post(
     String? path, {
     Map<String, String>? headers,
     Object? body,
-    _i5.Encoding? encoding,
+    _i6.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -96,7 +111,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
             #encoding: encoding,
           },
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i5.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #post,
@@ -109,7 +124,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Response>.value(_FakeResponse_0(
+            _i5.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #post,
@@ -121,14 +136,14 @@ class MockApi extends _i1.Mock implements _i3.Api {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Response>);
+      ) as _i5.Future<_i2.Response>);
 
   @override
-  _i4.Future<_i2.Response> upload(
+  _i5.Future<_i2.Response> upload(
     String? path, {
-    required _i6.File? file,
+    required _i7.File? file,
     required String? field,
-    _i7.MediaType? contentType,
+    _i8.MediaType? contentType,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -140,7 +155,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
             #contentType: contentType,
           },
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i5.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #upload,
@@ -153,7 +168,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Response>.value(_FakeResponse_0(
+            _i5.Future<_i2.Response>.value(_FakeResponse_0(
           this,
           Invocation.method(
             #upload,
@@ -165,5 +180,114 @@ class MockApi extends _i1.Mock implements _i3.Api {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Response>);
+      ) as _i5.Future<_i2.Response>);
+}
+
+/// A class which mocks [Notifier].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockNotifier extends _i1.Mock implements _i9.Notifier {
+  @override
+  _i3.FlutterLocalNotificationsPlugin get flutterLocalNotificationsPlugin =>
+      (super.noSuchMethod(
+        Invocation.getter(#flutterLocalNotificationsPlugin),
+        returnValue: _FakeFlutterLocalNotificationsPlugin_1(
+          this,
+          Invocation.getter(#flutterLocalNotificationsPlugin),
+        ),
+        returnValueForMissingStub: _FakeFlutterLocalNotificationsPlugin_1(
+          this,
+          Invocation.getter(#flutterLocalNotificationsPlugin),
+        ),
+      ) as _i3.FlutterLocalNotificationsPlugin);
+
+  @override
+  set flutterLocalNotificationsPlugin(
+          _i3.FlutterLocalNotificationsPlugin?
+              _flutterLocalNotificationsPlugin) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #flutterLocalNotificationsPlugin,
+          _flutterLocalNotificationsPlugin,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  String get channelId => (super.noSuchMethod(
+        Invocation.getter(#channelId),
+        returnValue: _i10.dummyValue<String>(
+          this,
+          Invocation.getter(#channelId),
+        ),
+        returnValueForMissingStub: _i10.dummyValue<String>(
+          this,
+          Invocation.getter(#channelId),
+        ),
+      ) as String);
+
+  @override
+  String get channelName => (super.noSuchMethod(
+        Invocation.getter(#channelName),
+        returnValue: _i10.dummyValue<String>(
+          this,
+          Invocation.getter(#channelName),
+        ),
+        returnValueForMissingStub: _i10.dummyValue<String>(
+          this,
+          Invocation.getter(#channelName),
+        ),
+      ) as String);
+
+  @override
+  _i5.Future<void> requestNotificationsPermission() => (super.noSuchMethod(
+        Invocation.method(
+          #requestNotificationsPermission,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  void scheduleTreatmentNotification({
+    required int? id,
+    required DateTime? scheduledDate,
+    required String? medicine,
+    required String? dose,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #scheduleTreatmentNotification,
+          [],
+          {
+            #id: id,
+            #scheduledDate: scheduledDate,
+            #medicine: medicine,
+            #dose: dose,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void scheduleNotification({
+    required int? id,
+    required String? title,
+    required String? body,
+    required DateTime? scheduledDate,
+  }) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #scheduleNotification,
+          [],
+          {
+            #id: id,
+            #title: title,
+            #body: body,
+            #scheduledDate: scheduledDate,
+          },
+        ),
+        returnValueForMissingStub: null,
+      );
 }
