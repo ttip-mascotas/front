@@ -66,6 +66,7 @@ final treatmentMap = {
   "datetime": dateTime.toIso8601String(),
   "numberOfTimes": 10,
   "frequency": 8,
+  "logs": [],
 };
 
 final String treatmentJson = jsonEncode(treatmentMap);
