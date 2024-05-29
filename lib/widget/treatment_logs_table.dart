@@ -39,27 +39,27 @@ class TreatmentLogsTable extends StatelessWidget {
       return TableRow(children: [dateCell, ...treatmentLogCells]);
     }).toList();
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Table(
-        defaultColumnWidth: const FlexColumnWidth(),
-        border: const TableBorder(
-          horizontalInside: BorderSide(
-            width: 1,
-            color: Colors.purple,
-            style: BorderStyle.solid,
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Table(
+          defaultColumnWidth: const IntrinsicColumnWidth(),
+          border: const TableBorder(
+            horizontalInside: BorderSide(
+              width: 1,
+              color: Colors.purple,
+              style: BorderStyle.solid,
+            ),
+            verticalInside: BorderSide(
+              width: 1,
+              color: Colors.purple,
+              style: BorderStyle.solid,
+            ),
           ),
-          verticalInside: BorderSide(
-            width: 1,
-            color: Colors.purple,
-            style: BorderStyle.solid,
-          ),
+          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+          children: rows,
         ),
-        columnWidths: const <int, TableColumnWidth>{
-          0: IntrinsicColumnWidth(),
-        },
-        defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-        children: rows,
       ),
     );
   }
@@ -80,48 +80,45 @@ class TreatmentLogCell extends StatelessWidget {
 
     return TableCell(
       verticalAlignment: TableCellVerticalAlignment.middle,
-      child: FittedBox(
-        fit: BoxFit.scaleDown,
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: GestureDetector(
-                  onTap: isActivated
-                      ? () {
-                          context
-                              .read<TreatmentCubit>()
-                              .checkTreatmentLog(treatmentLog.id);
-                        }
-                      : null,
-                  child: Container(
-                    height: size,
-                    width: size,
-                    decoration: BoxDecoration(
-                      color: Colors.purple.shade200,
-                      shape: BoxShape.circle,
-                    ),
-                    child: treatmentLog.administered
-                        ? const Icon(
-                            Icons.check,
-                            color: Colors.white,
-                            size: 20,
-                          )
-                        : null,
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                onTap: isActivated
+                    ? () {
+                        context
+                            .read<TreatmentCubit>()
+                            .checkTreatmentLog(treatmentLog.id);
+                      }
+                    : null,
+                child: Container(
+                  height: size,
+                  width: size,
+                  decoration: BoxDecoration(
+                    color: Colors.purple.shade200,
+                    shape: BoxShape.circle,
                   ),
+                  child: treatmentLog.administered
+                      ? const Icon(
+                          Icons.check,
+                          color: Colors.white,
+                          size: 20,
+                        )
+                      : null,
                 ),
               ),
-              Text(
-                formatTimeToString(treatmentLog.datetime),
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
+            ),
+            Text(
+              formatTimeToString(treatmentLog.datetime),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
