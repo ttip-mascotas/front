@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mascotas/bloc/treatment_cubit.dart';
 import 'package:mascotas/model/treatment_log.dart';
 import 'package:mascotas/utils/format.dart';
 
@@ -73,37 +75,43 @@ class TreatmentLogCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    IconData? iconData;
-    if (treatmentLog.administered) {
-      iconData = Icons.check;
-    }
-
-    double buttonInsetsAll = 4.0;
-    double iconSize = 20;
-    if (calculateDateDifferenceWithToday(treatmentLog.datetime) == 0) {
-      buttonInsetsAll = 8.0;
-      iconSize = 40;
-    }
+    final bool isActivated = dateIsBeforeNow(treatmentLog.datetime);
+    final double size = isActivated ? 40 : 20;
 
     return TableCell(
       verticalAlignment: TableCellVerticalAlignment.middle,
       child: FittedBox(
         fit: BoxFit.scaleDown,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(12.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: const CircleBorder(),
-                  padding: EdgeInsets.all(buttonInsetsAll),
-                ),
-                onPressed: () {},
-                child: Icon(
-                  iconData,
-                  color: Colors.white,
-                  size: iconSize,
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: GestureDetector(
+                  onTap: isActivated
+                      ? () {
+                          context
+                              .read<TreatmentCubit>()
+                              .checkTreatmentLog(treatmentLog.id);
+                        }
+                      : null,
+                  child: Container(
+                    height: size,
+                    width: size,
+                    decoration: BoxDecoration(
+                      color: Colors.purple.shade200,
+                      shape: BoxShape.circle,
+                    ),
+                    child: treatmentLog.administered
+                        ? const Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 20,
+                          )
+                        : null,
+                  ),
                 ),
               ),
               Text(
@@ -119,11 +127,9 @@ class TreatmentLogCell extends StatelessWidget {
     );
   }
 
-  int calculateDateDifferenceWithToday(DateTime date) {
+  bool dateIsBeforeNow(DateTime date) {
     DateTime now = DateTime.now();
-    return DateTime(date.year, date.month, date.day)
-        .difference(DateTime(now.year, now.month, now.day))
-        .inDays;
+    return date.isBefore(now);
   }
 }
 
@@ -139,14 +145,12 @@ class DateCell extends StatelessWidget {
   Widget build(BuildContext context) {
     return TableCell(
       verticalAlignment: TableCellVerticalAlignment.middle,
-      child: FittedBox(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            formatDateToShortString(date),
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-            ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          formatDateToShortString(date),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
