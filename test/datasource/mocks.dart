@@ -77,6 +77,7 @@ final analysis = Analysis(
   name: 'ejemplo.pdf',
   size: 1,
   createdAt: DateTime(2023, 1, 1),
+  url: 'example.com',
 );
 
 final analysisMap = {
@@ -86,6 +87,7 @@ final analysisMap = {
       "name": 'ejemplo.pdf',
       "size": 1,
       "createdAt": DateTime(2023, 1, 1).toIso8601String(),
+      "url": 'example.com',
     }
   ]
 };

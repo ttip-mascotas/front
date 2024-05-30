@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:mascotas/utils/format_url.dart';
 
 class Avatar extends StatelessWidget {
   final double radius;
@@ -36,13 +37,9 @@ class Avatar extends StatelessWidget {
   }
 
   static NetworkImage? getImageFromUrl(String url) {
-    const host = "10.0.2.2";
     return url.isNotEmpty
         ? NetworkImage(
-            url
-                .replaceFirst("localhost", host)
-                .replaceFirst("127.0.0.1", host)
-                .replaceFirst("minio", host),
+            formatUrl(url),
           )
         : null;
   }

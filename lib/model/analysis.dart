@@ -6,11 +6,13 @@ class Analysis extends Equatable {
   final String name;
   final int size;
   final DateTime createdAt;
+  final String url;
 
   const Analysis({
     required this.name,
     required this.size,
     required this.createdAt,
+    required this.url,
     this.id,
   });
 
@@ -18,6 +20,7 @@ class Analysis extends Equatable {
       : id = json['id'],
         name = json['name'],
         size = json['size'],
+        url = json['url'],
         createdAt = parseDateTimeStringAsDateTimeFromBack(json['createdAt']);
 
   @override
@@ -26,5 +29,6 @@ class Analysis extends Equatable {
         name,
         size,
         createdAt,
+        url,
       ];
 }
