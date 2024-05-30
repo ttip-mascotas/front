@@ -4,6 +4,7 @@ import 'package:mascotas/model/analysis.dart';
 import 'package:mascotas/model/medical_visit.dart';
 import 'package:mascotas/model/pet.dart';
 import 'package:mascotas/model/treatment.dart';
+import 'package:mascotas/model/treatment_log.dart';
 import 'package:mascotas/utils/format.dart';
 
 final Map<String, dynamic> petMap = {
@@ -92,3 +93,33 @@ final analysisMap = {
 };
 
 final String analysisJson = jsonEncode(analysisMap);
+
+final treatmentLog = TreatmentLog(
+  id: 1,
+  datetime: DateTime(2023, 1, 1),
+  administered: true,
+);
+
+final treatmentLogMap = {
+  "id": 1,
+  "datetime": DateTime(2023, 1, 1).toIso8601String(),
+  "administered": true,
+};
+
+final String treatmentLogJson = jsonEncode(treatmentLogMap);
+
+final treatmentWithLogMap = {
+  "id": 1,
+  "medicine": "Tramadol",
+  "dose": "1/4",
+  "datetime": dateTime.toIso8601String(),
+  "numberOfTimes": 10,
+  "frequency": 8,
+  "logs": [
+    treatmentLogMap,
+  ],
+};
+
+final String treatmentWithLogMapJson = jsonEncode(treatmentWithLogMap);
+
+final Treatment treatmentWithTreatmentLog = Treatment.fromJson(treatmentLogMap);

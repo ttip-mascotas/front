@@ -23,21 +23,20 @@ class TreatmentCubit extends Cubit<BlocState> {
     }
   }
 
-  void checkTreatmentLog(int treatmentLogId) async {
+  Future<void> checkTreatmentLog(int treatmentLogId) async {
     try {
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
         final Treatment treatment = currentState.value;
+        emit(Loading());
         final TreatmentLog treatmentLog = treatment.logs
             .firstWhere((treatmentLog) => treatmentLog.id == treatmentLogId);
-        treatmentLog.check();
-        emit(Loading());
-        //TODO: descomentar esta linea cuando este disponible el endpoint
-        /*final treatmentResponse = await treatmentsDatasource.checkTreatmentLog(
-        treatment.id!,
-        treatmentLog,
-      );*/
-        emit(Loaded(value: treatment));
+        final treatmentResponse = await treatmentsDatasource.checkTreatmentLog(
+          treatment.id!,
+          treatmentLog.id,
+          !treatmentLog.administered
+        );
+        emit(Loaded(value: treatmentResponse));
       }
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));

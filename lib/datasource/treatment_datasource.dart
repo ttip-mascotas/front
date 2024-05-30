@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:mascotas/datasource/datasource.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/treatment.dart';
-import 'package:mascotas/model/treatment_log.dart';
 
 class TreatmentsDatasource extends BaseDatasource {
   TreatmentsDatasource({required super.api});
@@ -23,14 +22,14 @@ class TreatmentsDatasource extends BaseDatasource {
     }
   }
 
-  Future<Treatment> checkTreatmentLog(int id, TreatmentLog treatmentLog) async {
+  Future<Treatment> checkTreatmentLog(int id, int treatmentLogId, bool administered) async {
     try {
       final body = {
-        'administered': treatmentLog.administered,
+        'administered': administered,
       };
 
-      final response = await api.post(
-        "/treatments/$id/log/${treatmentLog.id}",
+      final response = await api.put(
+        "/treatments/$id/logs/$treatmentLogId",
         body: body,
       );
 

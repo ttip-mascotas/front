@@ -139,6 +139,50 @@ class MockApi extends _i1.Mock implements _i4.Api {
       ) as _i5.Future<_i2.Response>);
 
   @override
+  _i5.Future<_i2.Response> put(
+    String? path, {
+    Map<String, String>? headers,
+    Object? body,
+    _i6.Encoding? encoding,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #put,
+          [path],
+          {
+            #headers: headers,
+            #body: body,
+            #encoding: encoding,
+          },
+        ),
+        returnValue: _i5.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #put,
+            [path],
+            {
+              #headers: headers,
+              #body: body,
+              #encoding: encoding,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i5.Future<_i2.Response>.value(_FakeResponse_0(
+          this,
+          Invocation.method(
+            #put,
+            [path],
+            {
+              #headers: headers,
+              #body: body,
+              #encoding: encoding,
+            },
+          ),
+        )),
+      ) as _i5.Future<_i2.Response>);
+
+  @override
   _i5.Future<_i2.Response> upload(
     String? path, {
     required _i7.File? file,
@@ -290,4 +334,16 @@ class MockNotifier extends _i1.Mock implements _i9.Notifier {
         ),
         returnValueForMissingStub: null,
       );
+
+  @override
+  _i5.Future<_i3.NotificationResponse?> notificationResponse() =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #notificationResponse,
+          [],
+        ),
+        returnValue: _i5.Future<_i3.NotificationResponse?>.value(),
+        returnValueForMissingStub:
+            _i5.Future<_i3.NotificationResponse?>.value(),
+      ) as _i5.Future<_i3.NotificationResponse?>);
 }
