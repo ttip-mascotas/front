@@ -24,6 +24,15 @@ class Api {
         headers: headers, body: jsonEncode(body), encoding: encoding);
   }
 
+  Future<http.Response> put(String path,
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) {
+    headers ??= {};
+    headers[HttpHeaders.contentTypeHeader] = 'application/json; charset=UTF-8';
+
+    return http.put(_getUrl(path),
+        headers: headers, body: jsonEncode(body), encoding: encoding);
+  }
+
   Uri _getUrl(String path, {Map<String, dynamic>? queryParameters}) {
     return Uri.http(_baseURL(), path, queryParameters);
   }

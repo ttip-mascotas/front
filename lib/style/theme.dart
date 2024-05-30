@@ -10,8 +10,8 @@ final colorScheme = ColorScheme.fromSeed(seedColor: Colors.purple);
 
 final elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
-    backgroundColor: MaterialStatePropertyAll(Colors.purple.shade200),
-    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+    backgroundColor: WidgetStatePropertyAll(Colors.purple.shade200),
+    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),

@@ -26,7 +26,7 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Column(
           children: [
             SearchBar(
-              padding: const MaterialStatePropertyAll<EdgeInsets>(
+              padding: const WidgetStatePropertyAll<EdgeInsets>(
                 EdgeInsets.symmetric(horizontal: 16.0),
               ),
               onSubmitted: searchAnalysis,
