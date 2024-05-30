@@ -47,6 +47,11 @@ class Treatment extends Equatable {
         "frequency": frequency,
       };
 
+  TreatmentLog findTreatmentLogWithId(int treatmentLogId) {
+    return logs
+        .firstWhere((treatmentLog) => treatmentLog.id == treatmentLogId);
+  }
+
   @override
   List<Object?> get props => [
         id,

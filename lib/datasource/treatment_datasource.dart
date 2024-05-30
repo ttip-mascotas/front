@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:mascotas/datasource/datasource.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/treatment.dart';
+import 'package:mascotas/model/treatment_log.dart';
 
 class TreatmentsDatasource extends BaseDatasource {
   TreatmentsDatasource({required super.api});
@@ -22,7 +23,7 @@ class TreatmentsDatasource extends BaseDatasource {
     }
   }
 
-  Future<Treatment> checkTreatmentLog(int id, int treatmentLogId, bool administered) async {
+  Future<TreatmentLog> checkTreatmentLog(int id, int treatmentLogId, bool administered) async {
     try {
       final body = {
         'administered': administered,
@@ -33,9 +34,9 @@ class TreatmentsDatasource extends BaseDatasource {
         body: body,
       );
 
-      return super.manageResponse<Treatment>(
+      return super.manageResponse<TreatmentLog>(
         response,
-        parseJson: (json) => Treatment.fromJson(json),
+        parseJson: (json) => TreatmentLog.fromJson(json),
         message: "Hubo un error al registrar el avance del tratamiento",
       );
     } on TimeoutException {

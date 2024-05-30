@@ -58,17 +58,17 @@ void main() {
         mockApi.get(
           any,
         ),
-      ).thenAnswer((_) async => Response(treatmentWithLogMapJson, 200));
+      ).thenAnswer((_) async => Response(treatmentWithLogJson, 200));
       when(
         mockApi.post(
           any,
         ),
-      ).thenAnswer((_) async => Response(treatmentWithLogMapJson, 200));
+      ).thenAnswer((_) async => Response(treatmentLogJson, 200));
     },
     build: () => TreatmentCubit(treatmentsDatasource: treatmentDatasource)..getTreatment(1),
     act: (cubit) => cubit.checkTreatmentLog(1),
     expect: () => [
-      Loaded(value: Treatment.fromJson(jsonDecode(treatmentWithLogMapJson))),
+      Loaded(value: Treatment.fromJson(jsonDecode(treatmentWithLogJson))),
     ],
   );
 
@@ -76,7 +76,7 @@ void main() {
     "Al registrar el avance de un tratamiento algo sale mal y obtengo un error",
     setUp: () {
       when(mockApi.get("/treatments/1"))
-          .thenAnswer((_) async => Response(treatmentWithLogMapJson, 200));
+          .thenAnswer((_) async => Response(treatmentWithLogJson, 200));
       when(mockApi.put(
         "/treatments/1/logs/1",
         body: {'administered': false},
@@ -88,8 +88,7 @@ void main() {
       await cubit.checkTreatmentLog(1);
     },
     expect: () => [
-      Loaded(value: Treatment.fromJson(jsonDecode(treatmentWithLogMapJson))),
-      Loading(),
+      Loaded(value: Treatment.fromJson(jsonDecode(treatmentWithLogJson))),
       Error(message: "Ocurrió un error inesperado"),
     ],
   );

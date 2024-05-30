@@ -120,6 +120,6 @@ final treatmentWithLogMap = {
   ],
 };
 
-final String treatmentWithLogMapJson = jsonEncode(treatmentWithLogMap);
+final String treatmentWithLogJson = jsonEncode(treatmentWithLogMap);
 
 final Treatment treatmentWithTreatmentLog = Treatment.fromJson(treatmentLogMap);

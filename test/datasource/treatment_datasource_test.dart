@@ -23,7 +23,7 @@ void main() {
     const treatmentId = 1;
 
     when(mockApi.get("/treatments/$treatmentId"))
-        .thenAnswer((_) async => Response(treatmentWithLogMapJson, 200));
+        .thenAnswer((_) async => Response(treatmentWithLogJson, 200));
 
     final treatment = await treatmentDatasource.getTreatment(treatmentId);
 
@@ -46,11 +46,11 @@ void main() {
     when(mockApi.put(
       "/treatments/$treatmentId/logs/$treatmentLogId",
       body: {'administered': true},
-    )).thenAnswer((_) async => Response(treatmentWithLogMapJson, 200));
+    )).thenAnswer((_) async => Response(treatmentLogJson, 200));
 
-    final treatment =
+    final treatmentLogResponse =
         await treatmentDatasource.checkTreatmentLog(treatmentId, treatmentLog.id, treatmentLog.administered);
 
-    expect(treatment.logs.first.administered, isTrue);
+    expect(treatmentLogResponse.administered, isTrue);
   });
 }

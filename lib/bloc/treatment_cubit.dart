@@ -28,15 +28,16 @@ class TreatmentCubit extends Cubit<BlocState> {
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
         final Treatment treatment = currentState.value;
-        emit(Loading());
-        final TreatmentLog treatmentLog = treatment.logs
-            .firstWhere((treatmentLog) => treatmentLog.id == treatmentLogId);
-        final treatmentResponse = await treatmentsDatasource.checkTreatmentLog(
+
+        final TreatmentLog treatmentLog = treatment.findTreatmentLogWithId(treatmentLogId);
+        await treatmentsDatasource.checkTreatmentLog(
           treatment.id!,
           treatmentLog.id,
           !treatmentLog.administered
         );
-        emit(Loaded(value: treatmentResponse));
+        treatmentLog.check();
+        emit(Loading());
+        emit(Loaded(value: treatment));
       }
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));
