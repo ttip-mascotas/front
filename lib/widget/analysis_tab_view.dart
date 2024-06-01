@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_file_downloader/flutter_file_downloader.dart';
 import 'package:mascotas/model/analysis.dart';
 import 'package:mascotas/utils/format.dart';
-import 'package:mascotas/utils/format_url.dart';
 import 'package:mascotas/widget/pets_divider.dart';
 
 class AnalysisList extends StatelessWidget {
@@ -58,7 +57,7 @@ class AnalysisList extends StatelessWidget {
 
   void downloadFile(Analysis analysis) async {
     await FileDownloader.downloadFile(
-        url: formatUrl(analysis.url),
+        url: 'https://www.renfe.com/content/dam/renfe/es/General/PDF-y-otros/Ejemplo-de-descarga-pdf.pdf',
         name: analysis.name,
         notificationType: NotificationType.all);
   }
