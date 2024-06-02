@@ -47,6 +47,7 @@ class Notifier {
       );
       debugPrint("Se creo la notificacion exitosamente a las $scheduledDate");
     } catch (error) {
+      debugPrint('Hubo un error al registrar la notificacion: $error');
       throw NotifierException('Error al registrar la notificacion');
     }
   }
