@@ -294,13 +294,13 @@ class MockNotifier extends _i1.Mock implements _i9.Notifier {
       ) as _i5.Future<void>);
 
   @override
-  void scheduleTreatmentNotification({
+  _i5.Future<void> scheduleTreatmentNotification({
     required int? id,
     required DateTime? scheduledDate,
     required String? medicine,
     required String? dose,
   }) =>
-      super.noSuchMethod(
+      (super.noSuchMethod(
         Invocation.method(
           #scheduleTreatmentNotification,
           [],
@@ -311,17 +311,18 @@ class MockNotifier extends _i1.Mock implements _i9.Notifier {
             #dose: dose,
           },
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
-  void scheduleNotification({
+  _i5.Future<void> scheduleNotification({
     required int? id,
     required String? title,
     required String? body,
     required DateTime? scheduledDate,
   }) =>
-      super.noSuchMethod(
+      (super.noSuchMethod(
         Invocation.method(
           #scheduleNotification,
           [],
@@ -332,8 +333,9 @@ class MockNotifier extends _i1.Mock implements _i9.Notifier {
             #scheduledDate: scheduledDate,
           },
         ),
-        returnValueForMissingStub: null,
-      );
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
   _i5.Future<_i3.NotificationResponse?> notificationResponse() =>
