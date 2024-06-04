@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:mascotas/exception/notifier_exception.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -29,21 +31,28 @@ class Notifier {
         ?.requestNotificationsPermission();
   }
 
-  void scheduleTreatmentNotification({
+  Future<void> scheduleTreatmentNotification({
     required int id,
     required DateTime scheduledDate,
     required String medicine,
     required String dose,
-  }) {
-    scheduleNotification(
-      id: id,
-      title: 'Notificación de dosis',
-      body: 'Es hora de darle el medicamento: $medicine con la dosis: $dose',
-      scheduledDate: scheduledDate,
-    );
+  }) async {
+    try {
+      debugPrint("Se va a crear la notificacion a las ${scheduledDate}");
+      await scheduleNotification(
+        id: id,
+        title: 'Notificación de dosis',
+        body: 'Es hora de darle el medicamento: $medicine con la dosis: $dose',
+        scheduledDate: scheduledDate,
+      );
+      debugPrint("Se creo la notificacion exitosamente a las $scheduledDate");
+    } catch (error) {
+      debugPrint('Hubo un error al registrar la notificacion: $error');
+      throw NotifierException('Error al registrar la notificacion');
+    }
   }
 
-  void scheduleNotification(
+  Future<void> scheduleNotification(
       {required int id,
       required String title,
       required String body,

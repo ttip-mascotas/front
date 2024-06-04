@@ -24,13 +24,7 @@ class _TreatmentFormState extends State<TreatmentForm> {
   @override
   Widget build(BuildContext context) {
     return FormStructure(
-      onSave: () => context.read<PetCubit>().startTreatment(
-            medicine: _medicineController.text,
-            dose: _doseController.text,
-            numberOfTime: _numberOfTimesController.text,
-            frequency: _frequency,
-            time: _timeController.text,
-          ),
+      onSave: startTreatment,
       successfulMessage: "Se inició el tratamiento de forma exitosa",
       errorMessage: (error) =>
           'No se pudo iniciar el tratamiento: ${error.message}',
@@ -88,6 +82,16 @@ class _TreatmentFormState extends State<TreatmentForm> {
         ],
       ),
     );
+  }
+
+  Future<void> startTreatment() async {
+    await context.read<PetCubit>().startTreatment(
+          medicine: _medicineController.text,
+          dose: _doseController.text,
+          numberOfTime: _numberOfTimesController.text,
+          frequency: _frequency,
+          time: _timeController.text,
+        );
   }
 
   void selectTime() {

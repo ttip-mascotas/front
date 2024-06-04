@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mascotas/exception/datasource_exception.dart';
+import 'package:mascotas/exception/notifier_exception.dart';
 
 class FormStructure extends StatefulWidget {
   final Future<void> Function() onSave;
@@ -45,7 +46,9 @@ class _FormStructureState extends State<FormStructure> {
                   Text(
                     _error,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.red,),
+                    style: const TextStyle(
+                      color: Colors.red,
+                    ),
                   ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -78,6 +81,12 @@ class _FormStructureState extends State<FormStructure> {
           SnackBar(content: Text(widget.successfulMessage)),
         );
       }).catchError((error) {
+        if (error is NotifierException) {
+          Navigator.pop(context);
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(error.message)));
+          return;
+        }
         setState(() {
           _error = widget.errorMessage(error);
         });
