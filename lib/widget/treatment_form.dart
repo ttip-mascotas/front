@@ -52,9 +52,28 @@ class _TreatmentFormState extends State<TreatmentForm> {
           const InputTitle(
             title: "Dosis",
           ),
-          TextFormField(
-            controller: _doseController,
-            validator: emptyFieldValidator,
+          Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: _doseController,
+                  validator: numberGreaterThanZero,
+                  keyboardType: TextInputType.number,
+                ),
+              ),
+              const SizedBox(width: 16,),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  color: Theme.of(context).primaryColor,
+                ),
+                child: const Text(
+                  'miligramos',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
           ),
           const InputTitle(
             title: "Cantidad",

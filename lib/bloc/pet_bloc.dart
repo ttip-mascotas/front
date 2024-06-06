@@ -76,20 +76,23 @@ class PetCubit extends Cubit<BlocState> {
         final treatmentFromResponse =
             await petsDatasource.startTreatment(treatment, pet.id);
         pet.startTreatment(treatmentFromResponse);
-        await scheduledNotification(treatmentFromResponse);
+        await scheduledNotification(treatmentFromResponse, pet.name);
         emit(Loading());
         emit(Loaded(value: pet));
       }
     });
   }
 
-  Future<void> scheduledNotification(Treatment treatment) async {
+  Future<void> scheduledNotification(
+      Treatment treatment, String petName) async {
     for (var treatmentLog in treatment.logs) {
       await notifier.scheduleTreatmentNotification(
-          id: treatment.id!,
-          scheduledDate: treatmentLog.datetime,
-          medicine: treatment.medicine,
-          dose: treatment.dose);
+        id: treatmentLog.id,
+        scheduledDate: treatmentLog.datetime,
+        medicine: treatment.medicine,
+        dose: treatment.dose,
+        petName: petName,
+      );
     }
   }
 

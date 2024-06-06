@@ -36,13 +36,15 @@ class Notifier {
     required DateTime scheduledDate,
     required String medicine,
     required String dose,
+    required String petName,
   }) async {
     try {
-      debugPrint("Se va a crear la notificacion a las ${scheduledDate}");
+      debugPrint(
+          "Se va a crear la notificacion a las $scheduledDate con el id $id");
       await scheduleNotification(
         id: id,
         title: 'Notificación de dosis',
-        body: 'Es hora de darle el medicamento: $medicine con la dosis: $dose',
+        body: 'Es hora de darle $dose miligramos de $medicine a $petName',
         scheduledDate: scheduledDate,
       );
       debugPrint("Se creo la notificacion exitosamente a las $scheduledDate");
