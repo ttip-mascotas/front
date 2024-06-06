@@ -43,7 +43,7 @@ class Notifier {
       await scheduleNotification(
         id: id,
         title: 'Notificación de dosis',
-        body: 'Es hora de darle $dose gramos de $medicine a $petName',
+        body: 'Es hora de darle $dose miligramos de $medicine a $petName',
         scheduledDate: scheduledDate,
       );
       debugPrint("Se creo la notificacion exitosamente a las $scheduledDate");

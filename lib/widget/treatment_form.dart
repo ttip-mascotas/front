@@ -69,7 +69,7 @@ class _TreatmentFormState extends State<TreatmentForm> {
                   color: Theme.of(context).primaryColor,
                 ),
                 child: const Text(
-                  'Gramos',
+                  'miligramos',
                   style: TextStyle(color: Colors.white),
                 ),
               ),

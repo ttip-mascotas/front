@@ -51,7 +51,7 @@ class TreatmentAttributes extends StatelessWidget {
             ),
           ),
           Text(
-            "Dosis: ${treatment.dose} gramos",
+            "Dosis: ${treatment.dose} miligramos",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
