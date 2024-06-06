@@ -87,7 +87,7 @@ class PetCubit extends Cubit<BlocState> {
       Treatment treatment, String petName) async {
     for (var treatmentLog in treatment.logs) {
       await notifier.scheduleTreatmentNotification(
-        id: treatment.id!,
+        id: treatmentLog.id,
         scheduledDate: treatmentLog.datetime,
         medicine: treatment.medicine,
         dose: treatment.dose,
