@@ -49,7 +49,7 @@ class TreatmentItem extends StatelessWidget {
               icon: Icons.medication,
             ),
             TreatmentAttribute(
-              text: treatment.dose,
+              text: '${treatment.dose} gramos',
               icon: Icons.numbers_rounded,
             ),
             TreatmentAttribute(
