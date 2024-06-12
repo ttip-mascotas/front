@@ -92,6 +92,7 @@ class PetCubit extends Cubit<BlocState> {
         medicine: treatment.medicine,
         dose: treatment.dose,
         petName: petName,
+        treatmentId: treatment.id!,
       );
     }
   }

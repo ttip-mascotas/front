@@ -6,12 +6,12 @@ import 'package:mascotas/bloc/pets_bloc.dart';
 import 'package:mascotas/datasource/api.dart';
 import 'package:mascotas/screen/pets_screen.dart';
 import 'package:mascotas/style/theme.dart';
-import 'package:mascotas/widget/notifications_on_tap_observer.dart';
-
 import 'bloc/treatment_cubit.dart';
 import 'datasource/pets_datasource.dart';
 import 'datasource/treatment_datasource.dart';
 import 'notifications/notifier.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,12 +47,10 @@ class MainApp extends StatelessWidget {
         }),
       ],
       child: MaterialApp(
+        navigatorKey: navigatorKey,
         title: "History Pets",
         theme: theme,
-        home: NotificationsOnTapObserver(
-          notifier: notifier,
-          child: const PetsScreen(),
-        ),
+        home: const PetsScreen(),
       ),
     );
   }

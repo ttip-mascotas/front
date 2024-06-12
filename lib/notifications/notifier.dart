@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mascotas/exception/notifier_exception.dart';
+import 'package:mascotas/main.dart';
+import 'package:mascotas/screen/treatment_schedule_screen.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+
+@pragma('vm:entry-point')
+void onDidReceiveNotificationResponse(NotificationResponse response) {
+  if (response.payload != null) {
+    final int id = int.parse(response.payload!);
+    navigatorKey.currentState!.push(
+      MaterialPageRoute(
+        builder: (context) => TreatmentScheduleScreen(id: id),
+      ),
+    );
+  }
+}
 
 class Notifier {
   late final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -19,6 +33,9 @@ class Notifier {
     );
     flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
+      onDidReceiveNotificationResponse: onDidReceiveNotificationResponse,
+      onDidReceiveBackgroundNotificationResponse:
+          onDidReceiveNotificationResponse,
     );
     tz.initializeTimeZones();
     tz.setLocalLocation(tz.getLocation(currentTimeZone));
@@ -37,6 +54,7 @@ class Notifier {
     required String medicine,
     required String dose,
     required String petName,
+    required int treatmentId,
   }) async {
     try {
       debugPrint(
@@ -46,6 +64,7 @@ class Notifier {
         title: 'Notificación de dosis',
         body: 'Es hora de darle $dose miligramos de $medicine a $petName',
         scheduledDate: scheduledDate,
+        payload: treatmentId.toString(),
       );
       debugPrint("Se creo la notificacion exitosamente a las $scheduledDate");
     } catch (error) {
@@ -54,11 +73,13 @@ class Notifier {
     }
   }
 
-  Future<void> scheduleNotification(
-      {required int id,
-      required String title,
-      required String body,
-      required DateTime scheduledDate}) async {
+  Future<void> scheduleNotification({
+    required int id,
+    required String title,
+    required String body,
+    required DateTime scheduledDate,
+    String? payload,
+  }) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,
       title,
@@ -72,6 +93,7 @@ class Notifier {
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
+      payload: payload,
     );
   }
 

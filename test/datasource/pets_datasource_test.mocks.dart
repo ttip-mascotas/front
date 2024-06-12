@@ -300,6 +300,7 @@ class MockNotifier extends _i1.Mock implements _i9.Notifier {
     required String? medicine,
     required String? dose,
     required String? petName,
+    required int? treatmentId,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -311,6 +312,7 @@ class MockNotifier extends _i1.Mock implements _i9.Notifier {
             #medicine: medicine,
             #dose: dose,
             #petName: petName,
+            #treatmentId: treatmentId,
           },
         ),
         returnValue: _i5.Future<void>.value(),
@@ -323,6 +325,7 @@ class MockNotifier extends _i1.Mock implements _i9.Notifier {
     required String? title,
     required String? body,
     required DateTime? scheduledDate,
+    String? payload,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -333,6 +336,7 @@ class MockNotifier extends _i1.Mock implements _i9.Notifier {
             #title: title,
             #body: body,
             #scheduledDate: scheduledDate,
+            #payload: payload,
           },
         ),
         returnValue: _i5.Future<void>.value(),
