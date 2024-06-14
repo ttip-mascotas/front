@@ -6,6 +6,7 @@ import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/treatment.dart';
 import 'package:mascotas/model/treatment_log.dart';
 
+// TODO: reemplazar treatment cubit por treatment websocket cubit
 class TreatmentCubit extends Cubit<BlocState> {
   final TreatmentsDatasource treatmentsDatasource;
 
