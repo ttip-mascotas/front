@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mascotas/bloc/bloc_state.dart';
-import 'package:mascotas/bloc/treatment_cubit.dart';
+import 'package:mascotas/bloc/treatment_websocket_bloc.dart';
+import 'package:mascotas/bloc/websocket_state.dart';
+import 'package:mascotas/datasource/api.dart';
+import 'package:mascotas/datasource/treatment_datasource.dart';
+import 'package:mascotas/datasource/web_socket_datasource.dart';
 import 'package:mascotas/widget/pets_scaffold.dart';
 import 'package:mascotas/widget/treatment_detail.dart';
 
@@ -12,40 +15,65 @@ class TreatmentScheduleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<TreatmentCubit>().getTreatment(id);
-
-    return const PetsScaffold(
+    return PetsScaffold(
       title: "Tratamiento",
-      body: TreatmentScheduleDetails(),
+      body: BlocProvider(
+          create: (BuildContext context) => WebSocketBloc(
+                repository: WebSocketDatasource(),
+                treatmentsDatasource: TreatmentsDatasource(api: Api()),
+                id: id,
+              ),
+          child: const TreatmentScheduleDetails()),
     );
   }
 }
 
-class TreatmentScheduleDetails extends StatelessWidget {
+class TreatmentScheduleDetails extends StatefulWidget {
   const TreatmentScheduleDetails({
     super.key,
   });
 
   @override
+  State<TreatmentScheduleDetails> createState() =>
+      _TreatmentScheduleDetailsState();
+}
+
+class _TreatmentScheduleDetailsState extends State<TreatmentScheduleDetails> {
+  late WebSocketBloc _webSocketBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _webSocketBloc = context.read<WebSocketBloc>();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TreatmentCubit, BlocState>(
-      builder: (BuildContext context, BlocState state) {
+    return BlocBuilder<WebSocketBloc, WebSocketState>(
+      builder: (BuildContext context, WebSocketState state) {
         switch (state) {
-          case Error():
+          case WebSocketError():
             return Container(
               padding: const EdgeInsets.all(20),
               child: Row(
                 children: [
-                  Flexible(child: Text(state.message)),
+                  Flexible(child: Text(state.errorMessage)),
                 ],
               ),
             );
-          case Loaded():
-            return TreatmentDetail(treatment: state.value);
+          case WebSocketTreatmentReceived():
+            return TreatmentDetail(treatment: state.treatment);
           default:
             return const Center(child: CircularProgressIndicator());
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _webSocketBloc.closeWebSocket();
+    _webSocketBloc.close();
+    super.dispose();
   }
 }

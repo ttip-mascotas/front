@@ -6,9 +6,7 @@ import 'package:mascotas/bloc/pets_bloc.dart';
 import 'package:mascotas/datasource/api.dart';
 import 'package:mascotas/screen/pets_screen.dart';
 import 'package:mascotas/style/theme.dart';
-import 'bloc/treatment_cubit.dart';
 import 'datasource/pets_datasource.dart';
-import 'datasource/treatment_datasource.dart';
 import 'notifications/notifier.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -32,7 +30,6 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = Api();
     final petsDatasource = PetsDatasource(api: api);
-    final treatmentsDatasource = TreatmentsDatasource(api: api);
 
     return MultiBlocProvider(
       providers: [
@@ -42,9 +39,6 @@ class MainApp extends StatelessWidget {
         BlocProvider(
             create: (BuildContext context) =>
                 PetsCubit(petsDatasource: petsDatasource)..init()),
-        BlocProvider(create: (BuildContext context) {
-          return TreatmentCubit(treatmentsDatasource: treatmentsDatasource);
-        }),
       ],
       child: MaterialApp(
         navigatorKey: navigatorKey,
