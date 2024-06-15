@@ -4,7 +4,6 @@ import 'package:mascotas/bloc/treatment_websocket_bloc.dart';
 import 'package:mascotas/bloc/websocket_state.dart';
 import 'package:mascotas/datasource/api.dart';
 import 'package:mascotas/datasource/treatment_datasource.dart';
-import 'package:mascotas/datasource/web_socket_controller.dart';
 import 'package:mascotas/datasource/web_socket_datasource.dart';
 import 'package:mascotas/widget/pets_scaffold.dart';
 import 'package:mascotas/widget/treatment_detail.dart';
@@ -20,8 +19,7 @@ class TreatmentScheduleScreen extends StatelessWidget {
       title: "Tratamiento",
       body: BlocProvider(
           create: (BuildContext context) => WebSocketBloc(
-                webSocketController:
-                    WebSocketController(repository: WebSocketDatasource()),
+                repository: WebSocketDatasource(),
                 treatmentsDatasource: TreatmentsDatasource(api: Api()),
                 id: id,
               ),
@@ -36,7 +34,8 @@ class TreatmentScheduleDetails extends StatefulWidget {
   });
 
   @override
-  State<TreatmentScheduleDetails> createState() => _TreatmentScheduleDetailsState();
+  State<TreatmentScheduleDetails> createState() =>
+      _TreatmentScheduleDetailsState();
 }
 
 class _TreatmentScheduleDetailsState extends State<TreatmentScheduleDetails> {

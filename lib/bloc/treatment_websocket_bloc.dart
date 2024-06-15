@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/websocket_state.dart';
 import 'package:mascotas/datasource/treatment_datasource.dart';
-import 'package:mascotas/datasource/web_socket_controller.dart';
+import 'package:mascotas/datasource/web_socket_datasource.dart';
+import 'package:mascotas/exception/datasource_exception.dart';
 import 'package:mascotas/model/treatment.dart';
+import 'package:mascotas/model/treatment_log.dart';
 
 class WebSocketBloc extends Cubit<WebSocketState> {
-  final WebSocketController webSocketController;
+  final WebSocketDatasource repository;
   final TreatmentsDatasource treatmentsDatasource;
 
   WebSocketBloc({
-    required this.webSocketController,
+    required this.repository,
     required this.treatmentsDatasource,
     required int id,
   }) : super(WebSocketInitial()) {
@@ -20,39 +22,45 @@ class WebSocketBloc extends Cubit<WebSocketState> {
   Future<void> setupWebSocketListener(int id) async {
     try {
       final treatment = await treatmentsDatasource.getTreatment(id);
-      await webSocketController.openWebSocket(
-        (treatmentLog) {
-          // TODO: cuando el endpoint devuelva el treatment hay que actualizar el estado del Cubit
-          debugPrint('Conectado ${treatmentLog.administered}');
+      await repository.connectWebSocket(
+        (treatmentUpdated) {
+          emit(WebSocketTreatmentReceived(treatmentUpdated));
         },
-        id,
-        //TODO: cambiar cuando esté listo el endpoint
-        treatment.logs.first.id,
+        id
       );
       emit(WebSocketTreatmentReceived(treatment));
+    } on DatasourceException catch (error) {
+      emit(WebSocketError(error.message));
     } catch (e) {
       debugPrint(e.toString());
-      emit(WebSocketError('No se pudo conectar al websocket'));
+      emit(WebSocketError('Ocurrió un error inesperado'));
     }
   }
 
   void closeWebSocket() {
-    webSocketController.closeWebSocket();
+    repository.closeWebSocket();
     emit(WebSocketClosed());
   }
 
   Future<void> checkTreatmentLog({required int treatmentLogId}) async {
-    if (state is WebSocketTreatmentReceived) {
-      final WebSocketTreatmentReceived currentState =
-          state as WebSocketTreatmentReceived;
-      final Treatment treatment = currentState.treatment;
+    try {
+      if (state is WebSocketTreatmentReceived) {
+        final WebSocketTreatmentReceived currentState =
+        state as WebSocketTreatmentReceived;
+        final Treatment treatment = currentState.treatment;
+        final TreatmentLog treatmentLog =
+        treatment.findTreatmentLogWithId(treatmentLogId);
 
-      // TODO: cambiar cuando esté listo el endpoint
-      webSocketController.checkTreatmentLog(
-        treatment.id!,
-        treatment.logs.first.id,
-        !treatment.logs.first.administered,
-      );
+        repository.checkTreatmentLog(
+          treatment.id!,
+          treatmentLogId,
+          !treatmentLog.administered,
+        );
+      }
+    } catch (error) {
+      debugPrint(error.toString());
+      emit(WebSocketError("Ocurrió un error inesperado"));
     }
+
   }
 }

@@ -3,21 +3,28 @@ import 'dart:convert';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
-import 'package:mascotas/bloc/bloc_state.dart';
-import 'package:mascotas/bloc/treatment_cubit.dart';
+import 'package:mascotas/bloc/treatment_websocket_bloc.dart';
+import 'package:mascotas/bloc/websocket_state.dart';
 import 'package:mascotas/datasource/treatment_datasource.dart';
+import 'package:mascotas/datasource/web_socket_datasource.dart';
 import 'package:mascotas/model/treatment.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-
 import '../datasource/mocks.dart';
 import '../datasource/pets_datasource_test.mocks.dart';
+import 'treatment_cubit_test.mocks.dart';
 
+@GenerateNiceMocks([MockSpec<WebSocketDatasource>()])
 void main() {
   late MockApi mockApi;
+  late MockWebSocketDatasource webSocketDatasource;
   late TreatmentsDatasource treatmentDatasource;
+  const int treatmentId = 1;
+  const int treatmentLogId = 1;
 
   setUp(() {
     mockApi = MockApi();
+    webSocketDatasource = MockWebSocketDatasource();
     treatmentDatasource = TreatmentsDatasource(api: mockApi);
   });
 
@@ -30,10 +37,12 @@ void main() {
         ),
       ).thenAnswer((_) async => Response(treatmentJson, 200));
     },
-    build: () => TreatmentCubit(treatmentsDatasource: treatmentDatasource),
-    act: (cubit) => cubit.getTreatment(1),
+    build: () => WebSocketBloc(
+        treatmentsDatasource: treatmentDatasource,
+        repository: webSocketDatasource,
+        id: treatmentId),
     expect: () => [
-      Loaded(value: Treatment.fromJson(jsonDecode(treatmentJson))),
+      WebSocketTreatmentReceived(Treatment.fromJson(jsonDecode(treatmentJson))),
     ],
   );
 
@@ -46,9 +55,11 @@ void main() {
         ),
       ).thenAnswer((_) async => throw Exception("Algo salió mal"));
     },
-    build: () => TreatmentCubit(treatmentsDatasource: treatmentDatasource),
-    act: (cubit) => cubit.getTreatment(99),
-    expect: () => [Error(message: "Ocurrió un error inesperado")],
+    build: () => WebSocketBloc(
+        treatmentsDatasource: treatmentDatasource,
+        repository: webSocketDatasource,
+        id: 99),
+    expect: () => [WebSocketError("Ocurrió un error inesperado")],
   );
 
   blocTest(
@@ -59,16 +70,15 @@ void main() {
           any,
         ),
       ).thenAnswer((_) async => Response(treatmentWithLogJson, 200));
-      when(
-        mockApi.post(
-          any,
-        ),
-      ).thenAnswer((_) async => Response(treatmentLogJson, 200));
     },
-    build: () => TreatmentCubit(treatmentsDatasource: treatmentDatasource)..getTreatment(1),
-    act: (cubit) => cubit.checkTreatmentLog(1),
+    build: () => WebSocketBloc(
+        treatmentsDatasource: treatmentDatasource,
+        repository: webSocketDatasource,
+        id: treatmentId),
+    act: (cubit) => cubit.checkTreatmentLog(treatmentLogId: treatmentLogId),
     expect: () => [
-      Loaded(value: Treatment.fromJson(jsonDecode(treatmentWithLogJson))),
+      WebSocketTreatmentReceived(
+          Treatment.fromJson(jsonDecode(treatmentWithLogJson))),
     ],
   );
 
@@ -77,19 +87,25 @@ void main() {
     setUp: () {
       when(mockApi.get("/treatments/1"))
           .thenAnswer((_) async => Response(treatmentWithLogJson, 200));
-      when(mockApi.put(
-        "/treatments/1/logs/1",
-        body: {'administered': false},
-      )).thenAnswer((_) async => throw Exception("Algo salió mal"));
+      when(webSocketDatasource.checkTreatmentLog(
+        treatmentId,
+        treatmentLogId,
+        false,
+      )).thenAnswer((_) => throw Exception("Algo salió mal"));
     },
-    build: () => TreatmentCubit(treatmentsDatasource: treatmentDatasource),
+    build: () {
+      return WebSocketBloc(
+        treatmentsDatasource: treatmentDatasource,
+        repository: webSocketDatasource,
+        id: treatmentId);
+    },
+    skip: 1,
     act: (cubit) async {
-      await cubit.getTreatment(1);
-      await cubit.checkTreatmentLog(1);
+      await cubit.setupWebSocketListener(treatmentId);
+      await cubit.checkTreatmentLog(treatmentLogId: treatmentLogId);
     },
     expect: () => [
-      Loaded(value: Treatment.fromJson(jsonDecode(treatmentWithLogJson))),
-      Error(message: "Ocurrió un error inesperado"),
+      WebSocketError("Ocurrió un error inesperado"),
     ],
   );
 }

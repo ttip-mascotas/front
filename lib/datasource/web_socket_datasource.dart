@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:mascotas/model/treatment_log.dart';
+import 'package:mascotas/model/treatment.dart';
 import 'package:stomp_dart_client/stomp_dart_client.dart';
 
 class WebSocketDatasource {
@@ -8,9 +8,8 @@ class WebSocketDatasource {
   final baseUrl = 'ws://10.0.2.2:8080/notifications';
 
   Future<void> connectWebSocket(
-    Function(TreatmentLog treatmentLog) onTreatmentReceived,
+    Function(Treatment treatment) onTreatmentReceived,
     int treatmentId,
-    int treatmentLogId,
   ) async {
     _client = StompClient(
       config: StompConfig(
@@ -18,7 +17,6 @@ class WebSocketDatasource {
         onDebugMessage: debugPrint,
         onConnect: (_) => onConnectCallback(
           treatmentId,
-          treatmentLogId,
           onTreatmentReceived,
         ),
       ),
@@ -28,17 +26,15 @@ class WebSocketDatasource {
 
   void onConnectCallback(
     int treatmentId,
-    int treatmentLogId,
-    Function(TreatmentLog treatmentLog) onTreatmentReceived,
+    Function(Treatment treatment) onTreatmentReceived,
   ) {
     _client?.subscribe(
-        destination: '/topic/treatments/$treatmentId/logs/$treatmentLogId',
+        destination: '/topic/treatments/$treatmentId',
         callback: (frame) {
           final body = frame.body;
           if (body != null) {
-            // TODO: cambiar por Treatment cuando el endpoint devuelva un treatment
-            final treatmentLog = TreatmentLog.fromJson(jsonDecode(body));
-            onTreatmentReceived(treatmentLog);
+            final treatment = Treatment.fromJson(jsonDecode(body));
+            onTreatmentReceived(treatment);
           }
         });
   }
