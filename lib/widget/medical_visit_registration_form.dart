@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mascotas/bloc/pet_bloc.dart';
-import 'package:mascotas/utils/format.dart';
-import 'package:mascotas/utils/validator.dart';
-import 'package:mascotas/widget/form_structure.dart';
-import 'package:mascotas/widget/input_title.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:mascotas/bloc/pet_bloc.dart";
+import "package:mascotas/utils/format.dart";
+import "package:mascotas/utils/validator.dart";
+import "package:mascotas/widget/form_structure.dart";
+import "package:mascotas/widget/input_title.dart";
 
 class MedicalVisitRegistrationForm extends StatefulWidget {
   const MedicalVisitRegistrationForm({super.key});
@@ -32,7 +32,7 @@ class _MedicalVisitRegistrationFormState
           ),
       successfulMessage: "Se agregó la visita médica de forma exitosa",
       errorMessage: (error) =>
-          'No se pudo agregar la visita médica: ${error.message}',
+          "No se pudo agregar la visita médica: ${error.message}",
       buttonMessage: "Registrar",
       child: Column(
         mainAxisSize: MainAxisSize.min,

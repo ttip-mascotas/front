@@ -1,10 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mascotas/bloc/pet_bloc.dart';
-import 'package:mascotas/utils/validator.dart';
-import 'package:mascotas/widget/form_structure.dart';
-import 'package:mascotas/widget/input_title.dart';
-import 'package:mascotas/widget/slider_with_number.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:mascotas/bloc/pet_bloc.dart";
+import "package:mascotas/utils/validator.dart";
+import "package:mascotas/widget/form_structure.dart";
+import "package:mascotas/widget/input_title.dart";
+import "package:mascotas/widget/slider_with_number.dart";
 
 class TreatmentForm extends StatefulWidget {
   const TreatmentForm({super.key});
@@ -27,7 +27,7 @@ class _TreatmentFormState extends State<TreatmentForm> {
       onSave: startTreatment,
       successfulMessage: "Se inició el tratamiento de forma exitosa",
       errorMessage: (error) =>
-          'No se pudo iniciar el tratamiento: ${error.message}',
+          "No se pudo iniciar el tratamiento: ${error.message}",
       buttonMessage: "Guardar",
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -61,7 +61,9 @@ class _TreatmentFormState extends State<TreatmentForm> {
                   keyboardType: TextInputType.number,
                 ),
               ),
-              const SizedBox(width: 16,),
+              const SizedBox(
+                width: 16,
+              ),
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -69,7 +71,7 @@ class _TreatmentFormState extends State<TreatmentForm> {
                   color: Theme.of(context).primaryColor,
                 ),
                 child: const Text(
-                  'miligramos',
+                  "miligramos",
                   style: TextStyle(color: Colors.white),
                 ),
               ),
@@ -96,7 +98,7 @@ class _TreatmentFormState extends State<TreatmentForm> {
                 _frequency = value;
               });
             },
-            text: '${_frequency.round()} hr',
+            text: "${_frequency.round()} hr",
           ),
         ],
       ),

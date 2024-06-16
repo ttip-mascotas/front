@@ -1,11 +1,11 @@
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:mascotas/model/analysis.dart';
-import 'package:mascotas/model/medical_visit.dart';
-import 'package:mascotas/model/pet.dart';
-import 'package:mascotas/model/treatment.dart';
-import 'package:mascotas/model/treatment_log.dart';
-import 'package:mascotas/utils/format.dart';
+import "package:mascotas/model/analysis.dart";
+import "package:mascotas/model/medical_visit.dart";
+import "package:mascotas/model/pet.dart";
+import "package:mascotas/model/treatment.dart";
+import "package:mascotas/model/treatment_log.dart";
+import "package:mascotas/utils/format.dart";
 
 final Map<String, dynamic> petMap = {
   "id": 1,
@@ -53,9 +53,9 @@ final dateTime = parseTimeStringAsDateTime("05:20 AM");
 
 final treatment = Treatment(
   id: 1,
-  medicine: 'Tramadol',
+  medicine: "Tramadol",
   startDate: dateTime,
-  dose: '1/4',
+  dose: "1/4",
   numberOfTime: 10,
   frequency: 8,
 );
@@ -76,20 +76,20 @@ final Pet petWithTreatment = Pet.fromJson(petMap)..startTreatment(treatment);
 
 final analysis = Analysis(
   id: 1,
-  name: 'ejemplo.pdf',
+  name: "ejemplo.pdf",
   size: 1,
   createdAt: DateTime(2023, 1, 1),
-  url: 'example.com',
+  url: "example.com",
 );
 
 final analysisMap = {
-  'results': [
+  "results": [
     {
       "id": 1,
-      "name": 'ejemplo.pdf',
+      "name": "ejemplo.pdf",
       "size": 1,
       "createdAt": DateTime(2023, 1, 1).toIso8601String(),
-      "url": 'example.com',
+      "url": "example.com",
     }
   ]
 };

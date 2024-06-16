@@ -1,5 +1,5 @@
-import 'package:equatable/equatable.dart';
-import 'package:mascotas/utils/format.dart';
+import "package:equatable/equatable.dart";
+import "package:mascotas/utils/format.dart";
 
 class Analysis extends Equatable {
   final int? id;

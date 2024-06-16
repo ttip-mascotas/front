@@ -1,7 +1,7 @@
-import 'dart:io';
+import "dart:io";
 
-import 'package:flutter/material.dart';
-import 'package:mascotas/utils/format_url.dart';
+import "package:flutter/material.dart";
+import "package:mascotas/utils/format_url.dart";
 
 class Avatar extends StatelessWidget {
   final double radius;

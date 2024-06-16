@@ -1,12 +1,12 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart';
-import 'package:mascotas/datasource/api.dart';
-import 'package:mascotas/datasource/treatment_datasource.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:http/http.dart";
+import "package:mascotas/datasource/api.dart";
+import "package:mascotas/datasource/treatment_datasource.dart";
+import "package:mockito/annotations.dart";
+import "package:mockito/mockito.dart";
 
-import 'mocks.dart';
-import 'pets_datasource_test.mocks.dart';
+import "mocks.dart";
+import "pets_datasource_test.mocks.dart";
 
 @GenerateNiceMocks([MockSpec<Api>()])
 void main() {
@@ -45,11 +45,11 @@ void main() {
 
     when(mockApi.put(
       "/treatments/$treatmentId/logs/$treatmentLogId",
-      body: {'administered': true},
+      body: {"administered": true},
     )).thenAnswer((_) async => Response(treatmentLogJson, 200));
 
-    final treatmentLogResponse =
-        await treatmentDatasource.checkTreatmentLog(treatmentId, treatmentLog.id, treatmentLog.administered);
+    final treatmentLogResponse = await treatmentDatasource.checkTreatmentLog(
+        treatmentId, treatmentLog.id, treatmentLog.administered);
 
     expect(treatmentLogResponse.administered, isTrue);
   });

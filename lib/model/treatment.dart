@@ -1,6 +1,6 @@
-import 'package:equatable/equatable.dart';
-import 'package:mascotas/model/treatment_log.dart';
-import 'package:mascotas/utils/format.dart';
+import "package:equatable/equatable.dart";
+import "package:mascotas/model/treatment_log.dart";
+import "package:mascotas/utils/format.dart";
 
 class Treatment extends Equatable {
   final int? id;

@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mascotas/bloc/treatment_websocket_bloc.dart';
-import 'package:mascotas/bloc/websocket_state.dart';
-import 'package:mascotas/datasource/api.dart';
-import 'package:mascotas/datasource/treatment_datasource.dart';
-import 'package:mascotas/datasource/web_socket_datasource.dart';
-import 'package:mascotas/widget/pets_scaffold.dart';
-import 'package:mascotas/widget/treatment_detail.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:mascotas/bloc/treatment_websocket_bloc.dart";
+import "package:mascotas/bloc/websocket_state.dart";
+import "package:mascotas/datasource/api.dart";
+import "package:mascotas/datasource/treatment_datasource.dart";
+import "package:mascotas/datasource/web_socket_datasource.dart";
+import "package:mascotas/widget/pets_scaffold.dart";
+import "package:mascotas/widget/treatment_detail.dart";
 
 class TreatmentScheduleScreen extends StatelessWidget {
   final int id;

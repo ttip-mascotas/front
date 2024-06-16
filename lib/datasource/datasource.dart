@@ -1,8 +1,8 @@
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:http/http.dart';
-import 'package:mascotas/datasource/api.dart';
-import 'package:mascotas/exception/datasource_exception.dart';
+import "package:http/http.dart";
+import "package:mascotas/datasource/api.dart";
+import "package:mascotas/exception/datasource_exception.dart";
 
 class BaseDatasource {
   final Api api;
@@ -17,7 +17,7 @@ class BaseDatasource {
     }
     if (_isClientError(response)) {
       throw DatasourceException(
-        json['message'] ?? json['messages'].first,
+        json["message"] ?? json["messages"].first,
       );
     } else {
       throw DatasourceException(message);

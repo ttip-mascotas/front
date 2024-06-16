@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:mascotas/bloc/pets_bloc.dart';
-import 'package:mascotas/model/pet.dart';
-import 'package:mascotas/utils/format.dart';
-import 'package:mascotas/utils/validator.dart';
-import 'package:mascotas/widget/avatar_selector.dart';
-import 'package:mascotas/widget/form_structure.dart';
-import 'package:mascotas/widget/input_title.dart';
-import 'package:mascotas/widget/sex_input.dart';
-import 'package:mascotas/widget/slider_with_number.dart';
-import 'package:mascotas/widget/text_form_field_with_title.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:image_picker/image_picker.dart";
+import "package:mascotas/bloc/pets_bloc.dart";
+import "package:mascotas/model/pet.dart";
+import "package:mascotas/utils/format.dart";
+import "package:mascotas/utils/validator.dart";
+import "package:mascotas/widget/avatar_selector.dart";
+import "package:mascotas/widget/form_structure.dart";
+import "package:mascotas/widget/input_title.dart";
+import "package:mascotas/widget/sex_input.dart";
+import "package:mascotas/widget/slider_with_number.dart";
+import "package:mascotas/widget/text_form_field_with_title.dart";
 
 class PetRegistrationForm extends StatefulWidget {
   const PetRegistrationForm({super.key});
@@ -41,7 +41,8 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
             sex: _sex.name.toUpperCase(),
           ),
       successfulMessage: "Se registro la mascota de forma exitosa",
-      errorMessage: (error) => 'No se pudo registrar la mascota: ${error.message}',
+      errorMessage: (error) =>
+          "No se pudo registrar la mascota: ${error.message}",
       buttonMessage: "Registrar",
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -82,7 +83,7 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
                 _weight = value;
               });
             },
-            text: '${_weight.round()} kg',
+            text: "${_weight.round()} kg",
           ),
           TextFormFieldWithTitle(
             nameController: _birthdateController,

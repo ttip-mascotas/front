@@ -1,13 +1,13 @@
-import 'dart:async';
-import 'dart:io';
+import "dart:async";
+import "dart:io";
 
-import 'package:http_parser/http_parser.dart';
-import 'package:mascotas/datasource/datasource.dart';
-import 'package:mascotas/exception/datasource_exception.dart';
-import 'package:mascotas/model/analysis.dart';
-import 'package:mascotas/model/medical_visit.dart';
-import 'package:mascotas/model/pet.dart';
-import 'package:mascotas/model/treatment.dart';
+import "package:http_parser/http_parser.dart";
+import "package:mascotas/datasource/datasource.dart";
+import "package:mascotas/exception/datasource_exception.dart";
+import "package:mascotas/model/analysis.dart";
+import "package:mascotas/model/medical_visit.dart";
+import "package:mascotas/model/pet.dart";
+import "package:mascotas/model/treatment.dart";
 
 class PetsDatasource extends BaseDatasource {
   PetsDatasource({required super.api});
@@ -33,7 +33,7 @@ class PetsDatasource extends BaseDatasource {
     return super.manageResponse<List<Pet>>(
       response,
       parseJson: (json) =>
-          json['results'].map<Pet>((json) => Pet.fromJson(json)).toList(),
+          json["results"].map<Pet>((json) => Pet.fromJson(json)).toList(),
       message: "Failed to load pets",
     );
   }
@@ -79,8 +79,8 @@ class PetsDatasource extends BaseDatasource {
   Future<Analysis> uploadAnalysis(File file, int petId) async {
     final response = await api.upload("/pets/$petId/analyses",
         file: file,
-        field: 'analysis',
-        contentType: MediaType('application', 'pdf'));
+        field: "analysis",
+        contentType: MediaType("application", "pdf"));
 
     return super.manageResponse<Analysis>(response,
         parseJson: (json) => Analysis.fromJson(json),
@@ -89,7 +89,7 @@ class PetsDatasource extends BaseDatasource {
 
   Future<String> uploadAvatar(File file) async {
     final response = await api.upload("/pets/avatars",
-        file: file, field: 'avatar', contentType: MediaType('image', 'jpeg'));
+        file: file, field: "avatar", contentType: MediaType("image", "jpeg"));
 
     return super.manageResponse<String>(response,
         parseJson: (json) => json["url"],
@@ -98,10 +98,10 @@ class PetsDatasource extends BaseDatasource {
 
   Future<List<Analysis>> searchAnalysis(String text, int petId) async {
     final response =
-        await api.get("/pets/$petId/analyses", queryParameters: {'q': text});
+        await api.get("/pets/$petId/analyses", queryParameters: {"q": text});
 
     return super.manageResponse<List<Analysis>>(response,
-        parseJson: (json) => json['results']
+        parseJson: (json) => json["results"]
             .map<Analysis>((json) => Analysis.fromJson(json))
             .toList(),
         message: "Hubo un problema al obtener los análisis");

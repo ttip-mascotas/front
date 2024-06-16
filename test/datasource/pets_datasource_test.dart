@@ -1,13 +1,13 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart';
-import 'package:mascotas/datasource/api.dart';
-import 'package:mascotas/datasource/pets_datasource.dart';
-import 'package:mascotas/notifications/notifier.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
+import "package:flutter_test/flutter_test.dart";
+import "package:http/http.dart";
+import "package:mascotas/datasource/api.dart";
+import "package:mascotas/datasource/pets_datasource.dart";
+import "package:mascotas/notifications/notifier.dart";
+import "package:mockito/annotations.dart";
+import "package:mockito/mockito.dart";
 
-import 'mocks.dart';
-import 'pets_datasource_test.mocks.dart';
+import "mocks.dart";
+import "pets_datasource_test.mocks.dart";
 
 @GenerateNiceMocks([MockSpec<Api>(), MockSpec<Notifier>()])
 void main() {
@@ -64,7 +64,7 @@ void main() {
     final pets = await petsDataSource.getPets();
 
     expect(pets.length, 1);
-    expect(pets[0].name, petMap['name']);
+    expect(pets[0].name, petMap["name"]);
     expect(pets[0].medicalVisits, isEmpty);
   });
 
@@ -111,11 +111,11 @@ void main() {
     const petId = 1;
 
     when(mockApi
-        .get("/pets/$petId/analyses", queryParameters: {'q': 'ejemplo'}))
+            .get("/pets/$petId/analyses", queryParameters: {"q": "ejemplo"}))
         .thenAnswer((_) async => Response(analysisJson, 200));
 
     final analysisResponse =
-        await petsDataSource.searchAnalysis('ejemplo', petId);
+        await petsDataSource.searchAnalysis("ejemplo", petId);
 
     final firstAnalysis = analysisResponse.first;
 

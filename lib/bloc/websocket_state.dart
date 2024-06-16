@@ -1,5 +1,5 @@
-import 'package:equatable/equatable.dart';
-import 'package:mascotas/model/treatment.dart';
+import "package:equatable/equatable.dart";
+import "package:mascotas/model/treatment.dart";
 
 abstract class WebSocketState extends Equatable {}
 

@@ -1,18 +1,18 @@
-import 'dart:convert';
+import "dart:convert";
 
-import 'package:bloc_test/bloc_test.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart';
-import 'package:mascotas/bloc/bloc_state.dart';
-import 'package:mascotas/bloc/pet_bloc.dart';
-import 'package:mascotas/datasource/pets_datasource.dart';
-import 'package:mascotas/exception/datasource_exception.dart';
-import 'package:mascotas/model/pet.dart';
-import 'package:mascotas/utils/format.dart';
-import 'package:mockito/mockito.dart';
+import "package:bloc_test/bloc_test.dart";
+import "package:flutter_test/flutter_test.dart";
+import "package:http/http.dart";
+import "package:mascotas/bloc/bloc_state.dart";
+import "package:mascotas/bloc/pet_bloc.dart";
+import "package:mascotas/datasource/pets_datasource.dart";
+import "package:mascotas/exception/datasource_exception.dart";
+import "package:mascotas/model/pet.dart";
+import "package:mascotas/utils/format.dart";
+import "package:mockito/mockito.dart";
 
-import '../datasource/mocks.dart';
-import '../datasource/pets_datasource_test.mocks.dart';
+import "../datasource/mocks.dart";
+import "../datasource/pets_datasource_test.mocks.dart";
 
 void main() {
   late MockApi mockApi;
@@ -70,7 +70,8 @@ void main() {
             body: medicalVisit.toJson()),
       ).thenAnswer((_) async => Response(medicalVisitJson, 200));
     },
-    build: () => PetCubit(petsDatasource: petsDataSource, notifier: notifier)..getPet(petId),
+    build: () => PetCubit(petsDatasource: petsDataSource, notifier: notifier)
+      ..getPet(petId),
     act: (cubit) async {
       await cubit.getPet(petId);
       return await cubit.addMedicalVisit(
@@ -100,7 +101,8 @@ void main() {
             body: medicalVisit.toJson()),
       ).thenAnswer((_) async => throw Exception("Algo salió mal"));
     },
-    build: () => PetCubit(petsDatasource: petsDataSource, notifier: notifier)..getPet(petId),
+    build: () => PetCubit(petsDatasource: petsDataSource, notifier: notifier)
+      ..getPet(petId),
     act: (cubit) async {
       await cubit.getPet(petId);
       return await cubit.addMedicalVisit(
@@ -136,7 +138,7 @@ void main() {
           dose: treatment.dose,
           numberOfTime: treatment.numberOfTime.toString(),
           frequency: treatment.frequency.toDouble(),
-          time: '5:20 AM');
+          time: "5:20 AM");
     },
     expect: () => [
       Loaded(value: petWithTreatment),
@@ -166,7 +168,7 @@ void main() {
           dose: treatment.dose,
           numberOfTime: treatment.numberOfTime.toString(),
           frequency: treatment.frequency.toDouble(),
-          time: '5:20 AM');
+          time: "5:20 AM");
     },
     errors: () => [isA<DatasourceException>()],
     expect: () => [

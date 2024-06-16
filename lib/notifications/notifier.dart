@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:mascotas/exception/notifier_exception.dart';
-import 'package:mascotas/main.dart';
-import 'package:mascotas/screen/treatment_schedule_screen.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
+import "package:flutter/material.dart";
+import "package:flutter_local_notifications/flutter_local_notifications.dart";
+import "package:mascotas/exception/notifier_exception.dart";
+import "package:mascotas/main.dart";
+import "package:mascotas/screen/treatment_schedule_screen.dart";
+import "package:timezone/data/latest_all.dart" as tz;
+import "package:timezone/timezone.dart" as tz;
 
-@pragma('vm:entry-point')
+@pragma("vm:entry-point")
 void onDidReceiveNotificationResponse(NotificationResponse response) {
   if (response.payload != null) {
     final int id = int.parse(response.payload!);
@@ -20,13 +20,13 @@ void onDidReceiveNotificationResponse(NotificationResponse response) {
 
 class Notifier {
   late final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  final String channelId = 'schedule notification';
-  final String channelName = 'dose notification';
+  final String channelId = "schedule notification";
+  final String channelName = "dose notification";
 
   Notifier(String currentTimeZone) {
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+        AndroidInitializationSettings("@mipmap/ic_launcher");
     const InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
@@ -61,15 +61,15 @@ class Notifier {
           "Se va a crear la notificacion a las $scheduledDate con el id $id");
       await scheduleNotification(
         id: id,
-        title: 'Notificación de dosis',
-        body: 'Es hora de darle $dose miligramos de $medicine a $petName',
+        title: "Notificación de dosis",
+        body: "Es hora de darle $dose miligramos de $medicine a $petName",
         scheduledDate: scheduledDate,
         payload: treatmentId.toString(),
       );
       debugPrint("Se creo la notificacion exitosamente a las $scheduledDate");
     } catch (error) {
-      debugPrint('Hubo un error al registrar la notificacion: $error');
-      throw NotifierException('Error al registrar la notificacion');
+      debugPrint("Hubo un error al registrar la notificacion: $error");
+      throw NotifierException("Error al registrar la notificacion");
     }
   }
 

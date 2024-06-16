@@ -1,8 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:http_parser/http_parser.dart';
+import "dart:convert";
+import "dart:io";
 
-import 'package:http/http.dart' as http;
+import "package:http/http.dart" as http;
+import "package:http_parser/http_parser.dart";
 
 class Api {
   Future<http.Response> get(
@@ -11,14 +11,17 @@ class Api {
     Map<String, dynamic>? queryParameters,
   }) {
     return http
-        .get(_getUrl(path, queryParameters: queryParameters), headers: headers,)
+        .get(
+          _getUrl(path, queryParameters: queryParameters),
+          headers: headers,
+        )
         .timeout(const Duration(seconds: 30));
   }
 
   Future<http.Response> post(String path,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) {
     headers ??= {};
-    headers[HttpHeaders.contentTypeHeader] = 'application/json; charset=UTF-8';
+    headers[HttpHeaders.contentTypeHeader] = "application/json; charset=UTF-8";
 
     return http.post(_getUrl(path),
         headers: headers, body: jsonEncode(body), encoding: encoding);
@@ -27,7 +30,7 @@ class Api {
   Future<http.Response> put(String path,
       {Map<String, String>? headers, Object? body, Encoding? encoding}) {
     headers ??= {};
-    headers[HttpHeaders.contentTypeHeader] = 'application/json; charset=UTF-8';
+    headers[HttpHeaders.contentTypeHeader] = "application/json; charset=UTF-8";
 
     return http.put(_getUrl(path),
         headers: headers, body: jsonEncode(body), encoding: encoding);
@@ -48,7 +51,7 @@ class Api {
       {required File file,
       required String field,
       MediaType? contentType}) async {
-    final request = http.MultipartRequest('POST', _getUrl(path));
+    final request = http.MultipartRequest("POST", _getUrl(path));
     request.files.add(http.MultipartFile(
       field,
       file.readAsBytes().asStream(),
