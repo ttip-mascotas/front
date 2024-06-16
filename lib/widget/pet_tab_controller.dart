@@ -1,17 +1,17 @@
-import 'dart:io';
+import "dart:io";
 
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mascotas/bloc/pet_bloc.dart';
-import 'package:mascotas/model/pet.dart';
-import 'package:mascotas/widget/medical_visit_tab_view.dart';
-import 'package:mascotas/widget/pet_floating_action_button.dart';
-import 'package:mascotas/widget/treatment_form.dart';
-import 'package:mascotas/widget/treatment_tab_view.dart';
+import "package:file_picker/file_picker.dart";
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:mascotas/bloc/pet_bloc.dart";
+import "package:mascotas/model/pet.dart";
+import "package:mascotas/widget/medical_visit_tab_view.dart";
+import "package:mascotas/widget/pet_floating_action_button.dart";
+import "package:mascotas/widget/treatment_form.dart";
+import "package:mascotas/widget/treatment_tab_view.dart";
 
-import 'analysis_tab_view.dart';
-import 'medical_visit_registration_form.dart';
+import "analysis_tab_view.dart";
+import "medical_visit_registration_form.dart";
 
 class PetTabController extends StatefulWidget {
   const PetTabController({
@@ -58,7 +58,7 @@ class _PetTabControllerState extends State<PetTabController> {
               MedicalVisits(medicalVisits: widget.pet.medicalVisits),
               AnalysisList(
                 analyses: widget.pet.analyses,
-                messageEmptyList: 'No hay analisis registrados',
+                messageEmptyList: "No hay analisis registrados",
               ),
               TreatmentTabView(treatments: widget.pet.treatments),
             ],
@@ -111,22 +111,27 @@ class _PetTabControllerState extends State<PetTabController> {
   void uploadPDF() {
     FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['pdf'],
+      allowedExtensions: ["pdf"],
     ).then((result) async {
       if (result != null) {
         File file = File(result.files.single.path!);
-        if (!file.path.endsWith('.pdf')) {
-          throw Exception('el archivo ingresado no es un pdf');
+        if (!file.path.endsWith(".pdf")) {
+          throw Exception("El archivo ingresado no es un pdf");
         }
         await context.read<PetCubit>().uploadAnalysis(file);
+
+        if (!mounted) {
+          return;
+        }
+
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Se cargo el análisis exitosamente')),
+          const SnackBar(content: Text("Se cargo el análisis exitosamente")),
         );
       }
     }).catchError((error) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text('No se pudo cargar el análisis: ${error.message}')),
+            content: Text("No se pudo cargar el análisis: ${error.message}")),
       );
     });
   }
