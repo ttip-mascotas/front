@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mascotas/bloc/bloc_state.dart';
@@ -65,7 +66,7 @@ class PetCubit extends Cubit<BlocState> {
     await tryCatchFormException(() async {
       final treatment = Treatment(
         medicine: medicine,
-        startDate: parseTimeOfDayStringAsDateTime(time),
+        startDate: parseTimeStringAsDateTime(time),
         dose: dose,
         numberOfTime: int.parse(numberOfTime),
         frequency: frequency.round(),

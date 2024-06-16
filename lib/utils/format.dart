@@ -14,15 +14,19 @@ String formatTimeToString(DateTime date) {
   return DateFormat("h:mm a").format(date);
 }
 
-DateTime parseDateTimeStringAsDateTimeFromBack(String date) {
-  return DateTime.parse(date);
+DateTime parseUTCDateTimeISO8601StringToLocal(String date) {
+  return DateTime.parse(date).toLocal();
+}
+
+String convertLocalDateTimeToIso8601UTCString(DateTime datetime) {
+  return datetime.toUtc().toIso8601String();
 }
 
 DateTime parseDateStringAsDateTime(String date) {
   return DateFormat("dd-MM-yy").parse(date);
 }
 
-DateTime parseTimeOfDayStringAsDateTime(String timeOfDay) {
+DateTime parseTimeStringAsDateTime(String timeOfDay) {
   final format = DateFormat("HH:mm a");
   final selectedTime = format.parse(timeOfDay);
   final now = DateTime.now();

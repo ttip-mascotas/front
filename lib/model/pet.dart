@@ -41,7 +41,7 @@ class Pet extends Equatable {
         age = json["age"],
         weight = json["weight"],
         photo = json["photo"],
-        birthdate = parseDateTimeStringAsDateTimeFromBack(json["birthdate"]),
+        birthdate = parseUTCDateTimeISO8601StringToLocal(json["birthdate"]),
         breed = json["breed"],
         fur = json["fur"],
         sex = typeOfSex[json["sex"]] ?? '',
@@ -73,14 +73,14 @@ class Pet extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'weight': weight,
-        'photo': photo,
-        'birthdate': birthdate.toIso8601String(),
-        'breed': breed,
-        'fur': fur,
-        'sex': sex,
+        "id": id,
+        "name": name,
+        "weight": weight,
+        "photo": photo,
+        "birthdate": convertLocalDateTimeToIso8601UTCString(birthdate),
+        "breed": breed,
+        "fur": fur,
+        "sex": sex,
       };
 
   String birthdateToString() {
@@ -89,9 +89,9 @@ class Pet extends Equatable {
 
   String ageToString() {
     if (age > 1) {
-      return '${age.toString()} años';
+      return "${age.toString()} años";
     }
-    return '${age.toString()} año';
+    return "${age.toString()} año";
   }
 
   String weightToString() {

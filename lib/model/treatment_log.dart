@@ -14,7 +14,7 @@ class TreatmentLog extends Equatable {
 
   TreatmentLog.fromJson(Map<String, dynamic> json)
       : id = json["id"],
-        datetime = parseDateTimeStringAsDateTimeFromBack(json["datetime"]),
+        datetime = parseUTCDateTimeISO8601StringToLocal(json["datetime"]),
         administered = json["administered"];
 
   @override
