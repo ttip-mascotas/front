@@ -1,8 +1,8 @@
-import 'package:equatable/equatable.dart';
-import 'package:mascotas/model/analysis.dart';
-import 'package:mascotas/model/medical_visit.dart';
-import 'package:mascotas/model/treatment.dart';
-import 'package:mascotas/utils/format.dart';
+import "package:equatable/equatable.dart";
+import "package:mascotas/model/analysis.dart";
+import "package:mascotas/model/medical_visit.dart";
+import "package:mascotas/model/treatment.dart";
+import "package:mascotas/utils/format.dart";
 
 class Pet extends Equatable {
   final int id;
@@ -41,10 +41,10 @@ class Pet extends Equatable {
         age = json["age"],
         weight = json["weight"],
         photo = json["photo"],
-        birthdate = parseDateTimeStringAsDateTimeFromBack(json["birthdate"]),
+        birthdate = parseUTCDateTimeISO8601StringToLocal(json["birthdate"]),
         breed = json["breed"],
         fur = json["fur"],
-        sex = typeOfSex[json["sex"]] ?? '',
+        sex = typeOfSex[json["sex"]] ?? "",
         medicalVisits = _medicalVisitsFromJson(json["medicalVisits"]),
         treatments = _treatmentFromJson(json["treatments"]),
         analyses = _analysesFromJson(json["analyses"]);
@@ -73,30 +73,15 @@ class Pet extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'weight': weight,
-        'photo': photo,
-        'birthdate': birthdate.toIso8601String(),
-        'breed': breed,
-        'fur': fur,
-        'sex': sex,
+        "id": id,
+        "name": name,
+        "weight": weight,
+        "photo": photo,
+        "birthdate": convertLocalDateTimeToIso8601UTCString(birthdate),
+        "breed": breed,
+        "fur": fur,
+        "sex": sex,
       };
-
-  String birthdateToString() {
-    return formatDateToString(birthdate);
-  }
-
-  String ageToString() {
-    if (age > 1) {
-      return '${age.toString()} años';
-    }
-    return '${age.toString()} año';
-  }
-
-  String weightToString() {
-    return "${weight.ceil().toString()} Kg";
-  }
 
   void addMedicalVisit(MedicalVisit medicalVisit) {
     medicalVisits.add(medicalVisit);

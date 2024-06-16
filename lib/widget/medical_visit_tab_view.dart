@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:mascotas/model/medical_visit.dart';
-import 'package:mascotas/utils/format.dart';
-import 'package:mascotas/widget/pets_divider.dart';
+import "package:flutter/material.dart";
+import "package:mascotas/model/medical_visit.dart";
+import "package:mascotas/utils/format.dart";
+import "package:mascotas/widget/pets_divider.dart";
 
 class MedicalVisits extends StatelessWidget {
   final List<MedicalVisit> medicalVisits;

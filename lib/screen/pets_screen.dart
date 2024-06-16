@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mascotas/bloc/bloc_state.dart';
-import 'package:mascotas/bloc/pets_bloc.dart';
-import 'package:mascotas/model/pet.dart';
-import 'package:mascotas/navigation/navigation.dart';
-import 'package:mascotas/widget/avatar.dart';
-import 'package:mascotas/widget/pet_registration_form.dart';
-import 'package:mascotas/widget/pets_divider.dart';
-import 'package:mascotas/widget/pets_scaffold.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:mascotas/bloc/bloc_state.dart";
+import "package:mascotas/bloc/pets_bloc.dart";
+import "package:mascotas/model/pet.dart";
+import "package:mascotas/navigation/navigation.dart";
+import "package:mascotas/utils/format.dart";
+import "package:mascotas/widget/avatar.dart";
+import "package:mascotas/widget/pet_registration_form.dart";
+import "package:mascotas/widget/pets_divider.dart";
+import "package:mascotas/widget/pets_scaffold.dart";
 
 class PetsScreen extends StatelessWidget {
   const PetsScreen({super.key});
@@ -17,7 +18,7 @@ class PetsScreen extends StatelessWidget {
     final purple = Colors.purple.shade200;
 
     return PetsScaffold(
-      title: 'Mis Mascotas',
+      title: "Mis Mascotas",
       body: BlocBuilder<PetsCubit, BlocState>(
         builder: (BuildContext context, BlocState state) {
           switch (state) {
@@ -113,11 +114,11 @@ class PetBasicInfo extends StatelessWidget {
                     icon: Icons.pets,
                   ),
                   PetInfo(
-                    info: pet.ageToString(),
+                    info: convertAgeToString(pet.age),
                     icon: Icons.access_time,
                   ),
                   PetInfo(
-                    info: pet.weightToString(),
+                    info: convertWeightToString(pet.weight),
                     icon: Icons.scale,
                   )
                 ],

@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:mascotas/model/treatment.dart';
-import 'package:mascotas/widget/treatment_logs_table.dart';
+import "package:flutter/material.dart";
+import "package:mascotas/model/treatment.dart";
+import "package:mascotas/widget/treatment_logs_table.dart";
 
 class TreatmentDetail extends StatelessWidget {
   final Treatment treatment;

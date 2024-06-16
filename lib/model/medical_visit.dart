@@ -1,5 +1,5 @@
-import 'package:equatable/equatable.dart';
-import 'package:mascotas/utils/format.dart';
+import "package:equatable/equatable.dart";
+import "package:mascotas/utils/format.dart";
 
 class MedicalVisit extends Equatable {
   final int? id;
@@ -17,17 +17,17 @@ class MedicalVisit extends Equatable {
   });
 
   MedicalVisit.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        specialist = json['specialist'],
-        address = json['address'],
-        date = parseDateTimeStringAsDateTimeFromBack(json['datetime']),
-        observations = json['observations'];
+      : id = json["id"],
+        specialist = json["specialist"],
+        address = json["address"],
+        date = parseUTCDateTimeISO8601StringToLocal(json["datetime"]),
+        observations = json["observations"];
 
   Map<String, dynamic> toJson() => {
-        'specialist': specialist,
-        'address': address,
-        'datetime': date.toIso8601String(),
-        'observations': observations,
+        "specialist": specialist,
+        "address": address,
+        "datetime": convertLocalDateTimeToIso8601UTCString(date),
+        "observations": observations,
       };
 
   @override

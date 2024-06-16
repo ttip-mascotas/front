@@ -1,3 +1,4 @@
+// ignore: prefer_double_quotes
 import 'package:flutter/material.dart';
 
 final theme = ThemeData(

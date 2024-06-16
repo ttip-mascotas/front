@@ -1,11 +1,12 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:mascotas/model/treatment.dart';
-import 'package:stomp_dart_client/stomp_dart_client.dart';
+import "dart:convert";
+
+import "package:flutter/material.dart";
+import "package:mascotas/model/treatment.dart";
+import "package:stomp_dart_client/stomp_dart_client.dart";
 
 class WebSocketDatasource {
   StompClient? _client;
-  final baseUrl = 'ws://10.0.2.2:8080/notifications';
+  final baseUrl = "ws://10.0.2.2:8080/notifications";
 
   Future<void> connectWebSocket(
     Function(Treatment treatment) onTreatmentReceived,
@@ -29,7 +30,7 @@ class WebSocketDatasource {
     Function(Treatment treatment) onTreatmentReceived,
   ) {
     _client?.subscribe(
-        destination: '/topic/treatments/$treatmentId',
+        destination: "/topic/treatments/$treatmentId",
         callback: (frame) {
           final body = frame.body;
           if (body != null) {
@@ -48,9 +49,9 @@ class WebSocketDatasource {
 
   void checkTreatmentLog(
       int treatmentId, int treatmentLogId, bool administrated) {
-    final body = {'administered': administrated};
+    final body = {"administered": administrated};
     _client?.send(
-      destination: '/app/treatments/$treatmentId/logs/$treatmentLogId',
+      destination: "/app/treatments/$treatmentId/logs/$treatmentLogId",
       body: jsonEncode(body),
     );
   }

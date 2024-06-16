@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:mascotas/widget/avatar.dart';
+import "package:flutter/material.dart";
+import "package:mascotas/widget/avatar.dart";
 
 class AvatarSelector extends StatelessWidget {
   final String photo;
@@ -19,10 +19,7 @@ class AvatarSelector extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(5),
             decoration: BoxDecoration(
-              color: Theme
-                  .of(context)
-                  .colorScheme
-                  .primary,
+              color: Theme.of(context).colorScheme.primary,
               borderRadius: const BorderRadius.all(
                 Radius.circular(50),
               ),

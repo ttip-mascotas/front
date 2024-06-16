@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:mascotas/screen/pet_screen.dart';
-import 'package:mascotas/screen/search_screen.dart';
-import 'package:mascotas/screen/treatment_schedule_screen.dart';
+import "package:flutter/material.dart";
+import "package:mascotas/screen/pet_screen.dart";
+import "package:mascotas/screen/search_screen.dart";
+import "package:mascotas/screen/treatment_schedule_screen.dart";
 
 class Navigation {
   static void goToPetScreen({required BuildContext context, required int id}) {

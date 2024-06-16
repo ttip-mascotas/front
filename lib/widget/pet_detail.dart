@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:mascotas/model/pet.dart';
-import 'package:mascotas/widget/pet_tab_controller.dart';
+import "package:flutter/material.dart";
+import "package:mascotas/model/pet.dart";
+import "package:mascotas/utils/format.dart";
+import "package:mascotas/widget/pet_tab_controller.dart";
 
-import 'avatar.dart';
+import "avatar.dart";
 
 class PetDetail extends StatelessWidget {
   const PetDetail({super.key, required this.pet});
@@ -56,28 +57,28 @@ class PetAttributes extends StatelessWidget {
               ),
             ),
             PetAttribute(
-              attributeValue: pet.ageToString(),
-              attributeName: 'Edad',
+              attributeValue: convertAgeToString(pet.age),
+              attributeName: "Edad",
             ),
             PetAttribute(
-              attributeValue: pet.birthdateToString(),
-              attributeName: 'Nacimiento',
+              attributeValue: formatDateToString(pet.birthdate),
+              attributeName: "Nacimiento",
             ),
             PetAttribute(
-              attributeValue: pet.weightToString(),
-              attributeName: 'Peso',
+              attributeValue: convertWeightToString(pet.weight),
+              attributeName: "Peso",
             ),
             PetAttribute(
               attributeValue: pet.sex,
-              attributeName: 'Sexo',
+              attributeName: "Sexo",
             ),
             PetAttribute(
               attributeValue: pet.breed,
-              attributeName: 'Raza',
+              attributeName: "Raza",
             ),
             PetAttribute(
               attributeValue: pet.fur,
-              attributeName: 'Pelaje',
+              attributeName: "Pelaje",
             ),
           ],
         ),

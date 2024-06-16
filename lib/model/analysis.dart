@@ -1,5 +1,5 @@
-import 'package:equatable/equatable.dart';
-import 'package:mascotas/utils/format.dart';
+import "package:equatable/equatable.dart";
+import "package:mascotas/utils/format.dart";
 
 class Analysis extends Equatable {
   final int? id;
@@ -17,11 +17,11 @@ class Analysis extends Equatable {
   });
 
   Analysis.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        size = json['size'],
-        url = json['url'],
-        createdAt = parseDateTimeStringAsDateTimeFromBack(json['createdAt']);
+      : id = json["id"],
+        name = json["name"],
+        size = json["size"],
+        url = json["url"],
+        createdAt = parseUTCDateTimeISO8601StringToLocal(json["createdAt"]);
 
   @override
   List<Object?> get props => [

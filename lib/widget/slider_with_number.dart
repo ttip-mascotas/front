@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import "package:flutter/material.dart";
 
 class SliderWithNumber extends StatelessWidget {
   final int divisions;
@@ -33,9 +33,9 @@ class SliderWithNumber extends StatelessWidget {
             ),
             child: Center(
                 child: Text(
-                  text,
-                  style: const TextStyle(color: Colors.white),
-                ))),
+              text,
+              style: const TextStyle(color: Colors.white),
+            ))),
         Expanded(
           child: Slider(
             value: value,

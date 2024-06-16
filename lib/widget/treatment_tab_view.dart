@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:mascotas/model/treatment.dart';
-import 'package:mascotas/navigation/navigation.dart';
-import 'package:mascotas/utils/format.dart';
-import 'package:mascotas/widget/pets_divider.dart';
+import "package:flutter/material.dart";
+import "package:mascotas/model/treatment.dart";
+import "package:mascotas/navigation/navigation.dart";
+import "package:mascotas/utils/format.dart";
+import "package:mascotas/widget/pets_divider.dart";
 
 class TreatmentTabView extends StatelessWidget {
   final List<Treatment> treatments;
@@ -24,7 +24,7 @@ class TreatmentTabView extends StatelessWidget {
             itemCount: treatments.length)
         : const Padding(
             padding: EdgeInsets.all(16.0),
-            child: Text('No hay tratamientos registrados'),
+            child: Text("No hay tratamientos registrados"),
           );
   }
 }
@@ -43,13 +43,14 @@ class TreatmentItem extends StatelessWidget {
         color: Colors.transparent,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             TreatmentAttribute(
               text: treatment.medicine,
               icon: Icons.medication,
             ),
             TreatmentAttribute(
-              text: '${treatment.dose} miligramos',
+              text: "${treatment.dose} miligramos",
               icon: Icons.numbers_rounded,
             ),
             TreatmentAttribute(

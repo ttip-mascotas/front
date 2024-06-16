@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:mascotas/model/pet.dart';
+import "package:flutter/material.dart";
+import "package:mascotas/model/pet.dart";
 
 class SexInput extends StatelessWidget {
   final PetSex petSex;

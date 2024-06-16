@@ -1,6 +1,6 @@
-import 'package:equatable/equatable.dart';
-import 'package:mascotas/model/treatment_log.dart';
-import 'package:mascotas/utils/format.dart';
+import "package:equatable/equatable.dart";
+import "package:mascotas/model/treatment_log.dart";
+import "package:mascotas/utils/format.dart";
 
 class Treatment extends Equatable {
   final int? id;
@@ -25,7 +25,7 @@ class Treatment extends Equatable {
       : id = json["id"],
         medicine = json["medicine"],
         dose = json["dose"],
-        startDate = parseDateTimeStringAsDateTimeFromBack(json["datetime"]),
+        startDate = parseUTCDateTimeISO8601StringToLocal(json["datetime"]),
         numberOfTime = json["numberOfTimes"],
         frequency = json["frequency"],
         logs = _logsFromJson(json["logs"]);
@@ -42,14 +42,13 @@ class Treatment extends Equatable {
   Map<String, dynamic> toJson() => {
         "medicine": medicine,
         "dose": dose,
-        "datetime": startDate.toIso8601String(),
+        "datetime": convertLocalDateTimeToIso8601UTCString(startDate),
         "numberOfTimes": numberOfTime,
         "frequency": frequency,
       };
 
   TreatmentLog findTreatmentLogWithId(int treatmentLogId) {
-    return logs
-        .firstWhere((treatmentLog) => treatmentLog.id == treatmentLogId);
+    return logs.firstWhere((treatmentLog) => treatmentLog.id == treatmentLogId);
   }
 
   @override
