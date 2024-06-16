@@ -1,7 +1,6 @@
-import 'package:equatable/equatable.dart';
+import "package:equatable/equatable.dart";
 
 class BlocState extends Equatable {
-
   @override
   List<Object?> get props => [];
 }
@@ -15,11 +14,10 @@ class Error extends BlocState {
   List<Object?> get props => [message];
 }
 
-class Loading extends BlocState {
-}
+class Loading extends BlocState {}
 
-class Loaded extends BlocState {
-  final value;
+class Loaded<T> extends BlocState {
+  final T value;
 
   Loaded({required this.value});
 
