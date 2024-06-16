@@ -1,12 +1,12 @@
-import 'package:equatable/equatable.dart';
-import 'package:mascotas/utils/format.dart';
+import "package:equatable/equatable.dart";
+import "package:mascotas/utils/format.dart";
 
 class TreatmentLog extends Equatable {
   final int id;
   final DateTime datetime;
-  bool administered;
+  final bool administered;
 
-  TreatmentLog({
+  const TreatmentLog({
     required this.id,
     required this.datetime,
     required this.administered,
@@ -23,8 +23,4 @@ class TreatmentLog extends Equatable {
         datetime,
         administered,
       ];
-
-  void check() {
-    administered = !administered;
-  }
 }
