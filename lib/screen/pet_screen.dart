@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mascotas/bloc/bloc_state.dart';
-import 'package:mascotas/bloc/pet_bloc.dart';
-import 'package:mascotas/model/pet.dart';
-import 'package:mascotas/navigation/navigation.dart';
-import 'package:mascotas/widget/avatar.dart';
-import 'package:mascotas/widget/pet_detail.dart';
-import 'package:mascotas/widget/pets_scaffold.dart';
+import "package:flutter/material.dart";
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:mascotas/bloc/bloc_state.dart";
+import "package:mascotas/bloc/pet_bloc.dart";
+import "package:mascotas/model/pet.dart";
+import "package:mascotas/navigation/navigation.dart";
+import "package:mascotas/widget/avatar.dart";
+import "package:mascotas/widget/pet_detail.dart";
+import "package:mascotas/widget/pets_scaffold.dart";
 
 class PetScreen extends StatelessWidget {
   final int id;
@@ -57,7 +57,7 @@ class PetDrawer extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(Icons.search),
-                  title: const Text('Buscar análisis'),
+                  title: const Text("Buscar análisis"),
                   onTap: () => Navigation.goToSearchScreen(context: context),
                 ),
               ],

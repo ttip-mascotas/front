@@ -1,6 +1,6 @@
-import 'dart:math';
+import "dart:math";
 
-import 'package:intl/intl.dart';
+import "package:intl/intl.dart";
 
 String formatDateToString(DateTime date) {
   return DateFormat("dd-MM-yy").format(date);
@@ -52,4 +52,15 @@ String formatBytes(int bytes, int decimals) {
   const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
   var i = (log(bytes) / log(1024)).floor();
   return "${(bytes / pow(1024, i)).toStringAsFixed(decimals)} ${suffixes[i]}";
+}
+
+String convertAgeToString(int age) {
+  if (age > 1) {
+    return "${age.toString()} años";
+  }
+  return "${age.toString()} año";
+}
+
+String convertWeightToString(double weight) {
+  return "${weight.ceil().toString()} Kg";
 }
