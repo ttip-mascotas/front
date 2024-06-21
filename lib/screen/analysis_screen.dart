@@ -5,6 +5,7 @@ import "package:mascotas/bloc/bloc_state.dart";
 import "package:mascotas/datasource/analysis_datasource.dart";
 import "package:mascotas/datasource/api.dart";
 import "package:mascotas/model/analysis.dart";
+import "package:mascotas/utils/format_url.dart";
 import "package:mascotas/widget/pets_scaffold.dart";
 
 class AnalysisScreen extends StatelessWidget {
@@ -48,7 +49,7 @@ class AnalysisScreen extends StatelessWidget {
                         children: List.generate(
                           images.length,
                           (index) => Image.network(
-                            images[index].url,
+                            formatUrl(images[index].url),
                           ),
                         ),
                       )
