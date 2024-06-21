@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_file_downloader/flutter_file_downloader.dart";
 import "package:mascotas/model/analysis.dart";
+import "package:mascotas/navigation/navigation.dart";
 import "package:mascotas/utils/format.dart";
 import "package:mascotas/utils/format_url.dart";
 import "package:mascotas/widget/pets_divider.dart";
@@ -27,20 +28,49 @@ class AnalysisList extends StatelessWidget {
                   color: Colors.transparent,
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    child: Row(
                       children: [
-                        AnalysisDetail(
-                          text: analysis.name,
-                          icon: Icons.picture_as_pdf_rounded,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AnalysisDetail(
+                                text: analysis.name,
+                                icon: Icons.picture_as_pdf_rounded,
+                              ),
+                              AnalysisDetail(
+                                text: formatBytes(analysis.size, 1),
+                                icon: Icons.balance,
+                              ),
+                              AnalysisDetail(
+                                text: formatDateToString(analysis.createdAt),
+                                icon: Icons.calendar_month_rounded,
+                              )
+                            ],
+                          ),
                         ),
-                        AnalysisDetail(
-                          text: formatBytes(analysis.size, 1),
-                          icon: Icons.download_for_offline_rounded,
-                        ),
-                        AnalysisDetail(
-                          text: formatDateToString(analysis.createdAt),
-                          icon: Icons.calendar_month_rounded,
+                        Column(
+                          children: [
+                            IconButton(
+                              onPressed: () => downloadFile(analysis),
+                              icon: Icon(
+                                Icons.download,
+                                color: Colors.purple.shade200,
+                                size: 30,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () => Navigation.goToAnalysisScreen(
+                                id: analysis.id!,
+                                context: context,
+                              ),
+                              icon: Icon(
+                                Icons.image,
+                                color: Colors.purple.shade200,
+                                size: 30,
+                              ),
+                            ),
+                          ],
                         )
                       ],
                     ),

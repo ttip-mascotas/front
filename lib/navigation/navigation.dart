@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:mascotas/screen/analysis_screen.dart";
 import "package:mascotas/screen/groups_screen.dart";
 import "package:mascotas/screen/pet_screen.dart";
 import "package:mascotas/screen/pets_screen.dart";
@@ -43,6 +44,14 @@ class Navigation {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => PetsScreen(id: id,),
+      ),
+    );
+  }
+
+  static goToAnalysisScreen({required BuildContext context, required int id}) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => AnalysisScreen(id: id,),
       ),
     );
   }
