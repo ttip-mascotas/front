@@ -8,6 +8,7 @@ class FormStructure extends StatefulWidget {
   final String successfulMessage;
   final String Function(DatasourceException) errorMessage;
   final String buttonMessage;
+  final void Function()? navigate;
 
   const FormStructure({
     required this.onSave,
@@ -15,6 +16,7 @@ class FormStructure extends StatefulWidget {
     required this.successfulMessage,
     required this.errorMessage,
     required this.buttonMessage,
+    this.navigate,
     super.key,
   });
 
@@ -76,13 +78,13 @@ class _FormStructureState extends State<FormStructure> {
         _error = "";
       });
       widget.onSave().then((_) {
-        Navigator.pop(context);
+        widget.navigate != null ? widget.navigate!() : Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(widget.successfulMessage)),
         );
       }).catchError((error) {
         if (error is NotifierException) {
-          Navigator.pop(context);
+          if (widget.navigate == null ) Navigator.pop(context);
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(error.message)));
           return;

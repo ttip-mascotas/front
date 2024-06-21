@@ -1,6 +1,7 @@
 import "dart:convert";
 
 import "package:mascotas/model/analysis.dart";
+import "package:mascotas/model/group.dart";
 import "package:mascotas/model/medical_visit.dart";
 import "package:mascotas/model/pet.dart";
 import "package:mascotas/model/treatment.dart";
@@ -21,10 +22,6 @@ final Map<String, dynamic> petMap = {
 };
 
 final String petJson = jsonEncode(petMap);
-
-final String petsJson = jsonEncode({
-  "results": [petMap]
-});
 
 final Map<String, dynamic> medicalVisitMap = {
   "id": 1,
@@ -125,3 +122,16 @@ final treatmentWithLogMap = {
 final String treatmentWithLogJson = jsonEncode(treatmentWithLogMap);
 
 final Treatment treatmentWithTreatmentLog = Treatment.fromJson(treatmentLogMap);
+
+const group = Group(id: 1, name: "Mi grupo", members: [], pets: []);
+
+final groupMap = {
+  "id": 1,
+  "name": "Mi grupo",
+  "members": [],
+  "pets": [
+    petMap,
+  ],
+};
+
+final String groupJson = jsonEncode(groupMap);

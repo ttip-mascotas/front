@@ -3,24 +3,25 @@ import "dart:io";
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:mascotas/bloc/bloc_state.dart";
-import "package:mascotas/datasource/pets_datasource.dart";
+import "package:mascotas/datasource/group_datasource.dart";
 import "package:mascotas/exception/datasource_exception.dart";
+import "package:mascotas/model/group.dart";
 import "package:mascotas/model/pet.dart";
 import "package:mascotas/utils/format.dart";
 import "package:mascotas/utils/try_catch_form_exception.dart";
 
-class PetsCubit extends Cubit<BlocState> {
-  final PetsDatasource petsDatasource;
+class GroupCubit extends Cubit<BlocState> {
+  final GroupDatasource groupDatasource;
 
-  PetsCubit({required this.petsDatasource}) : super(Loading());
+  GroupCubit({required this.groupDatasource}) : super(Loading());
 
-  void init() {
-    getPets();
+  void init(int id) {
+    getGroup(id);
   }
 
-  Future<void> getPets() async {
+  Future<void> getGroup(int id) async {
     try {
-      final pets = await petsDatasource.getPets();
+      final pets = await groupDatasource.getGroup(id);
       emit(Loaded(value: pets));
     } on DatasourceException catch (error) {
       emit(Error(message: error.message));
@@ -41,11 +42,11 @@ class PetsCubit extends Cubit<BlocState> {
     await tryCatchFormException(() async {
       if (state is Loaded) {
         final Loaded currentState = state as Loaded;
-        final List<Pet> pets = currentState.value;
+        final Group group = currentState.value;
 
         String url = "";
         if (photo.isNotEmpty) {
-          url = await petsDatasource.uploadAvatar(File(photo));
+          url = await groupDatasource.uploadAvatar(File(photo));
         }
 
         final pet = Pet(
@@ -56,13 +57,13 @@ class PetsCubit extends Cubit<BlocState> {
           breed: breed,
           fur: fur,
           sex: sex,
-          id: 0,
           age: 0,
         );
 
-        final petResponse = await petsDatasource.addPet(pet);
-        pets.add(petResponse);
-        emit(Loaded(value: pets));
+        final petResponse = await groupDatasource.addPet(pet, group.id);
+        group.pets.add(petResponse);
+        emit(Loading());
+        emit(Loaded(value: group));
       }
     });
   }

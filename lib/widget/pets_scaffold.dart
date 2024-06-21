@@ -5,18 +5,24 @@ class PetsScaffold extends StatelessWidget {
   final String title;
   final Widget? floatingActionButton;
   final Widget? drawer;
+  final Color? backgroundColor;
+  final bool? resizeToAvoidBottomInset;
 
   const PetsScaffold({
     required this.body,
     required this.title,
     this.floatingActionButton,
     this.drawer,
+    this.backgroundColor,
+    this.resizeToAvoidBottomInset,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: resizeToAvoidBottomInset,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
           title,

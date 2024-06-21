@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:mascotas/bloc/bloc_state.dart";
-import "package:mascotas/bloc/pets_bloc.dart";
+import "package:mascotas/bloc/group_bloc.dart";
+import "package:mascotas/model/group.dart";
 import "package:mascotas/model/pet.dart";
 import "package:mascotas/navigation/navigation.dart";
 import "package:mascotas/utils/format.dart";
@@ -11,33 +12,18 @@ import "package:mascotas/widget/pets_divider.dart";
 import "package:mascotas/widget/pets_scaffold.dart";
 
 class PetsScreen extends StatelessWidget {
-  const PetsScreen({super.key});
+  final int id;
+
+  const PetsScreen({required this.id, super.key});
 
   @override
   Widget build(BuildContext context) {
     final purple = Colors.purple.shade200;
+    context.read<GroupCubit>().getGroup(id);
 
     return PetsScaffold(
       title: "Mis Mascotas",
-      body: BlocBuilder<PetsCubit, BlocState>(
-        builder: (BuildContext context, BlocState state) {
-          switch (state) {
-            case Error():
-              return Container(
-                padding: const EdgeInsets.all(20),
-                child: Row(
-                  children: [
-                    Flexible(child: Text(state.message)),
-                  ],
-                ),
-              );
-            case Loaded():
-              return Pets(pets: state.value);
-            default:
-              return const Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+      body: const PetsBody(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: purple,
         onPressed: () => openPetRegistrationModal(context),
@@ -56,6 +42,36 @@ class PetsScreen extends StatelessWidget {
         showDragHandle: true,
         useSafeArea: true,
         builder: (BuildContext context) => const PetRegistrationForm());
+  }
+}
+
+class PetsBody extends StatelessWidget {
+  const PetsBody({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GroupCubit, BlocState>(
+      builder: (BuildContext context, BlocState state) {
+        switch (state) {
+          case Error():
+            return Container(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  Flexible(child: Text(state.message)),
+                ],
+              ),
+            );
+          case Loaded():
+            final Group value = state.value;
+            return Pets(pets: value.pets);
+          default:
+            return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 }
 
@@ -95,7 +111,7 @@ class PetBasicInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigation.goToPetScreen(context: context, id: pet.id),
+      onTap: () => Navigation.goToPetScreen(context: context, id: pet.id!),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Container(

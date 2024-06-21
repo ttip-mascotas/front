@@ -27,33 +27,6 @@ class PetsDatasource extends BaseDatasource {
     }
   }
 
-  Future<List<Pet>> getPets() async {
-    final response = await api.get("/pets");
-
-    return super.manageResponse<List<Pet>>(
-      response,
-      parseJson: (json) =>
-          json["results"].map<Pet>((json) => Pet.fromJson(json)).toList(),
-      message: "Failed to load pets",
-    );
-  }
-
-  Future<Pet> addPet(Pet pet) async {
-    try {
-      final body = pet.toJson();
-      final response = await api.post("/pets", body: body);
-
-      return super.manageResponse<Pet>(
-        response,
-        parseJson: (json) => Pet.fromJson(json),
-        message: "Hubo un problema al registrar la mascota",
-      );
-    } on TimeoutException {
-      return throw DatasourceException(
-          "Nuestros servidores están ocupados, intentalo nuevamente más tarde.");
-    }
-  }
-
   Future<MedicalVisit> addMedicalVisit(
       MedicalVisit medicalVisit, int id) async {
     final body = medicalVisit.toJson();
@@ -85,15 +58,6 @@ class PetsDatasource extends BaseDatasource {
     return super.manageResponse<Analysis>(response,
         parseJson: (json) => Analysis.fromJson(json),
         message: "Hubo un problema al guardar el archivo");
-  }
-
-  Future<String> uploadAvatar(File file) async {
-    final response = await api.upload("/pets/avatars",
-        file: file, field: "avatar", contentType: MediaType("image", "jpeg"));
-
-    return super.manageResponse<String>(response,
-        parseJson: (json) => json["url"],
-        message: "Hubo un problema al guardar la foto de tu mascota");
   }
 
   Future<List<Analysis>> searchAnalysis(String text, int petId) async {
