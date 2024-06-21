@@ -29,6 +29,15 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
   String _photo = "";
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _birthdateController.dispose();
+    _breedController.dispose();
+    _furController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FormStructure(
       onSave: () => context.read<GroupCubit>().addPet(

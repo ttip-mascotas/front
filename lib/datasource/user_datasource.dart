@@ -10,9 +10,10 @@ class UserDatasource extends BaseDatasource {
   UserDatasource({required super.api});
 
   Future<User> login(String email, String password) async {
+    //TODO: descomentar cuando este listo el endpoint de iniciar sesion
     return const User(id: 1, name: "Ximena", email: "ximena@example.com");
     /*try {
-      final response = await api.get("/users");
+      final response = await api.get("/users/login");
 
       return super.manageResponse<User>(
         response,

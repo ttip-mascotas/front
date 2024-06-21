@@ -20,6 +20,13 @@ class _LoginScreenState extends State<LoginScreen> {
   bool isVisible = true;
 
   @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return PetsScaffold(
       backgroundColor: Colors.purple.shade50,

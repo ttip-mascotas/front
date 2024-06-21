@@ -22,6 +22,15 @@ class _TreatmentFormState extends State<TreatmentForm> {
   double _frequency = 1;
 
   @override
+  void dispose() {
+    _medicineController.dispose();
+    _timeController.dispose();
+    _doseController.dispose();
+    _numberOfTimesController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FormStructure(
       onSave: startTreatment,
