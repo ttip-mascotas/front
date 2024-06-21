@@ -80,7 +80,7 @@ final analysis = Analysis(
   url: "example.com",
 );
 
-final analysisMap = {
+final analysisListMap = {
   "results": [
     {
       "id": 1,
@@ -90,6 +90,19 @@ final analysisMap = {
       "url": "example.com",
     }
   ]
+};
+
+final String analysisListJson = jsonEncode(analysisListMap);
+
+final analysisMap = {
+  "id": 1,
+  "name": "ejemplo.pdf",
+  "size": 1,
+  "createdAt": DateTime(2023, 1, 1).toIso8601String(),
+  "url": "example.com",
+  "images": [
+    {"id": 1, "url": "image.jpg"}
+  ],
 };
 
 final String analysisJson = jsonEncode(analysisMap);

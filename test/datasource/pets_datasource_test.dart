@@ -82,7 +82,7 @@ void main() {
 
     when(mockApi
             .get("/pets/$petId/analyses", queryParameters: {"q": "ejemplo"}))
-        .thenAnswer((_) async => Response(analysisJson, 200));
+        .thenAnswer((_) async => Response(analysisListJson, 200));
 
     final analysisResponse =
         await petsDataSource.searchAnalysis("ejemplo", petId);
