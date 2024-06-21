@@ -32,7 +32,7 @@ class Navigation {
   }
 
   static void goToGroupScreen({required BuildContext context}) {
-    Navigator.of(context).push(
+    Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) => const GroupsScreen(),
       ),

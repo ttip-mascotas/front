@@ -8,6 +8,7 @@ import "package:mascotas/model/user.dart";
 import "package:mascotas/navigation/navigation.dart";
 import "package:mascotas/widget/pets_divider.dart";
 import "package:mascotas/widget/pets_scaffold.dart";
+import "package:mascotas/widget/user_drawer.dart";
 
 class GroupsScreen extends StatelessWidget {
   const GroupsScreen({
@@ -22,6 +23,7 @@ class GroupsScreen extends StatelessWidget {
           final User user = state.value;
           context.read<GroupsBloc>().getGroups(userId: user.id);
           return const PetsScaffold(
+            drawer: UserDrawer(),
             body: GroupBody(),
             title: "Mis Grupos",
           );

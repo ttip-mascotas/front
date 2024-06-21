@@ -32,7 +32,7 @@ void main() {
     build: () => GroupCubit(groupDatasource: groupDatasource),
     act: (cubit) => cubit.getGroup(1),
     expect: () => [
-      Loaded(value: [Group.fromJson(jsonDecode(groupJson))]),
+      Loaded(value: Group.fromJson(jsonDecode(groupJson))),
     ],
   );
 

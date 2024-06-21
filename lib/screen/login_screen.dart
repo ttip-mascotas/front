@@ -22,50 +22,51 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return PetsScaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.purple.shade50,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const Padding(
-            padding: EdgeInsets.all(24.0),
-            child: Image(image: AssetImage("assets/icono.png")),
-          ),
-          FormStructure(
-            onSave: () async {
-              context.read<UserBloc>().login(
-                    email: emailController.text,
-                    password: passwordController.text,
-                  );
-            },
-            successfulMessage: "Has iniciado sesión correctamente",
-            errorMessage: (error) => "Ocurrio un problema al iniciar sesion",
-            buttonMessage: "Iniciar sesión",
-            navigate: () => Navigation.goToGroupScreen(context: context),
-            child: Column(
-              children: [
-                TextFormFieldWithTitle(
-                  keyboardType: TextInputType.emailAddress,
-                  controller: emailController,
-                  title: "Email",
-                  validator: emptyFieldValidator,
-                ),
-                TextFormFieldWithTitle(
-                  controller: passwordController,
-                  title: "Contraseña",
-                  validator: emptyFieldValidator,
-                  suffixIcon: Icons.remove_red_eye,
-                  obscureText: isVisible,
-                  onTapSuffixIcon: () {
-                    setState(() {
-                      isVisible = !isVisible;
-                    });
-                  },
-                )
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(24.0),
+              child: Image(image: AssetImage("assets/icono.png")),
             ),
-          ),
-        ],
+            FormStructure(
+              onSave: () async {
+                context.read<UserBloc>().login(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
+              },
+              successfulMessage: "Has iniciado sesión correctamente",
+              errorMessage: (error) => "Ocurrio un problema al iniciar sesion",
+              buttonMessage: "Iniciar sesión",
+              navigate: () => Navigation.goToGroupScreen(context: context),
+              child: Column(
+                children: [
+                  TextFormFieldWithTitle(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: emailController,
+                    title: "Email",
+                    validator: emptyFieldValidator,
+                  ),
+                  TextFormFieldWithTitle(
+                    controller: passwordController,
+                    title: "Contraseña",
+                    validator: emptyFieldValidator,
+                    suffixIcon: Icons.remove_red_eye,
+                    obscureText: isVisible,
+                    onTapSuffixIcon: () {
+                      setState(() {
+                        isVisible = !isVisible;
+                      });
+                    },
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
       title: "Inicio de Sesión",
     );

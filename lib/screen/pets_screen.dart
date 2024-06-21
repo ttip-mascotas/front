@@ -10,6 +10,7 @@ import "package:mascotas/widget/avatar.dart";
 import "package:mascotas/widget/pet_registration_form.dart";
 import "package:mascotas/widget/pets_divider.dart";
 import "package:mascotas/widget/pets_scaffold.dart";
+import "package:mascotas/widget/user_drawer.dart";
 
 class PetsScreen extends StatelessWidget {
   final int id;
@@ -23,6 +24,7 @@ class PetsScreen extends StatelessWidget {
 
     return PetsScaffold(
       title: "Mis Mascotas",
+      drawer: const UserDrawer(),
       body: const PetsBody(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: purple,
