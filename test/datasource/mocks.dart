@@ -6,6 +6,7 @@ import "package:mascotas/model/medical_visit.dart";
 import "package:mascotas/model/pet.dart";
 import "package:mascotas/model/treatment.dart";
 import "package:mascotas/model/treatment_log.dart";
+import "package:mascotas/model/user.dart";
 import "package:mascotas/utils/format.dart";
 
 final Map<String, dynamic> petMap = {
@@ -134,4 +135,29 @@ final groupMap = {
   ],
 };
 
+final groupListMap = {
+  "results": [
+    {
+      "id": 1,
+      "name": "Mi grupo",
+      "members": [],
+      "pets": [
+        petMap,
+      ],
+    }
+  ]
+};
+
 final String groupJson = jsonEncode(groupMap);
+
+final String groupListJson = jsonEncode(groupListMap);
+
+const user = User(id: 1, name: "Ximena", email: "email");
+
+final userMap = {
+  "id": 1,
+  "name": "Ximena",
+  "email": "email",
+};
+
+final String userJson = jsonEncode(userMap);
