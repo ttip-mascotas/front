@@ -11,11 +11,15 @@ import "../model/user.dart";
 class UserDatasource extends BaseDatasource {
   final FlutterSecureStorage storage;
 
-  UserDatasource({required this.storage ,required super.api});
+  UserDatasource({required this.storage, required super.api});
 
   Future<User> login(String email, String password) async {
     try {
-      final response = await api.post("/login");
+      final body = {
+        "username": email,
+        "password": password,
+      };
+      final response = await api.post("/login", body: body);
 
       final token = super.manageResponse<String>(
         response,

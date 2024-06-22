@@ -13,9 +13,9 @@ class Api {
     String path, {
     Map<String, String>? headers,
     Map<String, dynamic>? queryParameters,
-  }) {
+  }) async {
     headers ??= {};
-    addAuthorizationHeader(headers);
+    await addAuthorizationHeader(headers);
 
     return http
         .get(
@@ -26,20 +26,20 @@ class Api {
   }
 
   Future<http.Response> post(String path,
-      {Map<String, String>? headers, Object? body, Encoding? encoding}) {
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     headers ??= {};
     headers[HttpHeaders.contentTypeHeader] = "application/json; charset=UTF-8";
-    addAuthorizationHeader(headers);
+    await addAuthorizationHeader(headers);
 
     return http.post(_getUrl(path),
         headers: headers, body: jsonEncode(body), encoding: encoding);
   }
 
   Future<http.Response> put(String path,
-      {Map<String, String>? headers, Object? body, Encoding? encoding}) {
+      {Map<String, String>? headers, Object? body, Encoding? encoding}) async {
     headers ??= {};
     headers[HttpHeaders.contentTypeHeader] = "application/json; charset=UTF-8";
-    addAuthorizationHeader(headers);
+    await addAuthorizationHeader(headers);
 
     return http.put(_getUrl(path),
         headers: headers, body: jsonEncode(body), encoding: encoding);
@@ -51,7 +51,7 @@ class Api {
         MediaType? contentType}) async {
     final request = http.MultipartRequest("POST", _getUrl(path));
     final Map<String, String> headers = {};
-    addAuthorizationHeader(headers);
+    await addAuthorizationHeader(headers);
     request.headers.addAll(headers);
     request.files.add(http.MultipartFile(
       field,

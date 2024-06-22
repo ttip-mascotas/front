@@ -40,13 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             FormStructure(
               onSave: () async {
-                context.read<UserBloc>().login(
+                await context.read<UserBloc>().login(
                       email: emailController.text,
                       password: passwordController.text,
                     );
               },
               successfulMessage: "Has iniciado sesión correctamente",
-              errorMessage: (error) => "Ocurrio un problema al iniciar sesion",
+              errorMessage: (error) => "Ocurrio un problema al iniciar sesion: ${error.message}",
               buttonMessage: "Iniciar sesión",
               navigate: () => Navigation.goToGroupScreen(context: context),
               child: Column(
