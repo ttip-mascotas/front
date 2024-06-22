@@ -27,7 +27,7 @@ DateTime parseDateStringAsDateTime(String date) {
 }
 
 DateTime parseTimeStringAsDateTime(String timeOfDay) {
-  final format = DateFormat("HH:mm a");
+  final format = DateFormat("h:mm a");
   final selectedTime = format.parse(timeOfDay);
   final now = DateTime.now();
   final selectedDate = DateTime(
