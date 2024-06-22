@@ -155,7 +155,7 @@ final String groupListJson = jsonEncode(groupListMap);
 const user = User(id: 1, name: "Ximena", email: "email");
 
 final userMap = {
-  "id": "1",
+  "id": 1,
   "name": "Ximena",
   "email": "ximena@example.com",
 };

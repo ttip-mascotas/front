@@ -30,7 +30,7 @@ class UserDatasource extends BaseDatasource {
 
       await storage.write(key: StorageKey.tokenStorageKey, value: token);
       Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
-      return User.fromJson(decodedToken);
+      return User.fromToken(decodedToken);
     } on TimeoutException {
       throw DatasourceException(
           "Nuestros servidores están ocupados, intentalo nuevamente más tarde.");
