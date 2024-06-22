@@ -24,13 +24,18 @@ void main() {
     final UserDatasource userDatasource =
         UserDatasource(api: mockApi, storage: mockStorage);
 
-    when(mockApi.post("/login"))
+    const email = "ximena@example.com";
+    const password = "password";
+
+    when(mockApi.post("/login",
+            body: {"username": email, "password": password,}))
         .thenAnswer((_) async => Response(jsonEncode({"token": "token"}), 200));
 
-    final User user = await userDatasource.login("ximena@example.com", "password");
+    final User user =
+        await userDatasource.login(email, password);
 
     expect(user.name, "Ximena");
-    expect(user.email, "ximena@example.com");
+    expect(user.email, email);
     expect(user.id, 1);
   });
 

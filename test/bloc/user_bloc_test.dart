@@ -31,9 +31,13 @@ void main() {
   blocTest(
     "Inicia sesion de forma exitosa y obtengo los datalles del usuario",
     setUp: () {
+      const email = "ximena@example.com";
+      const password = "password";
+
       when(
         mockApi.post(
           any,
+          body: {"username": email, "password": password,}
         ),
       ).thenAnswer((_) async => Response(jsonEncode({"token": "token"}), 200));
     },
