@@ -1,12 +1,16 @@
 import "dart:async";
 
+import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "package:mascotas/datasource/datasource.dart";
 import "package:mascotas/exception/datasource_exception.dart";
 import "package:mascotas/model/group.dart";
+import "package:mascotas/utils/storage_key.dart";
 
 import "../model/user.dart";
 
 class UserDatasource extends BaseDatasource {
+  final storage = const FlutterSecureStorage();
+
   UserDatasource({required super.api});
 
   Future<User> login(String email, String password) async {
@@ -14,6 +18,8 @@ class UserDatasource extends BaseDatasource {
     return const User(id: 1, name: "Ximena", email: "ximena@example.com");
     /*try {
       final response = await api.get("/users/login");
+
+      //await storage.write(key: StorageKey.tokenStorageKey, value: "");
 
       return super.manageResponse<User>(
         response,

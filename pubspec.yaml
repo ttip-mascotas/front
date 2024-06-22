@@ -17,6 +17,7 @@ dependencies:
   flutter_bloc: ^8.1.5
   flutter_file_downloader: ^1.2.1
   flutter_local_notifications: ^17.1.2
+  flutter_secure_storage: ^4.2.1
   flutter_timezone: ^1.0.8
   http: ^1.2.1
   http_parser: ^4.0.2

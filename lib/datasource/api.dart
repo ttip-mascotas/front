@@ -1,15 +1,22 @@
 import "dart:convert";
 import "dart:io";
 
+import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "package:http/http.dart" as http;
 import "package:http_parser/http_parser.dart";
+import "package:mascotas/utils/storage_key.dart";
 
 class Api {
+  final storage = const FlutterSecureStorage();
+
   Future<http.Response> get(
     String path, {
     Map<String, String>? headers,
     Map<String, dynamic>? queryParameters,
   }) {
+    headers ??= {};
+    addAuthorizationHeader(headers);
+
     return http
         .get(
           _getUrl(path, queryParameters: queryParameters),
@@ -22,6 +29,7 @@ class Api {
       {Map<String, String>? headers, Object? body, Encoding? encoding}) {
     headers ??= {};
     headers[HttpHeaders.contentTypeHeader] = "application/json; charset=UTF-8";
+    addAuthorizationHeader(headers);
 
     return http.post(_getUrl(path),
         headers: headers, body: jsonEncode(body), encoding: encoding);
@@ -31,9 +39,29 @@ class Api {
       {Map<String, String>? headers, Object? body, Encoding? encoding}) {
     headers ??= {};
     headers[HttpHeaders.contentTypeHeader] = "application/json; charset=UTF-8";
+    addAuthorizationHeader(headers);
 
     return http.put(_getUrl(path),
         headers: headers, body: jsonEncode(body), encoding: encoding);
+  }
+
+  Future<http.Response> upload(String path,
+      {required File file,
+        required String field,
+        MediaType? contentType}) async {
+    final request = http.MultipartRequest("POST", _getUrl(path));
+    final Map<String, String> headers = {};
+    addAuthorizationHeader(headers);
+    request.headers.addAll(headers);
+    request.files.add(http.MultipartFile(
+      field,
+      file.readAsBytes().asStream(),
+      file.lengthSync(),
+      filename: file.path.split("/").last,
+      contentType: contentType,
+    ));
+    final response = await request.send();
+    return http.Response.fromStream(response);
   }
 
   Uri _getUrl(String path, {Map<String, dynamic>? queryParameters}) {
@@ -47,19 +75,10 @@ class Api {
     return "localhost:8080";
   }
 
-  Future<http.Response> upload(String path,
-      {required File file,
-      required String field,
-      MediaType? contentType}) async {
-    final request = http.MultipartRequest("POST", _getUrl(path));
-    request.files.add(http.MultipartFile(
-      field,
-      file.readAsBytes().asStream(),
-      file.lengthSync(),
-      filename: file.path.split("/").last,
-      contentType: contentType,
-    ));
-    final response = await request.send();
-    return http.Response.fromStream(response);
+  Future<void> addAuthorizationHeader(Map<String, String> headers) async {
+    /*final String? token = await storage.read(key: StorageKey.tokenStorageKey);
+    if (token != null) {
+      headers[HttpHeaders.authorizationHeader] = token;
+    }*/
   }
 }
