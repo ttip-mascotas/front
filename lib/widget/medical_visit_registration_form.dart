@@ -22,6 +22,15 @@ class _MedicalVisitRegistrationFormState
   final _dateController = TextEditingController();
 
   @override
+  void dispose() {
+    _specialistController.dispose();
+    _addressController.dispose();
+    _observationsController.dispose();
+    _dateController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FormStructure(
       onSave: () => context.read<PetCubit>().addMedicalVisit(

@@ -56,36 +56,6 @@ void main() {
     expect(medicalVisitResponse.address, medicalVisit.address);
   });
 
-  test("Get all pets", () async {
-    final PetsDatasource petsDataSource = PetsDatasource(api: mockApi);
-
-    when(mockApi.get("/pets")).thenAnswer((_) async => Response(petsJson, 200));
-
-    final pets = await petsDataSource.getPets();
-
-    expect(pets.length, 1);
-    expect(pets[0].name, petMap["name"]);
-    expect(pets[0].medicalVisits, isEmpty);
-  });
-
-  test("Register pet", () async {
-    final PetsDatasource petsDataSource = PetsDatasource(api: mockApi);
-
-    when(mockApi.post("/pets", body: pet.toJson()))
-        .thenAnswer((_) async => Response(petJson, 200));
-
-    final petResponse = await petsDataSource.addPet(pet);
-
-    expect(petResponse.id, 1);
-    expect(petResponse.name, "Lola");
-    expect(petResponse.age, 2);
-    expect(petResponse.weight, 35);
-    expect(petResponse.birthdate, DateTime(2023, 03, 30));
-    expect(petResponse.breed, "San Bernardo");
-    expect(petResponse.fur, "Largo");
-    expect(petResponse.sex, "Hembra");
-  });
-
   test("Start a treatment for a pet", () async {
     final PetsDatasource petsDataSource = PetsDatasource(api: mockApi);
 

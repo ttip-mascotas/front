@@ -48,7 +48,7 @@ class PetCubit extends Cubit<BlocState> {
         final Loaded currentState = state as Loaded;
         final Pet pet = currentState.value;
         final medicalVisitFromResponse =
-            await petsDatasource.addMedicalVisit(medicalVisit, pet.id);
+            await petsDatasource.addMedicalVisit(medicalVisit, pet.id!);
         pet.addMedicalVisit(medicalVisitFromResponse);
         emit(Loading());
         emit(Loaded(value: pet));
@@ -75,7 +75,7 @@ class PetCubit extends Cubit<BlocState> {
         final Loaded currentState = state as Loaded;
         final Pet pet = currentState.value;
         final treatmentFromResponse =
-            await petsDatasource.startTreatment(treatment, pet.id);
+            await petsDatasource.startTreatment(treatment, pet.id!);
         pet.startTreatment(treatmentFromResponse);
         await scheduledNotification(treatmentFromResponse, pet.name);
         emit(Loading());
@@ -104,7 +104,7 @@ class PetCubit extends Cubit<BlocState> {
         final Loaded currentState = state as Loaded;
         final Pet pet = currentState.value;
         final analysisFromResponse =
-            await petsDatasource.uploadAnalysis(file, pet.id);
+            await petsDatasource.uploadAnalysis(file, pet.id!);
         pet.addAnalysis(analysisFromResponse);
         emit(Loading());
         emit(Loaded(value: pet));
@@ -116,7 +116,7 @@ class PetCubit extends Cubit<BlocState> {
     if (state is Loaded) {
       final Loaded currentState = state as Loaded;
       final Pet pet = currentState.value;
-      return await petsDatasource.searchAnalysis(text, pet.id);
+      return await petsDatasource.searchAnalysis(text, pet.id!);
     }
     return [];
   }

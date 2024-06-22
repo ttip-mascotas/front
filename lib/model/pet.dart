@@ -5,7 +5,7 @@ import "package:mascotas/model/treatment.dart";
 import "package:mascotas/utils/format.dart";
 
 class Pet extends Equatable {
-  final int id;
+  final int? id;
   final String name;
   final int age;
   final double weight;
@@ -19,7 +19,7 @@ class Pet extends Equatable {
   final List<Analysis> analyses;
 
   Pet({
-    required this.id,
+    this.id,
     required this.name,
     required this.age,
     required this.weight,

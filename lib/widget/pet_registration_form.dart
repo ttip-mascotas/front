@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:image_picker/image_picker.dart";
-import "package:mascotas/bloc/pets_bloc.dart";
+import "package:mascotas/bloc/group_bloc.dart";
 import "package:mascotas/model/pet.dart";
 import "package:mascotas/utils/format.dart";
 import "package:mascotas/utils/validator.dart";
@@ -29,9 +29,18 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
   String _photo = "";
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _birthdateController.dispose();
+    _breedController.dispose();
+    _furController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FormStructure(
-      onSave: () => context.read<PetsCubit>().addPet(
+      onSave: () => context.read<GroupCubit>().addPet(
             name: _nameController.text,
             photo: _photo,
             weight: _weight,
@@ -60,7 +69,7 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
               ),
               Expanded(
                 child: TextFormFieldWithTitle(
-                  nameController: _nameController,
+                  controller: _nameController,
                   title: "Nombre",
                   validator: emptyFieldValidator,
                 ),
@@ -86,7 +95,7 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
             text: "${_weight.round()} kg",
           ),
           TextFormFieldWithTitle(
-            nameController: _birthdateController,
+            controller: _birthdateController,
             title: "Fecha de Nacimiento",
             validator: emptyFieldValidator,
             readOnly: true,
@@ -100,12 +109,12 @@ class _PetRegistrationFormState extends State<PetRegistrationForm> {
             onSelect: selectSex,
           ),
           TextFormFieldWithTitle(
-            nameController: _breedController,
+            controller: _breedController,
             title: "Raza",
             validator: emptyFieldValidator,
           ),
           TextFormFieldWithTitle(
-            nameController: _furController,
+            controller: _furController,
             title: "Pelaje",
             validator: emptyFieldValidator,
           ),
