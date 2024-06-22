@@ -32,8 +32,8 @@ class Pet extends Equatable {
     List<Treatment>? treatments,
     List<Analysis>? analyses,
   })  : medicalVisits = medicalVisits ?? [],
-        treatments = [],
-        analyses = [];
+        treatments = treatments ?? [],
+        analyses = analyses ?? [];
 
   Pet.fromJson(Map<String, dynamic> json)
       : id = json["id"],
