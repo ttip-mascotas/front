@@ -13,7 +13,7 @@ class User extends Equatable {
 
   factory User.fromJson(json) {
     return User(
-        id: json["id"],
+        id: int.parse(json["id"]),
         name: json["name"],
         email: json["email"],
     );

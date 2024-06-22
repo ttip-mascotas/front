@@ -1,6 +1,7 @@
 import "dart:async";
 
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
+import "package:jwt_decoder/jwt_decoder.dart";
 import "package:mascotas/datasource/datasource.dart";
 import "package:mascotas/exception/datasource_exception.dart";
 import "package:mascotas/model/group.dart";
@@ -28,8 +29,8 @@ class UserDatasource extends BaseDatasource {
       );
 
       await storage.write(key: StorageKey.tokenStorageKey, value: token);
-      // TODO: obtener usuario real
-      return const User(id: 1, name: "Ximena", email: "ximena@example.com");
+      Map<String, dynamic> decodedToken = JwtDecoder.decode(token);
+      return User.fromJson(decodedToken);
     } on TimeoutException {
       throw DatasourceException(
           "Nuestros servidores están ocupados, intentalo nuevamente más tarde.");

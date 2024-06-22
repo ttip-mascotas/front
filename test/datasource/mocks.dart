@@ -155,9 +155,12 @@ final String groupListJson = jsonEncode(groupListMap);
 const user = User(id: 1, name: "Ximena", email: "email");
 
 final userMap = {
-  "id": 1,
+  "id": "1",
   "name": "Ximena",
   "email": "ximena@example.com",
 };
 
 final String userJson = jsonEncode(userMap);
+
+const String token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlhpbWVuYSIsImVtYWlsIjoieGltZW5hQGV4YW1wbGUuY29tIiwiaWQiOiIxIiwiaWF0IjoxNTE2MjM5MDIyfQ.eX7J1Q2M7I7KgdxS_VK0ZyylL-o2SxhxC7l0Rz6E3wA";

@@ -29,7 +29,7 @@ void main() {
 
     when(mockApi.post("/login",
             body: {"username": email, "password": password,}))
-        .thenAnswer((_) async => Response(jsonEncode({"token": "token"}), 200));
+        .thenAnswer((_) async => Response(jsonEncode({"token": token}), 200));
 
     final User user =
         await userDatasource.login(email, password);

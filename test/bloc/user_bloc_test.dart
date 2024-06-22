@@ -39,7 +39,7 @@ void main() {
           any,
           body: {"username": email, "password": password,}
         ),
-      ).thenAnswer((_) async => Response(jsonEncode({"token": "token"}), 200));
+      ).thenAnswer((_) async => Response(jsonEncode({"token": token}), 200));
     },
     build: () => UserBloc(usersDatasource: usersDatasource),
     act: (cubit) => cubit.login(email: "ximena@example.com", password: "password"),
