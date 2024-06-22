@@ -18,7 +18,7 @@ void main() {
   test("Get a analysis with its images", () async {
     final AnalysisDatasource analysisDatasource = AnalysisDatasource(api: mockApi);
 
-    when(mockApi.get("/analysis/1")).thenAnswer((_) async => Response(analysisJson, 200));
+    when(mockApi.get("/analyses/1")).thenAnswer((_) async => Response(analysisJson, 200));
 
     final Analysis analysis = await analysisDatasource.getAnalysis(1);
 
