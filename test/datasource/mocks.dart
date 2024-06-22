@@ -157,7 +157,7 @@ const user = User(id: 1, name: "Ximena", email: "email");
 final userMap = {
   "id": 1,
   "name": "Ximena",
-  "email": "email",
+  "email": "ximena@example.com",
 };
 
 final String userJson = jsonEncode(userMap);

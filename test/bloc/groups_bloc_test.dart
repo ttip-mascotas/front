@@ -11,14 +11,17 @@ import "package:mockito/mockito.dart";
 
 import "../datasource/mocks.dart";
 import "../datasource/pets_datasource_test.mocks.dart";
+import "user_bloc_test.mocks.dart";
 
 void main() {
   late MockApi mockApi;
+  late MockFlutterSecureStorage mockStorage;
   late UserDatasource usersDatasource;
 
   setUp(() {
     mockApi = MockApi();
-    usersDatasource = UserDatasource(api: mockApi);
+    mockStorage = MockFlutterSecureStorage();
+    usersDatasource = UserDatasource(api: mockApi, storage: mockStorage);
   });
 
   blocTest(

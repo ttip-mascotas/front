@@ -3,13 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
-import 'dart:convert' as _i5;
-import 'dart:io' as _i6;
+import 'dart:async' as _i5;
+import 'dart:convert' as _i6;
+import 'dart:io' as _i7;
 
-import 'package:http/http.dart' as _i2;
-import 'package:http_parser/http_parser.dart' as _i7;
-import 'package:mascotas/datasource/api.dart' as _i3;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i2;
+import 'package:http/http.dart' as _i3;
+import 'package:http_parser/http_parser.dart' as _i8;
+import 'package:mascotas/datasource/api.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -25,8 +26,19 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeResponse_0 extends _i1.SmartFake implements _i2.Response {
-  _FakeResponse_0(
+class _FakeFlutterSecureStorage_0 extends _i1.SmartFake
+    implements _i2.FlutterSecureStorage {
+  _FakeFlutterSecureStorage_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeResponse_1 extends _i1.SmartFake implements _i3.Response {
+  _FakeResponse_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -38,9 +50,22 @@ class _FakeResponse_0 extends _i1.SmartFake implements _i2.Response {
 /// A class which mocks [Api].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockApi extends _i1.Mock implements _i3.Api {
+class MockApi extends _i1.Mock implements _i4.Api {
   @override
-  _i4.Future<_i2.Response> get(
+  _i2.FlutterSecureStorage get storage => (super.noSuchMethod(
+        Invocation.getter(#storage),
+        returnValue: _FakeFlutterSecureStorage_0(
+          this,
+          Invocation.getter(#storage),
+        ),
+        returnValueForMissingStub: _FakeFlutterSecureStorage_0(
+          this,
+          Invocation.getter(#storage),
+        ),
+      ) as _i2.FlutterSecureStorage);
+
+  @override
+  _i5.Future<_i3.Response> get(
     String? path, {
     Map<String, String>? headers,
     Map<String, dynamic>? queryParameters,
@@ -54,7 +79,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
             #queryParameters: queryParameters,
           },
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i5.Future<_i3.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #get,
@@ -66,7 +91,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Response>.value(_FakeResponse_0(
+            _i5.Future<_i3.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #get,
@@ -77,14 +102,14 @@ class MockApi extends _i1.Mock implements _i3.Api {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Response>);
+      ) as _i5.Future<_i3.Response>);
 
   @override
-  _i4.Future<_i2.Response> post(
+  _i5.Future<_i3.Response> post(
     String? path, {
     Map<String, String>? headers,
     Object? body,
-    _i5.Encoding? encoding,
+    _i6.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -96,7 +121,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
             #encoding: encoding,
           },
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i5.Future<_i3.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #post,
@@ -109,7 +134,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Response>.value(_FakeResponse_0(
+            _i5.Future<_i3.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #post,
@@ -121,14 +146,14 @@ class MockApi extends _i1.Mock implements _i3.Api {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Response>);
+      ) as _i5.Future<_i3.Response>);
 
   @override
-  _i4.Future<_i2.Response> put(
+  _i5.Future<_i3.Response> put(
     String? path, {
     Map<String, String>? headers,
     Object? body,
-    _i5.Encoding? encoding,
+    _i6.Encoding? encoding,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -140,7 +165,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
             #encoding: encoding,
           },
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i5.Future<_i3.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #put,
@@ -153,7 +178,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Response>.value(_FakeResponse_0(
+            _i5.Future<_i3.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #put,
@@ -165,14 +190,14 @@ class MockApi extends _i1.Mock implements _i3.Api {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Response>);
+      ) as _i5.Future<_i3.Response>);
 
   @override
-  _i4.Future<_i2.Response> upload(
+  _i5.Future<_i3.Response> upload(
     String? path, {
-    required _i6.File? file,
+    required _i7.File? file,
     required String? field,
-    _i7.MediaType? contentType,
+    _i8.MediaType? contentType,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -184,7 +209,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
             #contentType: contentType,
           },
         ),
-        returnValue: _i4.Future<_i2.Response>.value(_FakeResponse_0(
+        returnValue: _i5.Future<_i3.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #upload,
@@ -197,7 +222,7 @@ class MockApi extends _i1.Mock implements _i3.Api {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Response>.value(_FakeResponse_0(
+            _i5.Future<_i3.Response>.value(_FakeResponse_1(
           this,
           Invocation.method(
             #upload,
@@ -209,5 +234,16 @@ class MockApi extends _i1.Mock implements _i3.Api {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Response>);
+      ) as _i5.Future<_i3.Response>);
+
+  @override
+  _i5.Future<void> addAuthorizationHeader(Map<String, String>? headers) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addAuthorizationHeader,
+          [headers],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 }

@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_bloc/flutter_bloc.dart";
+import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "package:flutter_timezone/flutter_timezone.dart";
 import "package:mascotas/bloc/groups_bloc.dart";
 import "package:mascotas/bloc/pet_bloc.dart";
@@ -35,7 +36,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final api = Api();
     final petsDatasource = PetsDatasource(api: api);
-    final usersDatasource = UserDatasource(api: api);
+    final usersDatasource = UserDatasource(
+      api: api,
+      storage: const FlutterSecureStorage(),
+    );
 
     return MultiBlocProvider(
       providers: [

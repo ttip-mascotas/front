@@ -76,9 +76,9 @@ class Api {
   }
 
   Future<void> addAuthorizationHeader(Map<String, String> headers) async {
-    /*final String? token = await storage.read(key: StorageKey.tokenStorageKey);
+    final String? token = await storage.read(key: StorageKey.tokenStorageKey);
     if (token != null) {
       headers[HttpHeaders.authorizationHeader] = token;
-    }*/
+    }
   }
 }
